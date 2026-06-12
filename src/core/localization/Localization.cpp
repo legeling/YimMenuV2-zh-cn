@@ -492,10 +492,23 @@ namespace YimMenu::Localization
 		    {"Heist difficulty"sv, "抢劫任务难度"sv},
 		    {"Primary target"sv, "主要目标"sv},
 		    {"Weapon category"sv, "武器类别"sv},
+		    {"Heist Modifier"sv, "抢劫修改"sv},
+		    {"Apartment Heist"sv, "公寓抢劫"sv},
+		    {"Diamond Casino Heist"sv, "名钻赌场豪劫"sv},
+		    {"Cayo Perico Heist"sv, "佩里科岛抢劫任务"sv},
+		    {"Doomsday Heist"sv, "末日豪劫"sv},
+		    {"Heist Cuts"sv, "抢劫分红"sv},
+		    {"Heist Setups"sv, "抢劫设置"sv},
+		    {"Loots"sv, "战利品"sv},
 		    {"Set Cuts"sv, "设置分红"sv},
 		    {"Sets heist cut"sv, "设置抢劫分红"sv},
 		    {"Force Ready"sv, "强制准备"sv},
 		    {"Forces all players to be ready"sv, "强制所有玩家准备完成"sv},
+		    {"Heist approach"sv, "抢劫方案"sv},
+		    {"Approach"sv, "方案"sv},
+		    {"Gunman"sv, "枪手"sv},
+		    {"Driver"sv, "车手"sv},
+		    {"Hacker"sv, "黑客"sv},
 		    {"Skip Hacking"sv, "跳过黑客"sv},
 		    {"Skips hacking process"sv, "跳过黑客流程"sv},
 		    {"Skip Drilling"sv, "跳过钻孔"sv},
@@ -504,6 +517,48 @@ namespace YimMenu::Localization
 		    {"Skips card swiping process"sv, "跳过刷卡流程"sv},
 		    {"Instant Finish"sv, "立即完成"sv},
 		    {"Instantly passes the heist"sv, "立即通过抢劫任务"sv},
+		    {"Instant Finish (Pacific)"sv, "立即完成（太平洋标准）"sv},
+		    {"Instantly passes Pacific Standard Job"sv, "立即通过太平洋标准银行差事"sv},
+		    {"Select Heist"sv, "选择抢劫任务"sv},
+		    {"Heist categories"sv, "抢劫任务类别"sv},
+		    {"Sets up current apartment heist"sv, "设置当前公寓抢劫任务"sv},
+		    {"Sets up diamond casino heist"sv, "设置名钻赌场豪劫"sv},
+		    {"Sets up cayo perico heist"sv, "设置佩里科岛抢劫任务"sv},
+		    {"Sets up doomsday heist"sv, "设置末日豪劫"sv},
+		    {"Actual Take"sv, "实际收入"sv},
+		    {"Updates actual take"sv, "更新实际收入"sv},
+		    {"Set Potential Take"sv, "设置预计收入"sv},
+		    {"Set Actual Take"sv, "设置实际收入"sv},
+		    {"Primary Target Value"sv, "主要目标价值"sv},
+		    {"Secondary Take Value"sv, "次要战利品价值"sv},
+		    {"Updates primary target value"sv, "更新主要目标价值"sv},
+		    {"Updates secondary take value"sv, "更新次要战利品价值"sv},
+		    {"Set Primary Target Value"sv, "设置主要目标价值"sv},
+		    {"Set Secondary Take Value"sv, "设置次要战利品价值"sv},
+		    {"Cut Sewer"sv, "切开排水管"sv},
+		    {"Cuts the sewer"sv, "切开排水管"sv},
+		    {"Cut Glass"sv, "切开玻璃"sv},
+		    {"Cuts the glass"sv, "切开玻璃"sv},
+		    {"Take Primary Target"sv, "拿取主要目标"sv},
+		    {"Takes primary target"sv, "拿取主要目标"sv},
+		    {"Solo Mantrap"sv, "单人安检通道"sv},
+		    {"The Fleeca Job"sv, "全福银行差事"sv},
+		    {"Scope Out"sv, "探查"sv},
+		    {"Kuruma"sv, "骷髅马"sv},
+		    {"Prison Break"sv, "越狱"sv},
+		    {"Humane Raid"sv, "突袭人道研究实验室"sv},
+		    {"Series A Funding"sv, "首轮募资"sv},
+		    {"Pacific Standard"sv, "太平洋标准银行"sv},
+		    {"Pacific Standard Job"sv, "太平洋标准银行差事"sv},
+		    {"The Data Breaches"sv, "数据泄露"sv},
+		    {"The Bogdan Problem"sv, "波格丹危机"sv},
+		    {"The Doomsday Senario"sv, "末日将至"sv},
+		    {"Panther Statue"sv, "猎豹雕像"sv},
+		    {"Pink Diamond"sv, "粉钻"sv},
+		    {"Madrazo Files"sv, "玛德拉索档案"sv},
+		    {"Bearer Bonds"sv, "不记名债券"sv},
+		    {"Ruby Necklace"sv, "红宝石项链"sv},
+		    {"Sinsimito Tequila"sv, "西西米托龙舌兰"sv},
 		    {"Spectates the selected player"sv, "观战选中的玩家"sv}
 		    ,{"Cage Gun"sv, "笼子枪"sv}
 		    ,{"Delete Gun"sv, "删除枪"sv}
@@ -584,11 +639,11 @@ namespace YimMenu::Localization
 		    ,{"Hard"sv, "困难"sv}
 		    ,{"Diamonds"sv, "钻石"sv}
 		    ,{"Gold"sv, "黄金"sv}
-		    ,{"Artwork"sv, "艺术品"sv}
+		    ,{"Artwork"sv, "艺术作品"sv}
 		    ,{"Cash"sv, "现金"sv}
-		    ,{"Silent & Sneaky"sv, "无声潜入"sv}
-		    ,{"The Big Con"sv, "惊天骗局"sv}
-		    ,{"Aggressive"sv, "强攻"sv}
+		    ,{"Silent & Sneaky"sv, "隐迹潜踪"sv}
+		    ,{"The Big Con"sv, "兵不厌诈"sv}
+		    ,{"Aggressive"sv, "气势汹汹"sv}
 		    ,{"Remove Gunman"sv, "移除枪手"sv}
 		    ,{"Remove Driver"sv, "移除车手"sv}
 		    ,{"Remove Hacker"sv, "移除黑客"sv}
