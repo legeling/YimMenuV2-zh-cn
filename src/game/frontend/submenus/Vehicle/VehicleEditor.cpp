@@ -185,7 +185,7 @@ namespace YimMenu::Submenus
 				ImGui::Spacing();
 				{
 					ImGui::SetNextItemWidth(150);
-					ImGui::InputTextWithHint("##plate", "Plate Number", plate, sizeof(plate), ImGuiInputTextFlags_None);
+					ImGui::InputTextWithHint("##plate", Localization::Translate("Plate Number").c_str(), plate, sizeof(plate), ImGuiInputTextFlags_None);
 					ImGui::SameLine();
 					if (ImGui::Button(Localization::Translate("Change Plate").c_str()))
 						FiberPool::Push([] {

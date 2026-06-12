@@ -94,7 +94,7 @@ namespace YimMenu::Submenus
 			return true;
 		}();
 
-		ImGui::BeginCombo("Weapons", selectedWeapon.c_str());
+		ImGui::BeginCombo(Localization::Translate("Weapons").c_str(), selectedWeapon.c_str());
 		if (ImGui::IsItemActive() && !ImGui::IsPopupOpen("##weaponspopup"))
 		{
 			ImGui::OpenPopup("##weaponspopup");
