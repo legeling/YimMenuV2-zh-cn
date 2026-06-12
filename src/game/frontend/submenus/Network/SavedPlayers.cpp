@@ -80,7 +80,7 @@ namespace YimMenu::Submenus
 
 			if (players.size() == 0)
 			{
-				ImGui::TextDisabled("No saved players");
+				ImGui::TextDisabled("%s", Localization::Translate("No saved players").c_str());
 				ImGui::EndListBox();
 				return;
 			}
@@ -199,7 +199,7 @@ namespace YimMenu::Submenus
 				}
 				else
 				{
-					Notifications::Show("Saved Players", "Failed to get RID from username", NotificationType::Error);
+					Notifications::Show(Localization::Translate("Saved Players"), Localization::Translate("Failed to get RID from username"), NotificationType::Error);
 				}
 			});
 	}

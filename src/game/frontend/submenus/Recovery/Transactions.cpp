@@ -468,7 +468,7 @@ namespace YimMenu::Submenus
 			ImGui::SetNextItemWidth(180.0f);
 			ImGui::InputInt(Localization::Translate("Stat Value").c_str(), &item.m_StatValue); // I'm not actually sure what this does ngl
 
-			if (info.m_Basket.m_BasketItems.size() > 1 && ImGui::Button("Delete"))
+			if (info.m_Basket.m_BasketItems.size() > 1 && ImGui::Button(Localization::Translate("Delete").c_str()))
 				item_to_delete = i;
 			ImGui::PopID();
 
@@ -479,7 +479,7 @@ namespace YimMenu::Submenus
 		if (item_to_delete.has_value())
 			info.m_Basket.m_BasketItems.erase(std::next(info.m_Basket.m_BasketItems.begin(), *item_to_delete));
 
-		if (ImGui::Button("Add Item"))
+		if (ImGui::Button(Localization::Translate("Add Item").c_str()))
 		{
 			info.m_Basket.m_BasketItems.push_back({});
 		}
@@ -516,7 +516,7 @@ namespace YimMenu::Submenus
 			if (!NETSHOPPING::NET_GAMESERVER_CATALOG_IS_VALID())
 				return ImGui::TextDisabled("%s", "目录尚未加载");
 
-			ImGui::Text("Warning: You are solely responsible for what you do with this tool. If you don't know what you're doing, you'll likely get banned");
+			ImGui::TextWrapped("%s", Localization::Translate("Warning: You are solely responsible for what you do with this tool. If you don't know what you're doing, you'll likely get banned").c_str());
 
 			static TransactionInfo info{};
 			bool txn_valid{true};
@@ -579,12 +579,12 @@ namespace YimMenu::Submenus
 			ImGui::Separator();
 
 			ImGui::BeginDisabled(!txn_valid);
-			if (ImGui::Button("Trigger"))
+			if (ImGui::Button(Localization::Translate("Trigger").c_str()))
 				FiberPool::Push([] {
 					ProcessTransaction(info);
 				});
 			if (!txn_valid && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
-				ImGui::SetTooltip("The transaction isn't valid. Ensure that all fields are filled out correctly");
+				ImGui::SetTooltip("%s", Localization::Translate("The transaction isn't valid. Ensure that all fields are filled out correctly").c_str());
 			ImGui::EndDisabled();
 		}));
 

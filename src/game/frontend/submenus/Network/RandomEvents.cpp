@@ -65,16 +65,16 @@ namespace YimMenu::Submenus
 		switch (GSBDRandomEvents->EventData[selectedEvent].State)
 		{
 		case eRandomEventState::INACTIVE:
-			return "Inactive - launching in " + GSBDRandomEvents->EventData[selectedEvent].TimerState.GetRemainingTimeStr(FMRandomEvents->EventData[selectedEvent].InactiveTime);
+			return std::format("{}{}", Localization::Translate("Inactive - launching in "), GSBDRandomEvents->EventData[selectedEvent].TimerState.GetRemainingTimeStr(FMRandomEvents->EventData[selectedEvent].InactiveTime));
 		case eRandomEventState::AVAILABLE:
-			return "Available - deactivating in " + GSBDRandomEvents->EventData[selectedEvent].TimerState.GetRemainingTimeStr(FMRandomEvents->EventData[selectedEvent].AvailableTime);
+			return std::format("{}{}", Localization::Translate("Available - deactivating in "), GSBDRandomEvents->EventData[selectedEvent].TimerState.GetRemainingTimeStr(FMRandomEvents->EventData[selectedEvent].AvailableTime));
 		case eRandomEventState::ACTIVE:
-			return "Active";
+			return Localization::Translate("Active");
 		case eRandomEventState::CLEANUP:
-			return "Cleanup";
+			return Localization::Translate("Cleanup");
 		}
 
-		return "N/A";
+		return Localization::Translate("N/A");
 	}
 
 	static int GetNumLocallyActiveEvents()
@@ -135,7 +135,7 @@ namespace YimMenu::Submenus
 		}
 		else
 		{
-			Notifications::Show("Random Events", "Event script is not active. Are you a participant?", NotificationType::Error);
+			Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Event script is not active. Are you a participant?"), NotificationType::Error);
 		}
 	}
 
@@ -174,7 +174,8 @@ namespace YimMenu::Submenus
 				return ImGui::Text("%s", Localization::Translate("Freemode is not running.").c_str());
 			}
 
-			if (ImGui::BeginCombo("选择事件", randomEventNames[selectedEvent]))
+			const auto selectedEventName = Localization::Translate(randomEventNames[selectedEvent]);
+			if (ImGui::BeginCombo(Localization::Translate("Select Event").c_str(), selectedEventName.c_str()))
 			{
 				for (int event = DRUG_VEHICLE; event < MAX_EVENTS; event++)
 				{
@@ -192,7 +193,8 @@ namespace YimMenu::Submenus
 						break;
 					}
 
-					if (ImGui::Selectable(randomEventNames[event], event == selectedEvent))
+					const auto eventName = Localization::Translate(randomEventNames[event]);
+					if (ImGui::Selectable(eventName.c_str(), event == selectedEvent))
 					{
 						FiberPool::Push([event] {
 							selectedEvent = (eRandomEvent)event;
@@ -206,7 +208,8 @@ namespace YimMenu::Submenus
 				ImGui::EndCombo();
 			}
 
-			if (ImGui::InputInt(std::format("选择地点 (0-{})", numSubvariations).c_str(), &selectedSubvariation))
+			auto locationLabel = std::format("{} (0-{})", Localization::Translate("Select Location"), numSubvariations);
+			if (ImGui::InputInt(locationLabel.c_str(), &selectedSubvariation))
 			{
 				selectedSubvariation = std::clamp(selectedSubvariation, 0, numSubvariations);
 			}
@@ -232,17 +235,17 @@ namespace YimMenu::Submenus
 						ScriptMgr::Yield(100ms);
 						if (GSBDRandomEvents->EventData[selectedEvent].State == eRandomEventState::INACTIVE)
 						{
-							Notifications::Show("Random Events", "Failed to launch event. Are you freemode host?", NotificationType::Error);
+							Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Failed to launch event. Are you freemode host?"), NotificationType::Error);
 						}
 					}
 					else
 					{
-						Notifications::Show("Random Events", "Event is already active.", NotificationType::Error);
+						Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Event is already active."), NotificationType::Error);
 					}
 				});
 			}
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("%s", "需要 freemode 脚本主机权限。");
+				ImGui::SetTooltip("%s", Localization::Translate("Freemode script host is required.").c_str());
 
 			ImGui::SameLine();
 
@@ -259,7 +262,7 @@ namespace YimMenu::Submenus
 					}
 					else
 					{
-						Notifications::Show("Random Events", "Event is not active.", NotificationType::Error);
+						Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Event is not active."), NotificationType::Error);
 					}
 				});
 			}
@@ -277,12 +280,12 @@ namespace YimMenu::Submenus
 						}
 						else // Either update event coords TSE not sent yet or event doesn't register a trigger point
 						{
-							Notifications::Show("Random Events", "Failed to teleport to event. Coordinates are not valid.", NotificationType::Error);
+							Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Failed to teleport to event. Coordinates are not valid."), NotificationType::Error);
 						}
 					}
 					else
 					{
-						Notifications::Show("Random Events", "Event is not active.", NotificationType::Error);
+						Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Event is not active."), NotificationType::Error);
 					}
 				});
 			}
@@ -295,11 +298,11 @@ namespace YimMenu::Submenus
 					{
 						if (auto host = netComponent->GetHost())
 						{
-							ImGui::Text("Host: %s", host->GetName());
+							ImGui::Text(Localization::Translate("Host: %s").c_str(), host->GetName());
 						}
 						ImGui::SameLine();
 						ImGui::BeginDisabled(netComponent->IsLocalPlayerHost());
-						if (ImGui::SmallButton("Take Control"))
+						if (ImGui::SmallButton(Localization::Translate("Take Control").c_str()))
 						{
 							FiberPool::Push([eventThread] {
 								Scripts::ForceScriptHost(eventThread);

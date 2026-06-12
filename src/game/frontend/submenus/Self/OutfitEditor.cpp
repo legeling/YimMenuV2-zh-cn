@@ -1,6 +1,7 @@
 #include "OutfitEditor.hpp"
 
 #include "core/frontend/manager/UIManager.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/Self.hpp"
 #include "game/frontend/items/Items.hpp"
 #include "game/gta/Natives.hpp"
@@ -91,12 +92,12 @@ namespace YimMenu
 
 		category->AddItem(std::make_shared<ImGuiItem>([] {
 			if (!NativeInvoker::AreHandlersCached())
-				return ImGui::TextDisabled("Natives not cached yet");
+				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet").c_str());
 
 			auto ped = Self::GetPed();
 
 			if (!ped)
-				return ImGui::TextDisabled("Player ped not found");
+				return ImGui::TextDisabled("%s", Localization::Translate("Player ped not found").c_str());
 
 			// Create two columns layout
 			const float windowWidth = ImGui::GetContentRegionAvail().x;
@@ -110,7 +111,7 @@ namespace YimMenu
 
 			float header_y = ImGui::GetCursorPosY();
 
-			TextUnderlined("Components");
+			TextUnderlined(Localization::Translate("Components").c_str());
 			const struct
 			{
 				const char* name;
@@ -125,14 +126,15 @@ namespace YimMenu
 				int drawable, texture;
 				GetOutfitSlot(component.slot, drawable, texture);
 
-				ImGui::Text("%s", component.name);
+				const auto componentName = Localization::Translate(component.name);
+				ImGui::Text("%s", componentName.c_str());
 				ImGui::SameLine();
 
 				ImGui::SetCursorPosX(columnWidth - inputWidth * 2 - 10);
 
 				ImGui::PushItemWidth(inputWidth);
 				if (first_iter)
-					TextUnderlinedAt("Drawable", header_y);
+					TextUnderlinedAt(Localization::Translate("Drawable").c_str(), header_y);
 				if (ImGui::InputInt("##{}drawable", &drawable))
 				{
 					drawable = std::clamp(drawable, 0, GetMaxDrawable(component.slot) - 1);
@@ -140,7 +142,7 @@ namespace YimMenu
 				}
 				ImGui::SameLine();
 				if (first_iter)
-					TextUnderlinedAt("Texture", header_y); // TODO: this heading is slightly misaligned and I'm not sure why (caused by the above SameLine?)
+					TextUnderlinedAt(Localization::Translate("Texture").c_str(), header_y); // TODO: this heading is slightly misaligned and I'm not sure why (caused by the above SameLine?)
 				if (ImGui::InputInt("##{}texture", &texture))
 				{
 					texture = std::clamp(texture, 0, GetMaxTexture(component.slot, drawable) - 1);
@@ -154,7 +156,7 @@ namespace YimMenu
 
 			// Props section (Right column)
 			ImGui::NextColumn();
-			TextUnderlined("Props");
+			TextUnderlined(Localization::Translate("Props").c_str());
 
 			const struct
 			{
@@ -170,14 +172,15 @@ namespace YimMenu
 				int drawable, texture;
 				GetPropSlot(prop.slot, drawable, texture);
 
-				ImGui::Text("%s", prop.name);
+				const auto propName = Localization::Translate(prop.name);
+				ImGui::Text("%s", propName.c_str());
 				ImGui::SameLine();
 
 				ImGui::SetCursorPosX(columnWidth + (columnWidth - inputWidth * 2 - 10));
 
 				ImGui::PushItemWidth(inputWidth);
 				if (first_iter)
-					TextUnderlinedAt("Drawable", header_y);
+					TextUnderlinedAt(Localization::Translate("Drawable").c_str(), header_y);
 				if (ImGui::InputInt("##pdrawable", &drawable))
 				{
 					drawable = std::clamp(drawable, 0, GetMaxPropDrawable(prop.slot) - 1);
@@ -185,7 +188,7 @@ namespace YimMenu
 				}
 				ImGui::SameLine();
 				if (first_iter)
-					TextUnderlinedAt("Texture", header_y);
+					TextUnderlinedAt(Localization::Translate("Texture").c_str(), header_y);
 				if (ImGui::InputInt("##ptexture", &texture))
 				{
 					texture = std::clamp(texture, 0, GetMaxPropTexture(prop.slot, drawable) - 1);
@@ -199,7 +202,7 @@ namespace YimMenu
 
 			ImGui::Columns(1);
 
-			if (ImGui::Button("Randomize Outfit"))
+			if (ImGui::Button(Localization::Translate("Randomize Outfit").c_str()))
 			{
 				std::random_device rd;
 				std::mt19937 gen(rd());

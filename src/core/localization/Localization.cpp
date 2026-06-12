@@ -1204,6 +1204,72 @@ namespace YimMenu::Localization
 		    ,{"Valkyrie Cannon"sv, "女武神机炮"sv}
 		    ,{"Water Bomb"sv, "水弹"sv}
 		    ,{"Water Bomb (Secondary)"sv, "水弹（次级）"sv}
+		    ,{"No saved players"sv, "没有已保存的玩家"sv}
+		    ,{"Select Event"sv, "选择事件"sv}
+		    ,{"Select Location"sv, "选择地点"sv}
+		    ,{"Host: %s"sv, "主机：%s"sv}
+		    ,{"Player ped not found"sv, "未找到玩家角色实体"sv}
+		    ,{"Natives not cached yet"sv, "原生函数尚未缓存"sv}
+		    ,{"Props"sv, "配饰"sv}
+		    ,{"Drawable"sv, "模型"sv}
+		    ,{"Texture"sv, "贴图"sv}
+		    ,{"Freemode script host is required."sv, "需要 Freemode 脚本主机权限。"sv}
+		    ,{"Inactive - launching in "sv, "未激活，启动倒计时："sv}
+		    ,{"Available - deactivating in "sv, "可用，失效倒计时："sv}
+		    ,{"Drug Vehicle"sv, "毒品载具"sv}
+		    ,{"Movie Props"sv, "电影道具"sv}
+		    ,{"Sleeping Guard"sv, "沉睡守卫"sv}
+		    ,{"The Slashers"sv, "连环杀手"sv}
+		    ,{"Phantom Car"sv, "幻影车"sv}
+		    ,{"Sightseeing"sv, "观光之旅"sv}
+		    ,{"Smuggler Trail"sv, "走私者踪迹"sv}
+		    ,{"Cerberus Surprise"sv, "地狱犬惊魂"sv}
+		    ,{"Smuggler Plane"sv, "走私者飞机"sv}
+		    ,{"Crime Scene"sv, "犯罪现场"sv}
+		    ,{"Metal Detector"sv, "金属探测"sv}
+		    ,{"Finders Keepers"sv, "先到先得"sv}
+		    ,{"Shop Robbery"sv, "商店抢劫"sv}
+		    ,{"The Gooch"sv, "古奇"sv}
+		    ,{"Weazel Plaza Shootout"sv, "威索广场枪战"sv}
+		    ,{"Armored Truck"sv, "运钞车"sv}
+		    ,{"Possessed Animals"sv, "附身动物"sv}
+		    ,{"Ghosts Exposed"sv, "幽灵现形"sv}
+		    ,{"Happy Holidays Hauler"sv, "节日欢乐卡车"sv}
+		    ,{"Community Outreach"sv, "社区外展"sv}
+		    ,{"Getaway Driver"sv, "逃逸司机"sv}
+		    ,{"Stoner Survival"sv, "瘾君子生存战"sv}
+		    ,{"Valentine Cheater"sv, "情人节负心汉"sv}
+		    ,{"Triggerer"sv, "触发器"sv}
+		    ,{"Enable All DLC Vehicles"sv, "启用全部 DLC 载具"sv}
+		    ,{"Enable Creator Dev Mode"sv, "启用创建器开发模式"sv}
+		    ,{"Freeze Time"sv, "冻结时间"sv}
+		    ,{"Harass Players"sv, "骚扰玩家"sv}
+		    ,{"Lucky Wheel"sv, "幸运转盘"sv}
+		    ,{"Null Function Kick"sv, "空函数踢出"sv}
+		    ,{"Host Kick"sv, "主机踢出"sv}
+		    ,{"Script Host Kick"sv, "脚本主机踢出"sv}
+		    ,{"Freemode State Kick"sv, "Freemode 状态踢出"sv}
+		    ,{"Permadeath"sv, "永久死亡"sv}
+		    ,{"Permadeath All"sv, "全员永久死亡"sv}
+		    ,{"G's Cache"sv, "G 的补给点"sv}
+		    ,{"Shipwreck"sv, "沉船"sv}
+		    ,{"Collect Golden Clover"sv, "收集金色四叶草"sv}
+		    ,{"Complete Skydive"sv, "完成高空跳伞"sv}
+		    ,{"Madrazo Hit has already been completed."sv, "玛德拉索暗杀已完成。"sv}
+		    ,{"G's Cache has already been collected."sv, "G 的补给点已被收集。"sv}
+		    ,{"Golden Clover has already been collected."sv, "金色四叶草已被收集。"sv}
+		    ,{"Shipwreck has already been collected."sv, "沉船奖励已被收集。"sv}
+		    ,{"Object Hash Color"sv, "物体哈希颜色"sv}
+		    ,{"Object Net Info"sv, "物体网络信息"sv}
+		    ,{"Object Script Info"sv, "物体脚本信息"sv}
+		    ,{"Ped Hash Color"sv, "NPC 哈希颜色"sv}
+		    ,{"Ped Hashes"sv, "NPC 哈希"sv}
+		    ,{"Ped Net Info"sv, "NPC 网络信息"sv}
+		    ,{"Ped Script Info"sv, "NPC 脚本信息"sv}
+		    ,{"Peds Ignore"sv, "NPC 无视"sv}
+		    ,{"Player List"sv, "玩家列表"sv}
+		    ,{"Populate Name"sv, "填充名称"sv}
+		    ,{"Secondary Item"sv, "次要项目"sv}
 		};
 	}
 
