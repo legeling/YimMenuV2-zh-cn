@@ -327,7 +327,7 @@ namespace YimMenu::Submenus
 			}
 
 			// We should probably put this into a separate group, but I just don't want to do the same safety checks before rendering it
-			ImGui::SeparatorText("冷却与可用性");
+			ImGui::SeparatorText(Localization::Translate("Cooldown and Availability").c_str());
 
 			ImGui::InputInt("##cooldown", &setCooldown);
 			ImGui::SameLine();
@@ -337,7 +337,7 @@ namespace YimMenu::Submenus
 				FMRandomEvents->EventData[selectedEvent].InactiveTime = value;
 			}
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("%s", "需要 freemode 脚本主机权限。");
+				ImGui::SetTooltip("%s", Localization::Translate("Freemode script host is required.").c_str());
 
 			ImGui::InputInt("##availability", &setAvailability);
 			ImGui::SameLine();
@@ -347,9 +347,9 @@ namespace YimMenu::Submenus
 				FMRandomEvents->EventData[selectedEvent].AvailableTime = value;
 			}
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("%s", "需要 freemode 脚本主机权限。");
+				ImGui::SetTooltip("%s", Localization::Translate("Freemode script host is required.").c_str());
 
-			ImGui::Checkbox("按分钟应用", &applyInMinutes);
+			ImGui::Checkbox(Localization::Translate("Apply in Minutes").c_str(), &applyInMinutes);
 		}));
 
 		return menu;

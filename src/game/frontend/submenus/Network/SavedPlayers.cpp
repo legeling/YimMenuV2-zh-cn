@@ -151,7 +151,7 @@ namespace YimMenu::Submenus
 			}
 			else
 			{
-				ImGui::TextDisabled("%s", "数据尚未拉取");
+				ImGui::TextDisabled("%s", Localization::Translate("Data has not been fetched yet").c_str());
 			}
 
 			if (ImGui::Button(Localization::Translate("Join").c_str()))

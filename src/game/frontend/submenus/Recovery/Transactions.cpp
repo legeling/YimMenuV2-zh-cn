@@ -511,10 +511,10 @@ namespace YimMenu::Submenus
 				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet.").c_str());
 
 			if (AnticheatBypass::IsFSLProvidingLocalSaves())
-				return ImGui::TextDisabled("%s", "启用 FSL 本地存档时不支持交易功能");
+				return ImGui::TextDisabled("%s", Localization::Translate("Transactions are unavailable while FSL local saves are enabled").c_str());
 
 			if (!NETSHOPPING::NET_GAMESERVER_CATALOG_IS_VALID())
-				return ImGui::TextDisabled("%s", "目录尚未加载");
+				return ImGui::TextDisabled("%s", Localization::Translate("Catalog is not loaded").c_str());
 
 			ImGui::TextWrapped("%s", Localization::Translate("Warning: You are solely responsible for what you do with this tool. If you don't know what you're doing, you'll likely get banned").c_str());
 
