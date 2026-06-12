@@ -2,6 +2,7 @@
 
 #include "core/backend/ScriptMgr.hpp"
 #include "core/frontend/Notifications.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/gta/VehicleModel.hpp"
 #include "game/backend/Self.hpp"
 #include "game/gta/Natives.hpp"
@@ -137,7 +138,7 @@ namespace YimMenu
 			file_stream.close();
 		}
 		else
-			Notifications::Show("Persist Car", "Tried to save a vehicle which does not exist", NotificationType::Warning);
+			Notifications::Show(Localization::Translate("Persist Car"), Localization::Translate("Tried to save a vehicle which does not exist"), NotificationType::Warning);
 	}
 
 	void SavedVehicles::Load(std::string folderName, std::string fileName, bool spawnInside)
@@ -148,7 +149,7 @@ namespace YimMenu
 
 			if (!std::filesystem::exists(file))
 			{
-				Notifications::Show("Persist Car", "File does not exist.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Persist Car"), Localization::Translate("File does not exist."), NotificationType::Error);
 				return;
 			}
 
@@ -164,10 +165,10 @@ namespace YimMenu
 				{
 					if (spawnInside)
 						Self::GetPed().SetInVehicle(veh.GetHandle());
-					Notifications::Show("Persist Car", std::format("Spawned {}", fileName), NotificationType::Success);
+					Notifications::Show(Localization::Translate("Persist Car"), std::format(Localization::Translate("Spawned {}"), fileName), NotificationType::Success);
 				}
 				else
-					Notifications::Show("Persist Car", std::format("Unable to spawn {}", fileName), NotificationType::Error);
+					Notifications::Show(Localization::Translate("Persist Car"), std::format(Localization::Translate("Unable to spawn {}"), fileName), NotificationType::Error);
 			}
 			catch (std::exception& e)
 			{
@@ -177,7 +178,7 @@ namespace YimMenu
 			file_stream.close();
 		}
 		else
-			Notifications::Show("Persist Car", "Select a file first", NotificationType::Warning);
+			Notifications::Show(Localization::Translate("Persist Car"), Localization::Translate("Select a file first"), NotificationType::Warning);
 	}
 
 	Vehicle SavedVehicles::SpawnFromJson(nlohmann::json vehicle_json)

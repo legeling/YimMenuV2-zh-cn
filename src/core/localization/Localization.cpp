@@ -29,9 +29,15 @@ namespace YimMenu::Localization
 		    {"Yes"sv, "是"sv},
 		    {"No"sv, "否"sv},
 		    {"Default"sv, "默认"sv},
+		    {"FPS: %d"sv, "帧率：%d"sv},
+		    {"Interior Index"sv, "室内索引"sv},
+		    {"Enter Owner Interior"sv, "进入房主室内"sv},
+		    {"Do Teleport"sv, "执行传送"sv},
+		    {"Team"sv, "队伍"sv},
 		    {"Join"sv, "加入"sv},
 		    {"Refresh"sv, "刷新"sv},
 		    {"Write"sv, "写入"sv},
+		    {"Value"sv, "数值"sv},
 		    {"Reload"sv, "重新加载"sv},
 		    {"Unload"sv, "卸载"sv},
 		    {"Pause"sv, "暂停"sv},
@@ -56,8 +62,10 @@ namespace YimMenu::Localization
 		    {"Special Ability"sv, "特殊能力"sv},
 		    {"Wanted"sv, "通缉"sv},
 		    {"Info"sv, "信息"sv},
+		    {"Bytecode"sv, "字节码"sv},
 		    {"Toxic"sv, "恶意"sv},
 		    {"Troll"sv, "整活"sv},
+		    {"Locals"sv, "局部变量"sv},
 		    {"Damage"sv, "伤害"sv},
 		    {"Griefing"sv, "骚扰"sv},
 		    {"Kick"sv, "踢出"sv},
@@ -87,6 +95,8 @@ namespace YimMenu::Localization
 		    {"Matchmaking (Server)"sv, "匹配伪装（服务端）"sv},
 		    {"Saved Players"sv, "已保存玩家"sv},
 		    {"Random Events"sv, "随机事件"sv},
+		    {"Network Bail"sv, "断开网络"sv},
+		    {"Do Team Swap"sv, "执行队伍切换"sv},
 		    {"Hotkeys"sv, "热键"sv},
 		    {"GUI"sv, "界面"sv},
 		    {"Game"sv, "游戏"sv},
@@ -316,6 +326,7 @@ namespace YimMenu::Localization
 		    {"Set second (0-59)"sv, "设置秒数（0-59）"sv},
 		    {"Saved Players"sv, "已保存玩家"sv},
 		    {"Player Tracker"sv, "玩家追踪"sv},
+		    {"Persist Car"sv, "已保存载具"sv},
 		    {"Player Database Auto Update"sv, "玩家数据库自动更新"sv},
 		    {"Tracking Notifications"sv, "追踪通知"sv},
 		    {"Auto Update"sv, "自动更新"sv},
@@ -357,6 +368,13 @@ namespace YimMenu::Localization
 		    {"{} has hosted a job lobby"sv, "{} 创建了一个任务大厅"sv},
 		    {"{} has joined a job lobby"sv, "{} 加入了一个任务大厅"sv},
 		    {"{} is no longer in a job lobby"sv, "{} 已离开任务大厅"sv},
+		    {"{} vehicles fixed."sv, "已修复 {} 辆载具。"sv},
+		    {"No vehicles to fix."sv, "没有可修复的载具。"sv},
+		    {"Tried to save a vehicle which does not exist"sv, "尝试保存一辆不存在的载具"sv},
+		    {"File does not exist."sv, "文件不存在。"sv},
+		    {"Select a file first"sv, "请先选择一个文件"sv},
+		    {"Spawned {}"sv, "已生成 {}"sv},
+		    {"Unable to spawn {}"sv, "无法生成 {}"sv},
 		    {"Invalid"sv, "无效"sv},
 		    {"Hidden by Modder"sv, "被 Mod 玩家隐藏"sv},
 		    {"Job"sv, "任务"sv},
@@ -368,6 +386,19 @@ namespace YimMenu::Localization
 		    {"Golf"sv, "高尔夫"sv},
 		    {"Tennis"sv, "网球"sv},
 		    {"Shooting Range"sv, "射击场"sv},
+		    {"HP: {}/{} ({:.2f}%)"sv, "生命值：{}/{}（{:.2f}%）"sv},
+		    {"Please join GTA Online."sv, "请先进入 GTA 在线模式。"sv},
+		    {"Cannot open gun locker while in an interior."sv, "处于室内时无法打开武器柜。"sv},
+		    {"Not safe to open the wardrobe at the moment."sv, "当前无法安全打开衣柜。"sv},
+		    {"Failed to open the wardrobe."sv, "打开衣柜失败。"sv},
+		    {"Not safe to call the mechanic at the moment."sv, "当前无法安全呼叫技工。"sv},
+		    {"Failed to call the mechanic."sv, "呼叫技工失败。"sv},
+		    {"No model name provided."sv, "未提供模型名称。"sv},
+		    {"This vehicle cannot be saved as a personal vehicle."sv, "这辆载具无法保存为个人载具。"sv},
+		    {"This vehicle is already a personal vehicle."sv, "这辆载具已经是个人载具了。"sv},
+		    {"Player entity cannot be deleted."sv, "玩家实体无法删除。"sv},
+		    {"Invalid vehicle."sv, "无效载具。"sv},
+		    {"No vehicle model name provided."sv, "未提供载具模型名称。"sv},
 		    {"Freemode global block is not loaded."sv, "自由模式全局块未加载。"sv},
 		    {"Random Events are not initialized."sv, "随机事件尚未初始化。"sv},
 		    {"Freemode stack is not valid."sv, "自由模式堆栈无效。"sv},
@@ -824,7 +855,14 @@ namespace YimMenu::Localization
 		    ,{"Teleport to Golden Clover"sv, "传送到金色四叶草"sv}
 		    ,{"Collect Golden Clover"sv, "领取金色四叶草"sv}
 		    ,{"Open Gun Locker"sv, "打开武器柜"sv}
+		    ,{"Allows you to access gun locker remotely."sv, "允许你远程打开武器柜。"sv}
+		    ,{"Wardrobe"sv, "衣柜"sv}
+		    ,{"Open Wardrobe"sv, "打开衣柜"sv}
+		    ,{"Allows you to access your wardrobe remotely."sv, "允许你远程打开衣柜。"sv}
 		    ,{"Call Mechanic"sv, "呼叫技工"sv}
+		    ,{"Allows you to request your personal vehicles."sv, "允许你呼叫你的个人载具。"sv}
+		    ,{"Fix All Vehicles"sv, "修复全部载具"sv}
+		    ,{"Fixes all of your destroyed personal vehicles."sv, "修复你所有已损毁的个人载具。"sv}
 		    ,{"Join YimMenu-only Sessions"sv, "加入仅限 YimMenu 的战局"sv}
 		    ,{"Fast Join"sv, "快速加入"sv}
 		    ,{"Spoof Matchmaking Region"sv, "伪装匹配地区"sv}
@@ -881,6 +919,11 @@ namespace YimMenu::Localization
 		    ,{"Collects the Golden Clover."sv, "领取金色四叶草。"sv}
 		    ,{"Bounty Amount"sv, "悬赏金额"sv}
 		    ,{"Anonymous Bounty"sv, "匿名悬赏"sv}
+		    ,{"Spawn Object"sv, "生成物体"sv}
+		    ,{"Spawns a ped at your current location."sv, "在你当前位置生成一个 NPC。"sv}
+		    ,{"Spawns an object at your current location."sv, "在你当前位置生成一个物体。"sv}
+		    ,{"Save Personal Vehicle"sv, "保存个人载具"sv}
+		    ,{"Saves the current vehicle you are in as your personal vehicle."sv, "将你当前乘坐的载具保存为个人载具。"sv}
 		    ,{"Send to Interior Index"sv, "发送到室内索引"sv}
 		    ,{"The interior index to send the player(s) to"sv, "要将玩家发送到的室内索引"sv}
 		    ,{"Send to Property Index"sv, "发送到房产索引"sv}
@@ -1310,6 +1353,7 @@ namespace YimMenu::Localization
 		    ,{"Select"sv, "选择"sv}
 		    ,{"Empty"sv, "空"sv}
 		    ,{"None"sv, "无"sv}
+		    ,{"(Select)"sv, "（选择）"sv}
 		    ,{"MOC"sv, "机动作战中心"sv}
 		    ,{"Top"sv, "顶部"sv}
 		    ,{"Mechanic"sv, "技工"sv}
@@ -1319,8 +1363,40 @@ namespace YimMenu::Localization
 		    ,{"State"sv, "状态"sv}
 		    ,{"Thread"sv, "线程"sv}
 		    ,{"Threads"sv, "线程"sv}
+		    ,{"True"sv, "真"sv}
+		    ,{"False"sv, "假"sv}
 		    ,{"Explode"sv, "引爆"sv}
 		    ,{"Explode All"sv, "引爆全部"sv}
+		    ,{"Jump to Offset"sv, "跳转到偏移"sv}
+		    ,{"Press ENTER to write."sv, "按回车写入。"sv}
+		    ,{"Exit Reason: %s"sv, "退出原因：%s"sv}
+		    ,{"Kill"sv, "终止"sv}
+		    ,{"Log Labels"sv, "记录标签"sv}
+		    ,{"Host: %s"sv, "主机：%s"sv}
+		    ,{"Take Control"sv, "接管"sv}
+		    ,{"Thread ID: %d"sv, "线程 ID：%d"sv}
+		    ,{"Stack Size: %d"sv, "栈大小：%d"sv}
+		    ,{"Stack Pointer: 0x%X"sv, "栈指针：0x%X"sv}
+		    ,{"Program Counter: 0x%X"sv, "程序计数器：0x%X"sv}
+		    ,{"Code Size: %d"sv, "代码大小：%d"sv}
+		    ,{"Arg Count: %d"sv, "参数数量：%d"sv}
+		    ,{"Local Count: %d"sv, "局部变量数量：%d"sv}
+		    ,{"Global Count: %d"sv, "全局变量数量：%d"sv}
+		    ,{"Native Count: %d"sv, "原生函数数量：%d"sv}
+		    ,{"String Count: %d"sv, "字符串数量：%d"sv}
+		    ,{"Script Name"sv, "脚本名称"sv}
+		    ,{"Stack Size"sv, "栈大小"sv}
+		    ,{"Arg Count"sv, "参数数量"sv}
+		    ,{"Arg[%d]"sv, "参数[%d]"sv}
+		    ,{"Pause After Starting"sv, "启动后暂停"sv}
+		    ,{"Start Script"sv, "启动脚本"sv}
+		    ,{"Started script with ID {}."sv, "已启动脚本，ID 为 {}。"sv}
+		    ,{"Start Session Script"sv, "启动战局脚本"sv}
+		    ,{"Start Script With Event"sv, "通过事件启动脚本"sv}
+		    ,{"No free stack of this size."sv, "没有这个大小的空闲栈。"sv}
+		    ,{"Add Offset"sv, "添加偏移"sv}
+		    ,{"Add Read Player Id"sv, "添加读取玩家 ID"sv}
+		    ,{"Remove Offset"sv, "移除偏移"sv}
 		    ,{"Freeze"sv, "冻结"sv}
 		    ,{"Seatbelt"sv, "安全带"sv}
 		    ,{"Spectate"sv, "观战"sv}

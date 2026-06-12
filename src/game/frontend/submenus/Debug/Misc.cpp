@@ -1,6 +1,7 @@
 #include "DrawVariable.hpp"
 #include "Locals.hpp"
 #include "core/filemgr/FileMgr.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/Self.hpp"
 #include "game/pointers/Pointers.hpp"
 #include "core/backend/FiberPool.hpp"
@@ -16,7 +17,7 @@ namespace YimMenu::Submenus
 		auto misc = std::make_unique<Category>("Misc");
 
 		misc->AddItem(std::make_unique<ImGuiItem>([] {
-			if (ImGui::Button("Network Bail"))
+			if (ImGui::Button(Localization::Translate("Network Bail").c_str()))
 			{
 				FiberPool::Push([] {
 					NETWORK::NETWORK_BAIL(0, 24, 0);
@@ -24,12 +25,12 @@ namespace YimMenu::Submenus
 			}
 
 			static int interiorIndex = 0;
-			ImGui::InputInt("interiorIndex", &interiorIndex);
+			ImGui::InputInt(Localization::Translate("Interior Index").c_str(), &interiorIndex);
 
 			static bool enterOwnerInterior = false;
-			ImGui::Checkbox("enterOwnerInterior", &enterOwnerInterior);
+			ImGui::Checkbox(Localization::Translate("Enter Owner Interior").c_str(), &enterOwnerInterior);
 
-			if (ImGui::Button("DoTeleport"))
+			if (ImGui::Button(Localization::Translate("Do Teleport").c_str()))
 			{
 				FiberPool::Push([] {
 					SCRIPT_EVENT_SEND_TO_INTERIOR message;
@@ -48,8 +49,8 @@ namespace YimMenu::Submenus
 			}
 
 			static int team;
-			ImGui::InputInt("Team", &team);
-			if (ImGui::Button("fm_mission_controller DoTeamSwap"))
+			ImGui::InputInt(Localization::Translate("Team").c_str(), &team);
+			if (ImGui::Button(Localization::Translate("Do Team Swap").c_str()))
 			{
 				FiberPool::Push([] {
 					static ScriptFunction DoTeamSwap("fm_mission_controller"_J, ScriptPointer("DoTeamSwap", "2D 02 04 00 00 38 00 50"));

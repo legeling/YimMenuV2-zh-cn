@@ -41,7 +41,7 @@ namespace YimMenu::Submenus
 				{
 					auto health = Players::GetSelected().GetPed().GetHealth();
 					auto maxHealth = Players::GetSelected().GetPed().GetMaxHealth();
-					std::string healthStr = std::format("HP: {}/{} ({:.2f}%)", health, maxHealth, (float)health / maxHealth * 100.0f);
+					std::string healthStr = std::format(Localization::Translate("HP: {}/{} ({:.2f}%)"), health, maxHealth, (float)health / maxHealth * 100.0f);
 					ImGui::Text("%s", healthStr.c_str());
 
 					auto coords = Players::GetSelected().GetPed().GetPosition();

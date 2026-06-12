@@ -1,6 +1,7 @@
 #include "core/commands/Command.hpp"
 #include "core/backend/ScriptMgr.hpp"
 #include "core/frontend/Notifications.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/Self.hpp"
 #include "game/gta/Scripts.hpp"
 #include "game/gta/ScriptLocal.hpp"
@@ -18,7 +19,7 @@ namespace YimMenu::Features
 		{
 			if (!*Pointers.IsSessionStarted || Scripts::IsScriptActive("AM_CONTACT_REQUESTS"_J))
 			{
-				Notifications::Show("Mechanic", "Not safe to call the mechanic at the moment.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Mechanic"), Localization::Translate("Not safe to call the mechanic at the moment."), NotificationType::Error);
 				return;
 			}
 
@@ -41,7 +42,7 @@ namespace YimMenu::Features
 				}
 				else
 				{
-					Notifications::Show("Mechanic", "Failed to call the mechanic.", NotificationType::Error);
+					Notifications::Show(Localization::Translate("Mechanic"), Localization::Translate("Failed to call the mechanic."), NotificationType::Error);
 				}
 			}
 		}

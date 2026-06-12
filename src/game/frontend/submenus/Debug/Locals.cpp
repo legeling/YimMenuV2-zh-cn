@@ -1,5 +1,6 @@
 #include "Locals.hpp"
 #include "DrawVariable.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/gta/Scripts.hpp"
 #include "types/script/scrThread.hpp"
 
@@ -48,11 +49,11 @@ namespace YimMenu::Submenus
 
 		editor->AddItem(std::make_unique<ImGuiItem>([] {
 			ImGui::SetNextItemWidth(200.f);
-			ImGui::InputText("Script", scriptName, sizeof(scriptName));
+			ImGui::InputText(Localization::Translate("Script").c_str(), scriptName, sizeof(scriptName));
 
 			curThread = Scripts::FindScriptThread(Joaat(scriptName));
 			if (!curThread)
-				return ImGui::TextDisabled("Invalid");
+				return ImGui::TextDisabled("%s", Localization::Translate("Invalid").c_str());
 
 			DrawSavedVariable(curLocal);
 			DrawSavedVariableEdit(curLocal, curLocal.Read(curThread));
@@ -60,7 +61,7 @@ namespace YimMenu::Submenus
 
 		saved->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!curThread)
-				return ImGui::TextDisabled("Invalid");
+				return ImGui::TextDisabled("%s", Localization::Translate("Invalid").c_str());
 
 			auto scriptIdf = curThread->m_ScriptHash;
 			if (scriptIdf != curLocal.script)
@@ -102,13 +103,13 @@ namespace YimMenu::Submenus
 			ImGui::SetNextItemWidth(200.f);
 			ImGui::InputText("##localname", localName, sizeof(localName));
 			ImGui::SameLine();
-			if (ImGui::Button("Save"))
+			if (ImGui::Button(Localization::Translate("Save").c_str()))
 			{
 				curLocal.name = localName;
 				SaveLocal(curLocal);
 			}
 			ImGui::SameLine();
-			if (ImGui::Button("Delete"))
+			if (ImGui::Button(Localization::Translate("Delete").c_str()))
 			{
 				curLocal.name = localName;
 				DeleteLocal(curLocal);

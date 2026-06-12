@@ -1,6 +1,7 @@
 #include "Overlay.hpp"
 #include "Menu.hpp"
 #include "core/commands/BoolCommand.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/pointers/Pointers.hpp"
 #include "game/gta/invoker/Invoker.hpp"
 #include "game/gta/Natives.hpp"
@@ -26,7 +27,7 @@ namespace YimMenu
 		ImGui::Begin("##overlay", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoInputs);
 
 		if (Features::_OverlayShowFPS.GetState())
-			ImGui::Text("FPS: %d", (int)(ImGui::GetIO().Framerate));
+			ImGui::Text(Localization::Translate("FPS: %d").c_str(), (int)(ImGui::GetIO().Framerate));
 
 		ImGui::PopFont();
 		ImGui::PopStyleColor();

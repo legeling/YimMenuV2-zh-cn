@@ -1,5 +1,6 @@
 #include "core/commands/StringCommand.hpp"
 #include "core/frontend/Notifications.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/Self.hpp"
 #include "game/gta/Object.hpp"
 #include "game/gta/Natives.hpp"
@@ -19,7 +20,7 @@ namespace YimMenu::Features
 			auto model = _PedModelName.GetString();
 			if (!model.length())
 			{
-				Notifications::Show("Spawn Ped", "No model name provided.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Spawn Ped"), Localization::Translate("No model name provided."), NotificationType::Error);
 				return;
 			}
 
@@ -30,7 +31,7 @@ namespace YimMenu::Features
 			}
 			else
 			{
-				Notifications::Show("Spawn Ped", "Invalid model name provided.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Spawn Ped"), Localization::Translate("Invalid model name provided."), NotificationType::Error);
 			}
 		}
 	};
@@ -44,7 +45,7 @@ namespace YimMenu::Features
 			auto model = _ObjectModelName.GetString();
 			if (!model.length())
 			{
-				Notifications::Show("Spawn Object", "No model name provided.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Spawn Object"), Localization::Translate("No model name provided."), NotificationType::Error);
 				return;
 			}
 
@@ -55,7 +56,7 @@ namespace YimMenu::Features
 			}
 			else
 			{
-				Notifications::Show("Spawn Object", "Invalid model name provided.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Spawn Object"), Localization::Translate("Invalid model name provided."), NotificationType::Error);
 			}
 		}
 	};

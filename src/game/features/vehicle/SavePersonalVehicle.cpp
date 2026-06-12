@@ -2,6 +2,7 @@
 #include "core/commands/Command.hpp"
 #include "core/backend/ScriptMgr.hpp"
 #include "core/frontend/Notifications.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/Self.hpp"
 #include "game/gta/Scripts.hpp"
 #include "game/gta/ScriptFunction.hpp"
@@ -93,26 +94,26 @@ namespace YimMenu::Features
 		{
 			if (!*Pointers.IsSessionStarted)
 			{
-				Notifications::Show("Save Personal Vehicle", "Please join GTA Online.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Save Personal Vehicle"), Localization::Translate("Please join GTA Online."), NotificationType::Error);
 				return;
 			}
 
 			if (!Self::GetVehicle().IsValid())
 			{
-				Notifications::Show("Save Personal Vehicle", "Please get in a vehicle.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Save Personal Vehicle"), Localization::Translate("Please get in a vehicle."), NotificationType::Error);
 				return;
 			}
 
 			static ScriptFunction isVehicleValidForPV("freemode"_J, ScriptPointer("IsVehicleValidForPV", "5D ? ? ? 2A 06 56 13 00 38 00").Add(1).Rip());
 			if (s_BlacklistedVehicles.contains(Self::GetVehicle().GetModel()) || !isVehicleValidForPV.Call<bool>(Self::GetVehicle().GetModel()))
 			{
-				Notifications::Show("Save Personal Vehicle", "This vehicle cannot be saved as a personal vehicle.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Save Personal Vehicle"), Localization::Translate("This vehicle cannot be saved as a personal vehicle."), NotificationType::Error);
 				return;
 			}
 
 			if (Self::GetVehicle().GetHandle() == FreemodeGeneral::Get()->PersonalVehicleIndex)
 			{
-				Notifications::Show("Save Personal Vehicle", "This vehicle is already a personal vehicle.", NotificationType::Error);
+				Notifications::Show(Localization::Translate("Save Personal Vehicle"), Localization::Translate("This vehicle is already a personal vehicle."), NotificationType::Error);
 				return;
 			}
 

@@ -58,11 +58,11 @@ namespace YimMenu::Submenus
 			FiberPool::Push([=] {
 				if (newLocationName.empty())
 				{
-					Notifications::Show("Custom Teleport", "Please enter a valid name", NotificationType::Warning);
+					Notifications::Show(Localization::Translate("Custom Teleport"), Localization::Translate("Please enter a valid name"), NotificationType::Warning);
 				}
 				else if (SavedLocations::GetSavedLocationByName(newLocationName))
 				{
-					Notifications::Show("Custom Teleport", std::format("Location with name {} already exists", newLocationName));
+					Notifications::Show(Localization::Translate("Custom Teleport"), std::format(Localization::Translate("Location with name {} already exists"), newLocationName));
 				}
 				else
 				{

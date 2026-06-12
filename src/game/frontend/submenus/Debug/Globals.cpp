@@ -1,5 +1,6 @@
 #include "Globals.hpp"
 #include "DrawVariable.hpp"
+#include "core/localization/Localization.hpp"
 
 // TODO: name compares are expensive, but this is way better than the old impl that reads the json file every frame
 
@@ -77,15 +78,15 @@ namespace YimMenu::Submenus
 			ImGui::BeginGroup();
 
 			ImGui::SetNextItemWidth(200.f);
-			ImGui::InputTextWithHint("##global_name", "Name", globalName, sizeof(globalName));
+			ImGui::InputTextWithHint("##global_name", Localization::Translate("Name").c_str(), globalName, sizeof(globalName));
 			ImGui::SameLine();
-			if (ImGui::Button("Save"))
+			if (ImGui::Button(Localization::Translate("Save").c_str()))
 			{
 				curGlobal.name = globalName;
 				SaveGlobal(curGlobal);
 			}
 			ImGui::SameLine();
-			if (ImGui::Button("Delete"))
+			if (ImGui::Button(Localization::Translate("Delete").c_str()))
 			{
 				curGlobal.name = globalName;
 				DeleteGlobal(curGlobal);
