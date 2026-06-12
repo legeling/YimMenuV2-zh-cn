@@ -13,6 +13,12 @@
 
 namespace YimMenu::Submenus
 {
+	template <typename... Args>
+	static std::string RuntimeFormat(std::string_view fmt, Args&&... args)
+	{
+		return std::vformat(fmt, std::make_format_args(args...));
+	}
+
 	constexpr std::array<std::pair<const char*, std::uint32_t>, 28> NET_SHOP_ACTIONS =
 	    {{
 	        {"ACQUIRE", "NET_SHOP_ACTION_ACQUIRE"_J},
@@ -221,7 +227,7 @@ namespace YimMenu::Submenus
 						if (!NETSHOPPING::NET_GAMESERVER_BASKET_ADD_ITEM(&scr_item, item.m_Quantity))
 						{
 							Notifications::Show(Localization::Translate("Transactions"),
-							    std::format(Localization::Translate("Failed to add {} (x{}) to basket"), item.m_PrimaryItem.m_Name, item.m_Quantity),
+							    RuntimeFormat(Localization::Translate("Failed to add {} (x{}) to basket"), item.m_PrimaryItem.m_Name, item.m_Quantity),
 							    NotificationType::Error);
 							txn_failed = true;
 							NETSHOPPING::NET_GAMESERVER_BASKET_END();
@@ -421,13 +427,13 @@ namespace YimMenu::Submenus
 		{
 			if (info.m_Type == TransactionInfo::Type::SERVICE)
 			{
-				SetTransactionError(std::format(Localization::Translate("Item category {} does not match txn category {}"), CategoryNameFromHash(item.m_IntendedCategory), info.m_Category.m_Name));
+				SetTransactionError(RuntimeFormat(Localization::Translate("Item category {} does not match txn category {}"), CategoryNameFromHash(item.m_IntendedCategory), info.m_Category.m_Name));
 				is_valid = false;
 				return false;
 			}
 			else
 			{
-				SetTransactionWarning(std::format(Localization::Translate("Item category {} does not match txn category {}"), CategoryNameFromHash(item.m_IntendedCategory), info.m_Category.m_Name));
+				SetTransactionWarning(RuntimeFormat(Localization::Translate("Item category {} does not match txn category {}"), CategoryNameFromHash(item.m_IntendedCategory), info.m_Category.m_Name));
 			}
 		}
 
@@ -495,7 +501,7 @@ namespace YimMenu::Submenus
 			ImGui::InputInt(Localization::Translate("Price").c_str(), &info.m_Service.m_Price);
 			if (info.m_Service.m_Price > info.m_Service.m_Item.m_IntendedPrice && info.m_Action.m_Hash == "NET_SHOP_ACTION_EARN"_J)
 			{
-				SetTransactionError(std::format(Localization::Translate("Item price exceeds maximum allowed ({})"), info.m_Service.m_Item.m_IntendedPrice));
+				SetTransactionError(RuntimeFormat(Localization::Translate("Item price exceeds maximum allowed ({})"), info.m_Service.m_Item.m_IntendedPrice));
 				txn_valid = false;
 			}
 		}
