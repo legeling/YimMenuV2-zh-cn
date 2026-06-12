@@ -920,6 +920,290 @@ namespace YimMenu::Localization
 		    ,{"Cops Dispatch"sv, "警察调度"sv}
 		    ,{"Decals"sv, "贴花"sv}
 		    ,{"Default"sv, "默认"sv}
+		    ,{"IMPORTANT! PLEASE READ!"sv, "重要！请务必阅读！"sv}
+		    ,{"Play with YimMenu users"sv, "与 YimMenu 用户一起游玩"sv}
+		    ,{"Play with everyone (Broken!)"sv, "与所有人一起游玩（已失效）"sv}
+		    ,{"Open GitHub"sv, "打开 GitHub"sv}
+		    ,{"Open Matrix server"sv, "打开 Matrix 服务器"sv}
+		    ,{"Skipped phone call from character {}"sv, "已跳过角色来电：{}"sv}
+		    ,{"You are solely responsible for what you do with this tool. If you don't know what you're doing, you'll likely get banned"sv, "你需自行承担使用此工具的后果。如果不了解自己在做什么，很可能会被封禁"sv}
+		    ,{"Allow Hats In Vehicles"sv, "允许在载具内佩戴帽子"sv}
+		    ,{"Allows altering your melee damage output"sv, "允许调整你的近战伤害输出"sv}
+		    ,{"Allows you to access gun locker remotely."sv, "允许你远程访问武器柜。"sv}
+		    ,{"Allows you to access the selected Street Dealer remotely."sv, "允许你远程访问所选街头贩子。"sv}
+		    ,{"Allows you to access your wardrobe remotely."sv, "允许你远程访问衣柜。"sv}
+		    ,{"Allows you to join players with rpf mods (or a half installed game)."sv, "允许你加入安装了 rpf 模组（或游戏安装不完整）的玩家。"sv}
+		    ,{"Allows you to listen to any radio station on foot with Hotkey Q"sv, "允许你在步行时通过热键 Q 收听任意电台"sv}
+		    ,{"Attempts to improve join speed by loading host broadcast variables asynchronously. This may cause certain jobs to break, use with caution"sv, "尝试通过异步加载主机广播变量来提升加入速度。这可能导致某些任务异常，请谨慎使用"sv}
+		    ,{"Beat Time Trial"sv, "完成时间挑战赛"sv}
+		    ,{"Blows the player up"sv, "将玩家炸飞"sv}
+		    ,{"Cannot open gun locker while in an interior."sv, "在室内时无法打开武器柜。"sv}
+		    ,{"Changes the color of the distance ESP for players"sv, "修改玩家距离 ESP 的颜色"sv}
+		    ,{"Changes the color of the hash ESP for objects"sv, "修改物体哈希 ESP 的颜色"sv}
+		    ,{"Changes the color of the hash ESP for peds"sv, "修改 NPC 哈希 ESP 的颜色"sv}
+		    ,{"Changes the color of the name ESP for players"sv, "修改玩家名称 ESP 的颜色"sv}
+		    ,{"Changes the color of the skeleton ESP for peds"sv, "修改 NPC 骨骼 ESP 的颜色"sv}
+		    ,{"Changes the color of the skeleton ESP for players"sv, "修改玩家骨骼 ESP 的颜色"sv}
+		    ,{"Collects G's Cache."sv, "收集 G 的补给点奖励。"sv}
+		    ,{"Collects Shipwreck."sv, "收集沉船奖励。"sv}
+		    ,{"Collects the Golden Clover."sv, "收集金色四叶草。"sv}
+		    ,{"Collects the selected Buried Stash."sv, "收集所选埋藏战利品。"sv}
+		    ,{"Collects the selected Hidden Cache."sv, "收集所选隐藏补给箱。"sv}
+		    ,{"Collects the selected Treasure Chest."sv, "收集所选宝箱。"sv}
+		    ,{"Collects the selected product."sv, "收集所选货物。"sv}
+		    ,{"Completed all activities, switch session to apply the changes."sv, "已完成所有活动，请切换战局以应用更改。"sv}
+		    ,{"Completes all the Daily Objectives and the Weekly Challenge."sv, "完成所有每日目标和每周挑战。"sv}
+		    ,{"Completes the selected Skydive."sv, "完成所选高空跳伞。"sv}
+		    ,{"Completes the selected Time Trial."sv, "完成所选时间挑战赛。"sv}
+		    ,{"Desired rocket boost behavior"sv, "期望的火箭推进器行为"sv}
+		    ,{"Detaches your camera and allows you to go anywhere!"sv, "分离你的镜头，让你可以自由前往任何地方！"sv}
+		    ,{"Dumps the current data hash into the console"sv, "将当前数据哈希输出到控制台"sv}
+		    ,{"Enables Buried Stashes in Los Santos, so you don't have to go to Cayo Perico."sv, "在洛圣都启用埋藏战利品，这样你就不必前往佩里科岛。"sv}
+		    ,{"Enables Treasure Chests in Los Santos, so you don't have to go to Cayo Perico."sv, "在洛圣都启用宝箱，这样你就不必前往佩里科岛。"sv}
+		    ,{"Enters the Stash House safe code."sv, "输入藏匿屋保险箱密码。"sv}
+		    ,{"Entity is not a ped."sv, "该实体不是 NPC。"sv}
+		    ,{"Entity is too far."sv, "该实体距离过远。"sv}
+		    ,{"Event is already active."sv, "事件已激活。"sv}
+		    ,{"Event is not active."sv, "事件未激活。"sv}
+		    ,{"Event script is not active. Are you a participant?"sv, "事件脚本未激活。你是参与者吗？"sv}
+		    ,{"Failed to get RID from username"sv, "无法通过用户名获取 RID"sv}
+		    ,{"Failed to launch event. Are you freemode host?"sv, "启动事件失败。你是 Freemode 主机吗？"sv}
+		    ,{"Failed to teleport to event. Coordinates are not valid."sv, "传送到事件失败，坐标无效。"sv}
+		    ,{"Formats HUD money with commas."sv, "将 HUD 金额按千位分隔显示。"sv}
+		    ,{"Forces player into permadeath that can only be fixed by a game restart"sv, "强制玩家进入永久死亡状态，只能通过重启游戏恢复"sv}
+		    ,{"Forces the player into an infinite loading screen that can only be fixed by restarting the game"sv, "强制玩家进入无限加载界面，只能通过重启游戏恢复"sv}
+		    ,{"Gravity gun cannot be applied on player entity."sv, "重力枪不能作用于玩家实体。"sv}
+		    ,{"Have an endless clip in your gun"sv, "让当前武器弹匣永不耗尽"sv}
+		    ,{"Hold the button with the command name and enter a keystroke to change its hotkey"sv, "按住命令名按钮并输入按键即可修改热键"sv}
+		    ,{"If a command has an existing hotkey, clicking the button will remove it"sv, "如果命令已有热键，点击该按钮会移除它"sv}
+		    ,{"Jump higher than normal"sv, "跳得比正常更高"sv}
+		    ,{"Keeps the player clean from any blood, dirt, water."sv, "让玩家始终保持干净，不沾血迹、污渍和水渍。"sv}
+		    ,{"Kicks the player by faking a vote kick"sv, "通过伪造投票踢出玩家"sv}
+		    ,{"Kicks the player by forcing them to call a null script function"sv, "通过强制调用空脚本函数踢出玩家"sv}
+		    ,{"Kicks the player by forcing them to end the freemode session"sv, "通过强制结束 Freemode 战局踢出玩家"sv}
+		    ,{"Kicks the player from their organization or motorcycle club"sv, "将玩家踢出其组织或摩托帮"sv}
+		    ,{"Kills the player"sv, "击杀该玩家"sv}
+		    ,{"Lets you win the Rig Slot Machines every time"sv, "让你每次都能赢下 Rig 老虎机"sv}
+		    ,{"Manipulate Rig Slot Machines"sv, "操控 Rig 老虎机"sv}
+		    ,{"Modify boost behavior"sv, "修改推进器行为"sv}
+		    ,{"Modify rocket boost behavior for vehicles that support it"sv, "修改支持该功能的载具的火箭推进器行为"sv}
+		    ,{"Multiplies RP by the given value"sv, "按给定数值倍增 RP"sv}
+		    ,{"Only available as host and the target is unblockable"sv, "仅主机可用，且目标无法阻挡"sv}
+		    ,{"Photographs the selected animal."sv, "拍摄所选动物。"sv}
+		    ,{"Please enable the blip from the Interaction Menu."sv, "请先在互动菜单中启用该地图标记。"sv}
+		    ,{"Please get in a vehicle."sv, "请先进入一辆载具。"sv}
+		    ,{"Please join GTA Online."sv, "请先进入 GTA 在线模式。"sv}
+		    ,{"Prevent you from getting Critical Hits"sv, "防止你受到暴击"sv}
+		    ,{"Prevents you from being kicked while idling."sv, "防止你因挂机而被踢出。"sv}
+		    ,{"Refresh List"sv, "刷新列表"sv}
+		    ,{"Reset all activities, switch session to apply the changes."sv, "已重置所有活动，请切换战局以应用更改。"sv}
+		    ,{"Riot Mode"sv, "暴动模式"sv}
+		    ,{"Script does not exist."sv, "脚本不存在。"sv}
+		    ,{"Script is already running."sv, "脚本已在运行。"sv}
+		    ,{"Send All to Interior"sv, "将所有人送到室内"sv}
+		    ,{"Send All to Property"sv, "将所有人送到房产"sv}
+		    ,{"Send Gooch"sv, "发送古奇"sv}
+		    ,{"Send Phantom Car"sv, "发送幻影车"sv}
+		    ,{"Send Sext"sv, "发送短信"sv}
+		    ,{"Send Sexts"sv, "群发短信"sv}
+		    ,{"Sends a random sext to the specified player"sv, "向指定玩家发送一条随机短信"sv}
+		    ,{"Sends the Gooch to the specified player."sv, "向指定玩家发送古奇。"sv}
+		    ,{"Sends the Phantom Car to the specified player."sv, "向指定玩家发送幻影车。"sv}
+		    ,{"Session Type"sv, "战局类型"sv}
+		    ,{"Set Bounties"sv, "设置悬赏"sv}
+		    ,{"Set Time"sv, "设置时间"sv}
+		    ,{"Set Weather"sv, "设置天气"sv}
+		    ,{"Sets the damage scale for melee"sv, "设置近战伤害倍率"sv}
+		    ,{"Ship Destroy"sv, "摧毁船只"sv}
+		    ,{"Shoot Animals Photography"sv, "野生动物摄影"sv}
+		    ,{"Should the ESP draw network info?"sv, "ESP 是否显示网络信息？"sv}
+		    ,{"Should the ESP draw peds?"sv, "ESP 是否显示 NPC？"sv}
+		    ,{"Should the ESP draw players?"sv, "ESP 是否显示玩家？"sv}
+		    ,{"Should the ESP draw script info?"sv, "ESP 是否显示脚本信息？"sv}
+		    ,{"Show Object Network Info"sv, "显示物体网络信息"sv}
+		    ,{"Show Object Script Info"sv, "显示物体脚本信息"sv}
+		    ,{"Show Ped Network Info"sv, "显示 NPC 网络信息"sv}
+		    ,{"Show Ped Script Info"sv, "显示 NPC 脚本信息"sv}
+		    ,{"Smoke on the Water"sv, "水上烟火"sv}
+		    ,{"Spams the killfeed of all players with fake kill entries. Use with caution"sv, "向所有玩家的击杀提示刷入伪造击杀记录。请谨慎使用"sv}
+		    ,{"Spawn a clone of the persone vehicle."sv, "生成个人载具的复制品。"sv}
+		    ,{"Spawn inside the personal vehicle."sv, "在个人载具内生成。"sv}
+		    ,{"Spawn inside the vehicle."sv, "在载具内生成。"sv}
+		    ,{"Spawn the vehicle maxed."sv, "以满改状态生成载具。"sv}
+		    ,{"Spawns the selected animal."sv, "生成所选动物。"sv}
+		    ,{"Stand On Vehicles"sv, "站在载具上"sv}
+		    ,{"Switch session to apply the changes."sv, "请切换战局以应用更改。"sv}
+		    ,{"Teleport Everyone"sv, "传送所有人"sv}
+		    ,{"Teleport to Exotic Exports Vehicle"sv, "传送到异域出口载具"sv}
+		    ,{"Teleport to Golden Clover"sv, "传送到金色四叶草"sv}
+		    ,{"Teleport to Madrazo Hit"sv, "传送到玛德拉索暗杀"sv}
+		    ,{"Teleport to Madrazo Hit Target"sv, "传送到玛德拉索暗杀目标"sv}
+		    ,{"Teleport to Player"sv, "传送到玩家"sv}
+		    ,{"Teleport to Skydive"sv, "传送到高空跳伞"sv}
+		    ,{"Teleport to Time Trial"sv, "传送到时间挑战赛"sv}
+		    ,{"Teleports to G's Cache."sv, "传送到 G 的补给点。"sv}
+		    ,{"Teleports to Madrazo Hit Target."sv, "传送到玛德拉索暗杀目标。"sv}
+		    ,{"Teleports to Madrazo Hit."sv, "传送到玛德拉索暗杀。"sv}
+		    ,{"Teleports to Shipwreck."sv, "传送到沉船。"sv}
+		    ,{"Teleports to Stash House."sv, "传送到藏匿屋。"sv}
+		    ,{"Teleports to the Golden Clover."sv, "传送到金色四叶草。"sv}
+		    ,{"Teleports to the next Exotic Exports vehicle."sv, "传送到下一辆异域出口载具。"sv}
+		    ,{"Teleports to the selected Buried Stash."sv, "传送到所选埋藏战利品。"sv}
+		    ,{"Teleports to the selected Hidden Cache."sv, "传送到所选隐藏补给箱。"sv}
+		    ,{"Teleports to the selected LS Tag."sv, "传送到所选洛圣都涂鸦。"sv}
+		    ,{"Teleports to the selected Skydive."sv, "传送到所选高空跳伞。"sv}
+		    ,{"Teleports to the selected Street Dealer."sv, "传送到所选街头贩子。"sv}
+		    ,{"Teleports to the selected Time Trial."sv, "传送到所选时间挑战赛。"sv}
+		    ,{"Teleports to the selected Treasure Chest."sv, "传送到所选宝箱。"sv}
+		    ,{"Teleports to the selected product."sv, "传送到所选货物。"sv}
+		    ,{"The transaction isn't valid. Ensure that all fields are filled out correctly"sv, "该交易无效。请确认所有字段都已正确填写"sv}
+		    ,{"This Buried Stash has already been collected."sv, "该埋藏战利品已被收集。"sv}
+		    ,{"This Hidden Cache has already been collected."sv, "该隐藏补给箱已被收集。"sv}
+		    ,{"This LS Tag has already been sprayed."sv, "该洛圣都涂鸦已被喷涂。"sv}
+		    ,{"This Time Trial has already been beaten."sv, "该时间挑战赛已被完成。"sv}
+		    ,{"This Treasure Chest has already been collected."sv, "该宝箱已被收集。"sv}
+		    ,{"This animal has already been photographed."sv, "该动物已被拍摄。"sv}
+		    ,{"This item has been blocked for your safety"sv, "出于安全考虑，该项目已被屏蔽"sv}
+		    ,{"This product has already been collected."sv, "该货物已被收集。"sv}
+		    ,{"This stat should not be edited by the client. Right-click to force the write anyway"sv, "该属性不应由客户端修改。右键仍可强制写入"sv}
+		    ,{"This vehicle cannot be saved as a personal vehicle."sv, "该载具无法保存为个人载具。"sv}
+		    ,{"This vehicle is already a personal vehicle."sv, "该载具已经是个人载具。"sv}
+		    ,{"Transaction complete"sv, "交易完成"sv}
+		    ,{"Transaction failed"sv, "交易失败"sv}
+		    ,{"Wardrobe"sv, "衣柜"sv}
+		    ,{"You have already delivered all the vehicles."sv, "你已经交付了所有载具。"sv}
+		    ,{"You have just delivered a vehicle, wait a moment."sv, "你刚刚交付过一辆载具，请稍等片刻。"sv}
+		    ,{"You must own a Bail Office."sv, "你必须拥有一间保释事务所。"sv}
+		    ,{"You must own a Smoke on the Water property."sv, "你必须拥有“水上烟火”产业。"sv}
+		    ,{"Acid Lab"sv, "酸液实验室"sv}
+		    ,{"Agency (Hawick)"sv, "事务所（霍伊克）"sv}
+		    ,{"Agency (Little Seoul)"sv, "事务所（小首尔）"sv}
+		    ,{"Agency (Rockford)"sv, "事务所（罗克福德）"sv}
+		    ,{"Agency (Vespucci)"sv, "事务所（维斯普奇）"sv}
+		    ,{"Arcade (Davis)"sv, "游戏厅（戴维斯）"sv}
+		    ,{"Arcade (Grapeseed)"sv, "游戏厅（葡萄籽）"sv}
+		    ,{"Arcade (La Mesa)"sv, "游戏厅（拉梅萨）"sv}
+		    ,{"Arcade (Paleto Bay)"sv, "游戏厅（佩立托湾）"sv}
+		    ,{"Arcade (Rockford Hills)"sv, "游戏厅（罗克福德山）"sv}
+		    ,{"Arcade (West Vinewood)"sv, "游戏厅（西葡萄园）"sv}
+		    ,{"Arcadius Business Center"sv, "阿卡迪厄斯商务中心"sv}
+		    ,{"Auto Shop (Burton)"sv, "改装铺（伯顿）"sv}
+		    ,{"Auto Shop (La Mesa)"sv, "改装铺（拉梅萨）"sv}
+		    ,{"Auto Shop (Mission Row)"sv, "改装铺（使命街）"sv}
+		    ,{"Auto Shop (Rancho)"sv, "改装铺（兰乔）"sv}
+		    ,{"Auto Shop (Strawberry)"sv, "改装铺（草莓）"sv}
+		    ,{"Bail Office"sv, "保释事务所"sv}
+		    ,{"Bail Office (Davis)"sv, "保释事务所（戴维斯）"sv}
+		    ,{"Bail Office (Del Perro)"sv, "保释事务所（德佩罗）"sv}
+		    ,{"Bail Office (Mission Row)"sv, "保释事务所（使命街）"sv}
+		    ,{"Bail Office (Paleto Bay)"sv, "保释事务所（佩立托湾）"sv}
+		    ,{"Bail Office (West Vinewood)"sv, "保释事务所（西葡萄园）"sv}
+		    ,{"Car Meet"sv, "车友会"sv}
+		    ,{"Car Wash"sv, "洗车店"sv}
+		    ,{"Casino Penthouse"sv, "赌场顶层豪宅"sv}
+		    ,{"Del Perro Beach Clubhouse"sv, "德佩罗海滩会所"sv}
+		    ,{"Downtown Vinewood Clubhouse"sv, "市中心葡萄园会所"sv}
+		    ,{"Field Hangar"sv, "机库"sv}
+		    ,{"Freakhouse"sv, "怪胎屋"sv}
+		    ,{"Garage Innocence Blvd"sv, "因诺森斯大道车库"sv}
+		    ,{"Garment Factory"sv, "制衣厂"sv}
+		    ,{"Grapeseed Clubhouse"sv, "葡萄籽会所"sv}
+		    ,{"Great Chaparral Clubhouse"sv, "大灌木丛会所"sv}
+		    ,{"Hawick Clubhouse"sv, "霍伊克会所"sv}
+		    ,{"Heli Tours"sv, "直升机观光"sv}
+		    ,{"La Mesa Clubhouse"sv, "拉梅萨会所"sv}
+		    ,{"Lombank West"sv, "隆班克西部"sv}
+		    ,{"Maze Bank Tower"sv, "花园银行大楼"sv}
+		    ,{"Maze Bank West"sv, "花园银行西部"sv}
+		    ,{"Music Locker"sv, "音乐储物柜"sv}
+		    ,{"Office Garage 1"sv, "办公室车库 1"sv}
+		    ,{"Office Garage 2"sv, "办公室车库 2"sv}
+		    ,{"Office Garage 3"sv, "办公室车库 3"sv}
+		    ,{"Paleto Bay Clubhouse"sv, "佩立托湾会所"sv}
+		    ,{"Private Yacht"sv, "私人游艇"sv}
+		    ,{"Rancho Clubhouse"sv, "兰乔会所"sv}
+		    ,{"Salvage Yard"sv, "赃车店"sv}
+		    ,{"Salvage Yard (La Puerta)"sv, "赃车店（拉普尔塔）"sv}
+		    ,{"Salvage Yard (Murietta Heights)"sv, "赃车店（穆列塔高地）"sv}
+		    ,{"Salvage Yard (Paleto Bay)"sv, "赃车店（佩立托湾）"sv}
+		    ,{"Salvage Yard (Sandy Shores)"sv, "赃车店（沙滩海岸）"sv}
+		    ,{"Salvage Yard (Strawberry)"sv, "赃车店（草莓）"sv}
+		    ,{"Sandy Shores Clubhouse"sv, "沙滩海岸会所"sv}
+		    ,{"Vehicle Warehouse"sv, "载具仓库"sv}
+		    ,{"Vespucci Beach Clubhouse"sv, "维斯普奇海滩会所"sv}
+		    ,{"Weed Shop"sv, "大麻店"sv}
+		    ,{"Hour"sv, "小时"sv}
+		    ,{"Minute"sv, "分钟"sv}
+		    ,{"Second"sv, "秒"sv}
+		    ,{"Font Scale"sv, "字体缩放"sv}
+		    ,{"Fonts"sv, "字体"sv}
+		    ,{"Script"sv, "脚本"sv}
+		    ,{"Scripts"sv, "脚本"sv}
+		    ,{"Select"sv, "选择"sv}
+		    ,{"Empty"sv, "空"sv}
+		    ,{"None"sv, "无"sv}
+		    ,{"Top"sv, "顶部"sv}
+		    ,{"Mechanic"sv, "技工"sv}
+		    ,{"Nightclub"sv, "夜总会"sv}
+		    ,{"Editor"sv, "编辑器"sv}
+		    ,{"Features"sv, "功能"sv}
+		    ,{"State"sv, "状态"sv}
+		    ,{"Thread"sv, "线程"sv}
+		    ,{"Threads"sv, "线程"sv}
+		    ,{"Explode"sv, "引爆"sv}
+		    ,{"Explode All"sv, "引爆全部"sv}
+		    ,{"Freeze"sv, "冻结"sv}
+		    ,{"Seatbelt"sv, "安全带"sv}
+		    ,{"Spectate"sv, "观战"sv}
+		    ,{"Blimp 2"sv, "飞艇 2"sv}
+		    ,{"APC Shell"sv, "APC 炮弹"sv}
+		    ,{"BZ Gas"sv, "BZ 毒气"sv}
+		    ,{"Bird Crap"sv, "鸟粪"sv}
+		    ,{"Blackscreen"sv, "黑屏"sv}
+		    ,{"Bombushka Cannon"sv, "邦布什卡机炮"sv}
+		    ,{"Buried Mine"sv, "埋设地雷"sv}
+		    ,{"Cluster Bomb"sv, "集束炸弹"sv}
+		    ,{"Diamond"sv, "钻石"sv}
+		    ,{"Directional Flame"sv, "定向火焰"sv}
+		    ,{"Directional Flame Explode"sv, "定向火焰爆炸"sv}
+		    ,{"Directional Gas Canister"sv, "定向气罐"sv}
+		    ,{"Directional Steam"sv, "定向蒸汽"sv}
+		    ,{"Directional Water Hydrant"sv, "定向消防栓水柱"sv}
+		    ,{"Extinguisher"sv, "灭火器"sv}
+		    ,{"Flare"sv, "信号弹"sv}
+		    ,{"Gas Bomb"sv, "毒气炸弹"sv}
+		    ,{"Gas Canister"sv, "气罐"sv}
+		    ,{"Gas Tank"sv, "油箱"sv}
+		    ,{"Hi Octane"sv, "高辛烷值燃料"sv}
+		    ,{"Hunter Barrage"sv, "猎手齐射"sv}
+		    ,{"Hunter Cannon"sv, "猎手机炮"sv}
+		    ,{"Incendiary Bomb"sv, "燃烧弹"sv}
+		    ,{"Kinetic Mortar"sv, "动能迫击炮"sv}
+		    ,{"Orbital Cannon"sv, "轨道炮"sv}
+		    ,{"Petrol Pump"sv, "汽油泵"sv}
+		    ,{"Plane Rocket"sv, "飞机火箭弹"sv}
+		    ,{"Programmable AR"sv, "可编程步枪"sv}
+		    ,{"Propane"sv, "丙烷"sv}
+		    ,{"RC Tank Rocket"sv, "RC 坦克火箭弹"sv}
+		    ,{"Railgun"sv, "电磁炮"sv}
+		    ,{"Rogue Cannon"sv, "叛逆者机炮"sv}
+		    ,{"Script Drone"sv, "脚本无人机"sv}
+		    ,{"Script Missile"sv, "脚本导弹"sv}
+		    ,{"Script Missile (Large)"sv, "脚本导弹（大型）"sv}
+		    ,{"Slipstream"sv, "尾流"sv}
+		    ,{"Smoke Grenade"sv, "烟雾弹"sv}
+		    ,{"Smoke Grenade Launcher"sv, "烟雾弹发射器"sv}
+		    ,{"Standard Bomb"sv, "标准炸弹"sv}
+		    ,{"Standard Bomb (Wide)"sv, "标准炸弹（广域）"sv}
+		    ,{"Submarine (Big)"sv, "潜艇（大型）"sv}
+		    ,{"Tanker"sv, "油罐车"sv}
+		    ,{"Torpedo"sv, "鱼雷"sv}
+		    ,{"Trevor Rage"sv, "崔佛狂怒"sv}
+		    ,{"Underwater Mine"sv, "水下地雷"sv}
+		    ,{"Underwater Torpedo"sv, "水下鱼雷"sv}
+		    ,{"Valkyrie Cannon"sv, "女武神机炮"sv}
+		    ,{"Water Bomb"sv, "水弹"sv}
+		    ,{"Water Bomb (Secondary)"sv, "水弹（次级）"sv}
 		};
 	}
 
