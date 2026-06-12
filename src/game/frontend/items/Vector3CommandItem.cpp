@@ -2,6 +2,7 @@
 #include "core/commands/Command.hpp"
 #include "core/commands/Commands.hpp"
 #include "core/commands/Vector3Command.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/SavedLocations.hpp"
 #include "game/backend/Self.hpp"
 #include "game/pointers/Pointers.hpp"
@@ -18,7 +19,7 @@ namespace YimMenu
 	{
 		if (!m_Command)
 		{
-			ImGui::Text("Unknown!");
+			ImGui::Text("%s", Localization::Translate("Unknown!").c_str());
 			return;
 		}
 
@@ -31,23 +32,23 @@ namespace YimMenu
 		if (Self::GetPed())
 		{
 			ImGui::SameLine();
-			if (ImGui::Button("Current"))
+			if (ImGui::Button(Localization::Translate("Current").c_str()))
 				m_Command->SetState(Self::GetPed().GetPosition());
 		}
 		ImGui::SameLine();
-		if (ImGui::Button("Saved..."))
+		if (ImGui::Button(Localization::Translate("Saved...").c_str()))
 			ImGui::OpenPopup("##saved");
 
 		if (ImGui::BeginPopup("##saved", ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
 		{
-			ImGui::Text("Click on a location to select it. Add more at Teleport > Saved");
+			ImGui::Text("%s", Localization::Translate("Click on a location to select it. Add more at Teleport > Saved").c_str());
 			InputTextWithHint("##filter", "Search", &m_CurrentFilter).Draw();
 
 			const float max_length = *Pointers.ScreenResY / 3.2;
 
 			// TODO: duplicated code
 			ImGui::BeginGroup();
-			ImGui::Text("Categories");
+			ImGui::Text("%s", Localization::Translate("Categories").c_str());
 
 			if (ImGui::BeginListBox("##categories", {200, max_length}))
 			{
@@ -68,7 +69,7 @@ namespace YimMenu
 			ImGui::EndGroup();
 			ImGui::SameLine();
 			ImGui::BeginGroup();
-			ImGui::Text("Locations");
+			ImGui::Text("%s", Localization::Translate("Locations").c_str());
 			if (ImGui::BeginListBox("##saved_locs", {200, max_length}))
 			{
 				if (SavedLocations::GetAllSavedLocations().find(m_CurrentCategory) != SavedLocations::GetAllSavedLocations().end())
@@ -102,7 +103,7 @@ namespace YimMenu
 
 			ImGui::EndGroup();
 
-			if (ImGui::Button("Close"))
+			if (ImGui::Button(Localization::Translate("Close").c_str()))
 			{
 				ImGui::CloseCurrentPopup();
 			}
@@ -110,7 +111,7 @@ namespace YimMenu
 			ImGui::EndPopup();
 		}
 
-		auto& label = m_LabelOverride.has_value() ? m_LabelOverride.value() : m_Command->GetLabel();
+		const auto label = Localization::Translate(m_LabelOverride.has_value() ? m_LabelOverride.value() : m_Command->GetLabel());
 		if (!label.empty())
 		{
 			ImGui::SameLine();

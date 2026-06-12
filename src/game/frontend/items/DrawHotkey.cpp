@@ -1,4 +1,5 @@
 #include "DrawHotkey.hpp"
+#include "core/localization/Localization.hpp"
 
 namespace YimMenu
 {
@@ -6,7 +7,8 @@ namespace YimMenu
 	{
 		ImGui::PushID(link);
 
-		ImGui::Button(label.data());
+		const auto translatedLabel = Localization::Translate(label);
+		ImGui::Button(translatedLabel.data());
 
 		bool active = ImGui::IsItemActive();
 
@@ -22,9 +24,9 @@ namespace YimMenu
 		if (link->m_Chain.empty())
 		{
 			if (active)
-				ImGui::Text("Press any button...");
+				ImGui::Text("%s", Localization::Translate("Press any button...").c_str());
 			else
-				ImGui::Text("No hotkey assigned");
+				ImGui::Text("%s", Localization::Translate("No hotkey assigned").c_str());
 		}
 		else
 		{
@@ -52,7 +54,7 @@ namespace YimMenu
 			ImGui::PopItemWidth();
 
 			ImGui::SameLine();
-			if (ImGui::Button("Clear"))
+			if (ImGui::Button(Localization::Translate("Clear").c_str()))
 			{
 				link->m_Chain.clear();
 				g_HotkeySystem.MarkStateDirty();

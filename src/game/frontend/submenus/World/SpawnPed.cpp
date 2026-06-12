@@ -10,6 +10,7 @@
 #include "game/gta/data/Weapons.hpp"
 #include "game/gta/Scripts.hpp"
 #include "game/backend/NativeHooks.hpp"
+#include "core/localization/Localization.hpp"
 
 namespace YimMenu::Submenus
 {
@@ -63,7 +64,7 @@ namespace YimMenu::Submenus
 										{
 											Notifications::Show(
 											    "Spawn Ped",
-											    "Cannot spawn ped in vehicle, all seats are occupied, please free a seat first or disable 'Spawn In My Vehicle' option.",
+											    "无法在载具中生成 NPC，所有座位都已被占用。请先腾出座位，或关闭“生成到我的载具中”选项。",
 											    NotificationType::Warning);
 											return;
 										}
@@ -197,17 +198,17 @@ namespace YimMenu::Submenus
 
 			ImGui::SameLine();
 			ImGui::BeginGroup();
-			ImGui::BulletText("Ctrl+Click to set player model");
-			ImGui::Checkbox("Invincible", &invincible);
-			ImGui::Checkbox("Spawn Dead", &spawnDead);
-			ImGui::Checkbox("Spawn As Bodyguard", &spawnAsBodyguard);
-			ImGui::Checkbox("Spawn As Cop", &spawnAsCop);
-			ImGui::Checkbox("Spawn In My Vehicle", &spawnInMyVehicle);
-			ImGui::Checkbox("Give All Weapons", &giveAllWeapons);
-			ImGui::Checkbox("Spawn As Prostitute", &spawnAsProstitute);
-			ImGui::Checkbox("Randomize Outfit", &randomizeOutfit);
-			ImGui::Checkbox("Blip Ped", &blipPed);
-			if (ImGui::Button("Remove All"))
+			ImGui::BulletText("%s", "Ctrl+点击可设为玩家模型");
+			ImGui::Checkbox("无敌", &invincible);
+			ImGui::Checkbox("生成死亡状态", &spawnDead);
+			ImGui::Checkbox("作为保镖生成", &spawnAsBodyguard);
+			ImGui::Checkbox("作为警察生成", &spawnAsCop);
+			ImGui::Checkbox("生成到我的载具中", &spawnInMyVehicle);
+			ImGui::Checkbox("给予全部武器", &giveAllWeapons);
+			ImGui::Checkbox("作为妓女生成", &spawnAsProstitute);
+			ImGui::Checkbox("随机服装", &randomizeOutfit);
+			ImGui::Checkbox("为 NPC 添加标记", &blipPed);
+			if (ImGui::Button("移除全部"))
 			{
 				FiberPool::Push([] {
 					for (auto& ped : spawnedPeds)

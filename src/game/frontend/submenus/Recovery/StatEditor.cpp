@@ -1,5 +1,6 @@
 #include "StatEditor.hpp"
 #include "core/backend/FiberPool.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/AnticheatBypass.hpp"
 #include "game/pointers/Pointers.hpp"
 #include "game/gta/Natives.hpp"
@@ -233,26 +234,26 @@ namespace YimMenu::Submenus
 		switch (data->GetType())
 		{
 		case sStatData::Type::_BOOL:
-			return ImGui::Checkbox("Value", &value.m_AsBool);
+			return ImGui::Checkbox(Localization::Translate("Value").c_str(), &value.m_AsBool);
 		case sStatData::Type::FLOAT:
-			return ImGui::InputFloat("Value", &value.m_AsFloat);
+			return ImGui::InputFloat(Localization::Translate("Value").c_str(), &value.m_AsFloat);
 		case sStatData::Type::INT:
-			return ImGui::InputInt("Value", &value.m_AsInt);
+			return ImGui::InputInt(Localization::Translate("Value").c_str(), &value.m_AsInt);
 		case sStatData::Type::UINT32:
-			return ImGui::InputScalar("Value", ImGuiDataType_U32, &value.m_AsInt);
+			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_U32, &value.m_AsInt);
 		case sStatData::Type::UINT16:
-			return ImGui::InputScalar("Value", ImGuiDataType_U16, &value.m_AsInt);
+			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_U16, &value.m_AsInt);
 		case sStatData::Type::UINT8:
-			return ImGui::InputScalar("Value", ImGuiDataType_U8, &value.m_AsInt);
+			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_U8, &value.m_AsInt);
 		case sStatData::Type::INT64:
-			return ImGui::InputScalar("Value", ImGuiDataType_S64, &value.m_AsInt);
+			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_S64, &value.m_AsInt);
 		case sStatData::Type::UINT64:
-			return ImGui::InputScalar("Value", ImGuiDataType_U64, &value.m_AsInt);
+			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_U64, &value.m_AsInt);
 		case sStatData::Type::STRING:
-			return ImGui::InputText("Value", value.m_AsString, sizeof(value.m_AsString));
+			return ImGui::InputText(Localization::Translate("Value").c_str(), value.m_AsString, sizeof(value.m_AsString));
 		default:
 			ImGui::BeginDisabled();
-			ImGui::Text("Data type not supported");
+			ImGui::Text("%s", Localization::Translate("Data type not supported").c_str());
 			ImGui::EndDisabled();
 			return false; // data type not supported
 		}
@@ -306,9 +307,9 @@ namespace YimMenu::Submenus
 	{
 		ImGui::SetNextItemWidth(150.f);
 		if (info.m_IsBoolStat)
-			return ImGui::Checkbox("Value##packed", &value.m_AsBool);
+			return ImGui::Checkbox(Localization::TranslateLabel("Value##packed").c_str(), &value.m_AsBool);
 		else
-			return ImGui::InputScalar("Value##packed", ImGuiDataType_U8, &value.m_AsInt);
+			return ImGui::InputScalar(Localization::TranslateLabel("Value##packed").c_str(), ImGuiDataType_U8, &value.m_AsInt);
 	}
 
 	std::shared_ptr<Category> BuildStatEditorMenu()
@@ -321,14 +322,14 @@ namespace YimMenu::Submenus
 
 		normal->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!NativeInvoker::AreHandlersCached())
-				return ImGui::TextDisabled("Natives not cached yet");
+				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet.").c_str());
 
 			static StatInfo current_info;
 			static char stat_buf[48]{};
 			static StatValue value{};
 
 			ImGui::SetNextItemWidth(300.f);
-			if (ImGui::InputText("Name", stat_buf, sizeof(stat_buf)))
+			if (ImGui::InputText(Localization::Translate("Name").c_str(), stat_buf, sizeof(stat_buf)))
 			{
 				current_info = GetStatInfo(stat_buf);
 				if (current_info.IsValid())
@@ -336,7 +337,7 @@ namespace YimMenu::Submenus
 			}
 
 			if (!current_info.IsValid())
-				return ImGui::TextDisabled("Stat not found");
+				return ImGui::TextDisabled("%s", "未找到该属性");
 			else if (current_info.m_Normalized)
 			{
 				ImGui::Text("Normalized name to: %s", current_info.m_Name.data());
@@ -365,14 +366,14 @@ namespace YimMenu::Submenus
 
 		packed->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!NativeInvoker::AreHandlersCached())
-				return ImGui::TextDisabled("Natives not cached yet");
+				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet.").c_str());
 
 			// TODO: improve packed stat editor
 			static PackedStatInfo current_info{0, false, true};
 			static StatValue value{};
 
 			ImGui::SetNextItemWidth(200.f);
-			if (ImGui::InputInt("Index", &current_info.m_Index))
+			if (ImGui::InputInt(Localization::Translate("Index").c_str(), &current_info.m_Index))
 			{
 				current_info = GetPackedStatInfo(current_info.m_Index);
 				if (current_info.IsValid())
@@ -380,7 +381,7 @@ namespace YimMenu::Submenus
 			}
 
 			if (!current_info.IsValid())
-				return ImGui::TextDisabled("Index not valid");
+				return ImGui::TextDisabled("%s", "索引无效");
 
 			RenderPackedStatEditor(value, current_info);
 
@@ -395,17 +396,17 @@ namespace YimMenu::Submenus
 
 		packed_range->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!NativeInvoker::AreHandlersCached())
-				return ImGui::TextDisabled("Natives not cached yet");
+				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet.").c_str());
 
 			static int start{}, end{}, value{};
 
 			ImGui::SetNextItemWidth(150.f);
-			ImGui::InputInt("Start", &start);
+			ImGui::InputInt(Localization::Translate("Start").c_str(), &start);
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(150.f);
-			ImGui::InputInt("End", &end);
+			ImGui::InputInt(Localization::Translate("End").c_str(), &end);
 			ImGui::SetNextItemWidth(150.f);
-			ImGui::InputScalar("Value##packed_range", ImGuiDataType_U8, &value);
+			ImGui::InputScalar(Localization::TranslateLabel("Value##packed_range").c_str(), ImGuiDataType_U8, &value);
 			ImGui::SameLine();
 			if (ImGui::Button("Write##packed_range"))
 				FiberPool::Push([] {
@@ -415,7 +416,7 @@ namespace YimMenu::Submenus
 
 		from_clipboard->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!NativeInvoker::AreHandlersCached())
-				return ImGui::TextDisabled("Natives not cached yet");
+				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet.").c_str());
 
 			if (ImGui::Button("Load from Clipboard"))
 			{

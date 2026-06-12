@@ -1,6 +1,7 @@
 #include "Weapons.hpp"
 #include "core/backend/FiberPool.hpp"
 #include "core/backend/ScriptMgr.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/Self.hpp"
 #include "game/gta/data/Weapons.hpp"
 #include "game/gta/Natives.hpp"
@@ -101,7 +102,7 @@ namespace YimMenu::Submenus
 		}
 		if (ImGui::BeginPopup("##weaponspopup", ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove))
 		{
-			ImGui::Text("Search:");
+			ImGui::Text("%s", Localization::Translate("Search:").c_str());
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(250.f);
 			ImGui::InputText("##searchweapon", searchWeapon, sizeof(searchWeapon));
@@ -141,14 +142,14 @@ namespace YimMenu::Submenus
 			ImGui::EndPopup();
 		}
 
-		if (ImGui::Button("Give Weapon"))
+		if (ImGui::Button(Localization::Translate("Give Weapon").c_str()))
 		{
 			FiberPool::Push([] {
 				Self::GetPed().GiveWeapon(selectedWeaponHash, true);
 			});
 		}
 		ImGui::SameLine();
-		if (ImGui::Button("Remove Weapon"))
+		if (ImGui::Button(Localization::Translate("Remove Weapon").c_str()))
 		{
 			FiberPool::Push([] {
 				Self::GetPed().RemoveWeapon(selectedWeaponHash);
@@ -157,11 +158,11 @@ namespace YimMenu::Submenus
 
 		if (*Pointers.IsSessionStarted && selectedWeaponHash != 0)
 		{
-			ImGui::Text("Kills With: %d", kills);
-			ImGui::Text("Deaths By: %d", deaths);
-			ImGui::Text("K/D Ratio: %.2f", kdRatio);
-			ImGui::Text("Headshots: %d", headshots);
-			ImGui::Text("Accuracy: %d%%", accuracy);
+			ImGui::Text(Localization::Translate("Kills With: %d").c_str(), kills);
+			ImGui::Text(Localization::Translate("Deaths By: %d").c_str(), deaths);
+			ImGui::Text(Localization::Translate("K/D Ratio: %.2f").c_str(), kdRatio);
+			ImGui::Text(Localization::Translate("Headshots: %d").c_str(), headshots);
+			ImGui::Text(Localization::Translate("Accuracy: %d%%").c_str(), accuracy);
 		}
 	}
 

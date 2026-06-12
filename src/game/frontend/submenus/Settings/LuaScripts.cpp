@@ -1,6 +1,7 @@
 #include "LuaScripts.hpp"
 #include "core/backend/ScriptMgr.hpp"
 #include "core/backend/FiberPool.hpp"
+#include "core/localization/Localization.hpp"
 #include "core/scripting/LuaManager.hpp"
 #include "core/frontend/widgets/imgui_colors.h"
 
@@ -35,7 +36,7 @@ namespace YimMenu::Submenus
 
 					if (ImGui::IsItemHovered())
 					{
-						ImGui::SetTooltip("Click to load this script");
+						ImGui::SetTooltip("%s", "点击以加载该脚本");
 					}
 				});
 
@@ -59,7 +60,7 @@ namespace YimMenu::Submenus
 				ImGui::Text("%s", selectedScript->GetName().data());
 
 				bool paused = selectedScript->GetLoadState() == LuaScript::LoadState::PAUSED;
-				if (ImGui::Button(paused ? "Resume" : "Pause"))
+				if (ImGui::Button(Localization::Translate(paused ? "Resume" : "Pause").c_str()))
 				{
 					if (paused)
 						selectedScript->Resume();
@@ -67,12 +68,12 @@ namespace YimMenu::Submenus
 						selectedScript->Pause();
 				}
 				ImGui::SameLine();
-				if (ImGui::Button("Reload"))
+				if (ImGui::Button(Localization::Translate("Reload").c_str()))
 				{
 					selectedScript->Reload();
 				}
 				ImGui::SameLine();
-				if (ImGui::Button("Unload"))
+				if (ImGui::Button(Localization::Translate("Unload").c_str()))
 				{
 					selectedScript->Unload();
 				}

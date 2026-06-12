@@ -2,6 +2,7 @@
 
 #include "core/frontend/Notifications.hpp"
 #include "core/backend/FiberPool.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/SavedLocations.hpp"
 #include "game/backend/Self.hpp"
 #include "game/frontend/items/Items.hpp"
@@ -25,18 +26,18 @@ namespace YimMenu::Submenus
 
 		if (ImGui::BeginPopupModal("##deletelocation", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove))
 		{
-			ImGui::Text("Are you sure you want to delete %s?", locationToDelete.name.data());
+			ImGui::Text(Localization::Translate("Are you sure you want to delete %s?").c_str(), locationToDelete.name.data());
 
 			ImGui::Spacing();
 
-			if (ImGui::Button("Yes"))
+			if (ImGui::Button(Localization::Translate("Yes").c_str()))
 			{
 				SavedLocations::DeleteSavedLocation(category, locationToDelete.name);
 				locationToDelete.name = "";
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::SameLine();
-			if (ImGui::Button("No"))
+			if (ImGui::Button(Localization::Translate("No").c_str()))
 			{
 				locationToDelete.name = "";
 				ImGui::CloseCurrentPopup();
@@ -52,7 +53,7 @@ namespace YimMenu::Submenus
 		InputTextWithHint("Location name", "New location", &newLocationName).Draw();
 		ImGui::PopItemWidth();
 
-		if (ImGui::Button("Save current location")) // Button widget still crashes
+		if (ImGui::Button(Localization::Translate("Save current location").c_str())) // Button widget still crashes
 		{
 			FiberPool::Push([=] {
 				if (newLocationName.empty())
@@ -86,7 +87,7 @@ namespace YimMenu::Submenus
 
 		ImGui::Separator();
 
-		ImGui::Text("Double click to teleport\nShift click to delete");
+		ImGui::Text("%s", Localization::Translate("Double click to teleport\nShift click to delete").c_str());
 
 		ImGui::Spacing();
 
@@ -94,7 +95,7 @@ namespace YimMenu::Submenus
 		InputTextWithHint("##filter", "Search", &filter).Draw();
 
 		ImGui::BeginGroup();
-		ImGui::Text("Categories");
+		ImGui::Text("%s", Localization::Translate("Categories").c_str());
 		if (ImGui::BeginListBox("##categories", {200, -1}))
 		{
 			for (auto& l : SavedLocations::GetAllSavedLocations() | std::ranges::views::keys)
@@ -114,7 +115,7 @@ namespace YimMenu::Submenus
 		ImGui::EndGroup();
 		ImGui::SameLine();
 		ImGui::BeginGroup();
-		ImGui::Text("Locations");
+		ImGui::Text("%s", Localization::Translate("Locations").c_str());
 		if (ImGui::BeginListBox("##saved_locs", {200, -1})) // Need automatic dimensions instead of hard coded
 		{
 			if (SavedLocations::GetAllSavedLocations().find(category) != SavedLocations::GetAllSavedLocations().end())
@@ -151,7 +152,7 @@ namespace YimMenu::Submenus
 						ImGui::BeginTooltip();
 						if (l.name.length() > 27)
 							ImGui::Text("%s", l.name.data());
-						ImGui::Text("Distance: %f", GetDistanceFromLocation(l));
+						ImGui::Text(Localization::Translate("Distance: %f").c_str(), GetDistanceFromLocation(l));
 						ImGui::EndTooltip();
 					}
 				}

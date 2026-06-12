@@ -3,6 +3,7 @@
 #include "core/backend/ScriptMgr.hpp"
 #include "core/backend/FiberPool.hpp"
 #include "core/frontend/Notifications.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/backend/Self.hpp"
 #include "game/backend/PersonalVehicles.hpp"
 #include "game/gta/data/Vehicles.hpp"
@@ -65,9 +66,10 @@ namespace YimMenu::Submenus
 			ImGui::InputTextWithHint("Name", "Search", search, sizeof(search));
 
 			ImGui::SetNextItemWidth(300.f);
-			if (ImGui::BeginCombo("Class", selectedClass == -1 ? "All" : g_VehicleClassNames[selectedClass]))
+			const auto allText = Localization::Translate("All");
+			if (ImGui::BeginCombo(Localization::Translate("Class").c_str(), selectedClass == -1 ? allText.c_str() : g_VehicleClassNames[selectedClass]))
 			{
-				if (ImGui::Selectable("All", selectedClass == -1))
+				if (ImGui::Selectable(allText.c_str(), selectedClass == -1))
 				{
 					selectedClass = -1;
 				}
@@ -89,7 +91,7 @@ namespace YimMenu::Submenus
 			{
 				if (vehicleNames.empty())
 				{
-					ImGui::Text("Natives not cached yet.");
+					ImGui::Text("%s", Localization::Translate("Natives not cached yet.").c_str());
 				}
 				else
 				{
@@ -147,7 +149,7 @@ namespace YimMenu::Submenus
 
 		spawn->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!*Pointers.IsSessionStarted)
-				return ImGui::TextDisabled("Join GTA Online.");
+				return ImGui::TextDisabled("%s", "请先进入 GTA 在线模式。");
 
 			PersonalVehicles::Update();
 
@@ -156,9 +158,10 @@ namespace YimMenu::Submenus
 			ImGui::InputTextWithHint("Name", "Search", search, sizeof(search));
 
 			ImGui::SetNextItemWidth(300.f);
-			if (ImGui::BeginCombo("Garage", selectedGarageStr.empty() ? "All" : selectedGarageStr.c_str()))
+			const auto allText = Localization::Translate("All");
+			if (ImGui::BeginCombo(Localization::Translate("Garage").c_str(), selectedGarageStr.empty() ? allText.c_str() : selectedGarageStr.c_str()))
 			{
-				if (ImGui::Selectable("All", selectedGarageStr.empty()))
+				if (ImGui::Selectable(allText.c_str(), selectedGarageStr.empty()))
 				{
 					selectedGarageStr.clear();
 				}
@@ -179,7 +182,7 @@ namespace YimMenu::Submenus
 			{
 				if (PersonalVehicles::GetPersonalVehicles().empty())
 				{
-					ImGui::Text("Stats not loaded yet.");
+					ImGui::Text("%s", Localization::Translate("Stats not loaded yet.").c_str());
 				}
 				else
 				{
@@ -213,7 +216,7 @@ namespace YimMenu::Submenus
 									else
 									{
 										if (!personalVeh->Request(spawnInsidePersonalVehicle.GetState()))
-											Notifications::Show("Spawn Personal Vehicle", "Failed to spawn Personal Vehicle.", NotificationType::Error);
+											Notifications::Show("生成个人载具", "生成个人载具失败。", NotificationType::Error);
 									}
 								});
 							}

@@ -18,6 +18,7 @@
 #include "submenus/Debug.hpp"
 #include "submenus/World.hpp"
 #include "core/filemgr/FileMgr.hpp"
+#include "core/localization/Localization.hpp"
 #include "core/memory/ModuleMgr.hpp"
 #include "Onboarding.hpp"
 #include "core/frontend/manager/styles/Themes.hpp"
@@ -55,32 +56,24 @@ namespace YimMenu
 		    -1);
 	}
 
-	static const ImWchar* GetGlyphRangesCyrillicOnly()
-	{
-		static const ImWchar ranges[] =
-		    {
-		        0x0400,
-		        0x052F, // Cyrillic + Cyrillic Supplement
-		        0x2DE0,
-		        0x2DFF, // Cyrillic Extended-A
-		        0xA640,
-		        0xA69F, // Cyrillic Extended-B
-		        0,
-		    };
-		return &ranges[0];
-	}
-
-	static ImFont* CreateFontWithCyrillicSupport(ImGuiIO& io, float size)
+	static ImFont* CreateFontWithCjkSupport(ImGuiIO& io, float size)
 	{
 		ImFontConfig FontCfg{};
 		FontCfg.FontDataOwnedByAtlas = false;
 
 		auto font = io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(Fonts::MainFont), sizeof(Fonts::MainFont), size, &FontCfg, io.Fonts->GetGlyphRangesDefault());
 
-		// just use Arial for Cyrillic
-
 		FontCfg.MergeMode = true;
-		io.Fonts->AddFontFromFileTTF((std::filesystem::path(std::getenv("SYSTEMROOT")) / "Fonts" / "arial.ttf").string().c_str(), size, &FontCfg, GetGlyphRangesCyrillicOnly());
+		const auto fontsPath = std::filesystem::path(std::getenv("SYSTEMROOT")) / "Fonts";
+		for (const auto& candidate : {"msyh.ttc", "msyhbd.ttc", "simhei.ttf", "simsun.ttc", "arialuni.ttf"})
+		{
+			auto fullPath = fontsPath / candidate;
+			if (std::filesystem::exists(fullPath))
+			{
+				io.Fonts->AddFontFromFileTTF(fullPath.string().c_str(), size, &FontCfg, io.Fonts->GetGlyphRangesChineseFull());
+				break;
+			}
+		}
 
 		io.Fonts->Build();
 
@@ -98,11 +91,11 @@ namespace YimMenu
 		FontCfg.FontDataOwnedByAtlas = false;
 
 		IO.Fonts->Clear();
-		Menu::Font::g_DefaultFont = CreateFontWithCyrillicSupport(IO, Menu::Font::g_DefaultFontSize);
-		Menu::Font::g_OptionsFont = CreateFontWithCyrillicSupport(IO, Menu::Font::g_OptionsFontSize);
-		Menu::Font::g_ChildTitleFont = CreateFontWithCyrillicSupport(IO, Menu::Font::g_ChildTitleFontSize);
-		Menu::Font::g_ChatFont = CreateFontWithCyrillicSupport(IO, Menu::Font::g_ChatFontSize);
-		Menu::Font::g_OverlayFont = CreateFontWithCyrillicSupport(IO, Menu::Font::g_OverlayFontSize);
+		Menu::Font::g_DefaultFont = CreateFontWithCjkSupport(IO, Menu::Font::g_DefaultFontSize);
+		Menu::Font::g_OptionsFont = CreateFontWithCjkSupport(IO, Menu::Font::g_OptionsFontSize);
+		Menu::Font::g_ChildTitleFont = CreateFontWithCjkSupport(IO, Menu::Font::g_ChildTitleFontSize);
+		Menu::Font::g_ChatFont = CreateFontWithCjkSupport(IO, Menu::Font::g_ChatFontSize);
+		Menu::Font::g_OverlayFont = CreateFontWithCjkSupport(IO, Menu::Font::g_OverlayFontSize);
 		static const ImWchar full_range[] = {0x0020, 0xFFFF, 0};
 		Menu::Font::g_AwesomeFont = IO.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(Fonts::IconFont), sizeof(Fonts::IconFont), Menu::Font::g_AwesomeFontSize, &FontCfg, full_range);
 

@@ -311,7 +311,7 @@ namespace YimMenu
 		InitializeColorCommands();
 		auto imGuiCustomStyle = std::make_shared<Category>("Customize");
 		imGuiCustomStyle->AddItem(std::make_unique<ImGuiItem>([] {
-			ImGui::Text("ImGui Style Editor");
+			ImGui::Text("%s", "ImGui 样式编辑器");
 			ImGui::Separator();
 			if (ImGui::BeginTabBar("StyleTabs"))
 			{

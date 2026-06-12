@@ -1,5 +1,6 @@
 #include "Network.hpp"
 #include "core/backend/FiberPool.hpp"
+#include "core/localization/Localization.hpp"
 #include "core/frontend/Notifications.hpp"
 #include "game/frontend/items/Items.hpp"
 #include "game/frontend/submenus/Network/SavedPlayers.hpp"
@@ -32,9 +33,9 @@ namespace YimMenu::Submenus
 			static char name_buf[24]{};
 
 			ImGui::SetNextItemWidth(150.0f);
-			ImGui::InputText("Username", name_buf, sizeof(name_buf));
+			ImGui::InputText(Localization::Translate("Username").c_str(), name_buf, sizeof(name_buf));
 			ImGui::SameLine();
-			if (ImGui::Button("Join##username"))
+			if (ImGui::Button(Localization::TranslateLabel("Join##username").c_str()))
 				FiberPool::Push([] {
 					auto rid = YimMenu::Network::ResolveRockstarId(name_buf);
 					if (rid)
@@ -43,14 +44,14 @@ namespace YimMenu::Submenus
 					}
 					else
 					{
-						Notifications::Show("Joiner", "Failed to get RID from username", NotificationType::Error);
+						Notifications::Show("加入器", "无法通过用户名获取 RID", NotificationType::Error);
 					}
 				});
 
 			ImGui::SetNextItemWidth(150.0f);
-			ImGui::InputScalar("Rockstar Id", ImGuiDataType_U64, &rockstar_id);
+			ImGui::InputScalar("Rockstar ID", ImGuiDataType_U64, &rockstar_id);
 			ImGui::SameLine();
-			if (ImGui::Button("Join##rid"))
+			if (ImGui::Button(Localization::TranslateLabel("Join##rid").c_str()))
 				FiberPool::Push([] {
 					YimMenu::Network::JoinRockstarId(rockstar_id);
 				});

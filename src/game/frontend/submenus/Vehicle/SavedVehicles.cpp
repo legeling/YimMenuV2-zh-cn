@@ -3,6 +3,7 @@
 #include "core/backend/FiberPool.hpp"
 #include "core/backend/ScriptMgr.hpp"
 #include "core/frontend/Notifications.hpp"
+#include "core/localization/Localization.hpp"
 #include "core/util/Strings.hpp"
 #include "game/backend/Self.hpp"
 #include "game/backend/SavedVehicles.hpp"
@@ -36,7 +37,7 @@ namespace YimMenu::Submenus
 
 						if (!TrimString(fileName).size())
 						{
-							Notifications::Show("Saved Vehicles", "Filename empty!", NotificationType::Warning);
+							Notifications::Show("已保存载具", "文件名不能为空！", NotificationType::Warning);
 							return;
 						}
 
@@ -67,10 +68,11 @@ namespace YimMenu::Submenus
 				});
 
 			ImGui::SetNextItemWidth(300.f);
-			auto folder_display = folder.empty() ? "Root" : folder.c_str();
-			if (ImGui::BeginCombo("Folder", folder_display))
+			auto rootText = Localization::Translate("Root");
+			auto folder_display = folder.empty() ? rootText.c_str() : folder.c_str();
+			if (ImGui::BeginCombo(Localization::Translate("Folder").c_str(), folder_display))
 			{
-				if (ImGui::Selectable("Root", folder == ""))
+				if (ImGui::Selectable(rootText.c_str(), folder == ""))
 				{
 					folder.clear();
 					FiberPool::Push([] {
@@ -97,7 +99,7 @@ namespace YimMenu::Submenus
 			if (ImGui::InputTextWithHint("###veh_name", "Search", &search))
 				std::transform(search.begin(), search.end(), search.begin(), tolower);
 
-			ImGui::Text("Saved Vehicles");
+			ImGui::Text("%s", Localization::Translate("Saved Vehicles").c_str());
 
 			static const auto over_30 = (30 * ImGui::GetTextLineHeightWithSpacing() + 2);
 			const auto box_height = files.size() <= 30 ? (files.size() * ImGui::GetTextLineHeightWithSpacing() + 2) : over_30;
@@ -123,13 +125,13 @@ namespace YimMenu::Submenus
 			ImGui::SameLine();
 			ImGui::BeginGroup();
 			{
-				ImGui::Text("File Name");
+				ImGui::Text("%s", Localization::Translate("File Name").c_str());
 				ImGui::SetNextItemWidth(250);
 				ImGui::InputText("##vehiclefilename", vehicle_file_name_input, IM_ARRAYSIZE(vehicle_file_name_input));
 
 				if (folder.empty())
 				{
-					ImGui::Text("Folder Name");
+					ImGui::Text("%s", Localization::Translate("Folder Name").c_str());
 					ImGui::SetNextItemWidth(250);
 					ImGui::InputText("##foldername", newFolder, IM_ARRAYSIZE(newFolder));
 					drawSaveVehicleButton(true);
@@ -143,7 +145,7 @@ namespace YimMenu::Submenus
 				ImGui::OpenPopup("##spawncarmodel2");
 			if (ImGui::BeginPopupModal("##spawncarmodel2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove))
 			{
-				ImGui::Text("Are you sure you want to spawn %s", file.c_str());
+				ImGui::Text("确定要生成 %s 吗？", file.c_str());
 				ImGui::Spacing();
 				if (ImGui::Button("Yes"))
 				{

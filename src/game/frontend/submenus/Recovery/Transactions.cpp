@@ -3,6 +3,7 @@
 #include "core/backend/ScriptMgr.hpp"
 #include "core/frontend/Notifications.hpp"
 #include "core/frontend/widgets/imgui_colors.h"
+#include "core/localization/Localization.hpp"
 #include "game/backend/AnticheatBypass.hpp"
 #include "game/gta/Natives.hpp"
 #include "game/gta/Scripts.hpp"
@@ -455,17 +456,17 @@ namespace YimMenu::Submenus
 			}
 
 			ImGui::SetNextItemWidth(180.0f);
-			if (ImGui::InputScalar("Quantity", ImGuiDataType_U32, &item.m_Quantity))
+			if (ImGui::InputScalar(Localization::Translate("Quantity").c_str(), ImGuiDataType_U32, &item.m_Quantity))
 			{
 				if (item.m_Quantity == 0)
 					item_to_delete = i; // assume the user wants this item gone
 			}
 
 			ImGui::SetNextItemWidth(180.0f);
-			ImGui::InputInt("Price", &item.m_Price);
+			ImGui::InputInt(Localization::Translate("Price").c_str(), &item.m_Price);
 
 			ImGui::SetNextItemWidth(180.0f);
-			ImGui::InputInt("Stat Value", &item.m_StatValue); // I'm not actually sure what this does ngl
+			ImGui::InputInt(Localization::Translate("Stat Value").c_str(), &item.m_StatValue); // I'm not actually sure what this does ngl
 
 			if (info.m_Basket.m_BasketItems.size() > 1 && ImGui::Button("Delete"))
 				item_to_delete = i;
@@ -491,7 +492,7 @@ namespace YimMenu::Submenus
 		if (info.m_Service.m_Item.m_IntendedPrice != 0 || info.m_Action.m_Hash != "NET_SHOP_ACTION_EARN"_J)
 		{
 			ImGui::SetNextItemWidth(180.0f);
-			ImGui::InputInt("Price", &info.m_Service.m_Price);
+			ImGui::InputInt(Localization::Translate("Price").c_str(), &info.m_Service.m_Price);
 			if (info.m_Service.m_Price > info.m_Service.m_Item.m_IntendedPrice && info.m_Action.m_Hash == "NET_SHOP_ACTION_EARN"_J)
 			{
 				SetTransactionError(std::format("Item price exceeds maximum allowed ({})", info.m_Service.m_Item.m_IntendedPrice));
@@ -507,13 +508,13 @@ namespace YimMenu::Submenus
 
 		normal->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!NativeInvoker::AreHandlersCached())
-				return ImGui::TextDisabled("Natives not cached yet");
+				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet.").c_str());
 
 			if (AnticheatBypass::IsFSLProvidingLocalSaves())
-				return ImGui::TextDisabled("Transactions are not supported with FSL local saves enabled");
+				return ImGui::TextDisabled("%s", "启用 FSL 本地存档时不支持交易功能");
 
 			if (!NETSHOPPING::NET_GAMESERVER_CATALOG_IS_VALID())
-				return ImGui::TextDisabled("Catalog not loaded yet");
+				return ImGui::TextDisabled("%s", "目录尚未加载");
 
 			ImGui::Text("Warning: You are solely responsible for what you do with this tool. If you don't know what you're doing, you'll likely get banned");
 
@@ -521,11 +522,11 @@ namespace YimMenu::Submenus
 			bool txn_valid{true};
 
 			ImGui::SetNextItemWidth(180.0f);
-			if (ImGui::Combo("Type", reinterpret_cast<int*>(&info.m_Type), "Basket\0Service\0"))
+			if (ImGui::Combo(Localization::Translate("Type").c_str(), reinterpret_cast<int*>(&info.m_Type), "购物篮\0服务\0"))
 				OnTransactionTypeChanged(info);
 
 			ImGui::SetNextItemWidth(250.0f);
-			if (ImGui::BeginCombo("Category", info.m_Category.m_Name))
+			if (ImGui::BeginCombo(Localization::Translate("Category").c_str(), info.m_Category.m_Name))
 			{
 				for (auto& item : NET_SHOP_CATEGORIES)
 				{
@@ -545,7 +546,7 @@ namespace YimMenu::Submenus
 			}
 
 			ImGui::SetNextItemWidth(250.0f);
-			if (ImGui::BeginCombo("Action", info.m_Action.m_Name))
+			if (ImGui::BeginCombo(Localization::Translate("Action").c_str(), info.m_Action.m_Name))
 			{
 				for (auto& item : NET_SHOP_ACTIONS)
 				{
