@@ -63,7 +63,7 @@ namespace YimMenu::Submenus
 
 			static char search[64];
 			ImGui::SetNextItemWidth(300.f);
-			ImGui::InputTextWithHint("Name", "Search", search, sizeof(search));
+			ImGui::InputTextWithHint(Localization::Translate("Name").c_str(), Localization::Translate("Search").c_str(), search, sizeof(search));
 
 			ImGui::SetNextItemWidth(300.f);
 			const auto allText = Localization::Translate("All");
@@ -149,13 +149,13 @@ namespace YimMenu::Submenus
 
 		spawn->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!*Pointers.IsSessionStarted)
-				return ImGui::TextDisabled("%s", "请先进入 GTA 在线模式。");
+				return ImGui::TextDisabled("%s", Localization::Translate("Please enter GTA Online first.").c_str());
 
 			PersonalVehicles::Update();
 
 			static char search[64];
 			ImGui::SetNextItemWidth(300.f);
-			ImGui::InputTextWithHint("Name", "Search", search, sizeof(search));
+			ImGui::InputTextWithHint(Localization::Translate("Name").c_str(), Localization::Translate("Search").c_str(), search, sizeof(search));
 
 			ImGui::SetNextItemWidth(300.f);
 			const auto allText = Localization::Translate("All");

@@ -337,21 +337,21 @@ namespace YimMenu::Submenus
 			}
 
 			if (!current_info.IsValid())
-				return ImGui::TextDisabled("%s", "未找到该属性");
+				return ImGui::TextDisabled("%s", Localization::Translate("Stat not found").c_str());
 			else if (current_info.m_Normalized)
 			{
-				ImGui::Text("Normalized name to: %s", current_info.m_Name.data());
+				ImGui::Text(Localization::Translate("Normalized name to: %s").c_str(), current_info.m_Name.data());
 			}
 
 			bool can_edit = !current_info.m_Data->IsControlledByNetshop();
 
 			RenderStatEditor(value, current_info.m_Data);
 
-			if (ImGui::Button("Refresh"))
+			if (ImGui::Button(Localization::Translate("Refresh").c_str()))
 				ReadStat(value, current_info.m_Data);
 			ImGui::SameLine();
 			ImGui::BeginDisabled(!can_edit);
-			if (ImGui::Button("Write"))
+			if (ImGui::Button(Localization::Translate("Write").c_str()))
 				FiberPool::Push([] {
 					WriteStat(current_info.m_NameHash, value, current_info.m_Data);
 				});
@@ -360,7 +360,7 @@ namespace YimMenu::Submenus
 					WriteStat(current_info.m_NameHash, value, current_info.m_Data);
 				});
 			if (!can_edit && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
-				ImGui::SetTooltip("This stat should not be edited by the client. Right-click to force the write anyway");
+				ImGui::SetTooltip("%s", Localization::Translate("This stat should not be edited by the client. Right-click to force the write anyway").c_str());
 			ImGui::EndDisabled();
 		}));
 
@@ -381,14 +381,14 @@ namespace YimMenu::Submenus
 			}
 
 			if (!current_info.IsValid())
-				return ImGui::TextDisabled("%s", "索引无效");
+				return ImGui::TextDisabled("%s", Localization::Translate("Invalid index").c_str());
 
 			RenderPackedStatEditor(value, current_info);
 
-			if (ImGui::Button("Refresh##packed"))
+			if (ImGui::Button(Localization::TranslateLabel("Refresh##packed").c_str()))
 				ReadPackedStat(value, current_info);
 			ImGui::SameLine();
-			if (ImGui::Button("Write##packed"))
+			if (ImGui::Button(Localization::TranslateLabel("Write##packed").c_str()))
 				FiberPool::Push([] {
 					WritePackedStat(value, current_info);
 				});
@@ -408,7 +408,7 @@ namespace YimMenu::Submenus
 			ImGui::SetNextItemWidth(150.f);
 			ImGui::InputScalar(Localization::TranslateLabel("Value##packed_range").c_str(), ImGuiDataType_U8, &value);
 			ImGui::SameLine();
-			if (ImGui::Button("Write##packed_range"))
+			if (ImGui::Button(Localization::TranslateLabel("Write##packed_range").c_str()))
 				FiberPool::Push([] {
 					WritePackedStatRange(start, end, value);
 				});
@@ -418,7 +418,7 @@ namespace YimMenu::Submenus
 			if (!NativeInvoker::AreHandlersCached())
 				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet.").c_str());
 
-			if (ImGui::Button("Load from Clipboard"))
+			if (ImGui::Button(Localization::Translate("Load from Clipboard").c_str()))
 			{
 				auto clip_text = std::string(ImGui::GetClipboardText());
 				FiberPool::Push([clip_text] {

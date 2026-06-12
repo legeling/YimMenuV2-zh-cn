@@ -3,6 +3,7 @@
 #include "core/commands/Command.hpp"
 #include "core/commands/FloatCommand.hpp"
 #include "core/frontend/manager/styles/Themes.hpp"
+#include "core/localization/Localization.hpp"
 #include <regex>
 
 namespace YimMenu
@@ -217,7 +218,7 @@ namespace YimMenu
 	static void DrawColorsTab()
 	{
 		bool changed = false;
-		ImGui::Text("Modify Colors:");
+		ImGui::Text("%s", Localization::Translate("Modify Colors:").c_str());
 		ImGui::Separator();
 		for (int i = 0; i < ImGuiCol_COUNT; ++i)
 		{
@@ -240,7 +241,7 @@ namespace YimMenu
 	static void DrawRoundingTab()
 	{
 		bool changed = false;
-		ImGui::Text("Adjust Rounding:");
+		ImGui::Text("%s", Localization::Translate("Adjust Rounding:").c_str());
 		ImGui::Separator();
 		for (auto& [k, v] : g_RoundingValues)
 			if (ImGui::SliderFloat(PrettyPrintLabel(k).c_str(), &v, 0.0f, 20.0f, "%.1f"))
@@ -256,7 +257,7 @@ namespace YimMenu
 	static void DrawLayoutTab()
 	{
 		auto& s = ImGui::GetStyle();
-		ImGui::Text("Layout & Alignment:");
+		ImGui::Text("%s", Localization::Translate("Layout & Alignment:").c_str());
 		ImGui::Separator();
 		DrawStyleVec2("WindowPadding", s.WindowPadding.x, s.WindowPadding.y, 0.f, 32.f);
 		DrawStyleVec2("ItemSpacing", s.ItemSpacing.x, s.ItemSpacing.y, 0.f, 32.f);
@@ -275,7 +276,7 @@ namespace YimMenu
 	static void DrawBorderTab()
 	{
 		auto& s = ImGui::GetStyle();
-		ImGui::Text("Border Sizes:");
+		ImGui::Text("%s", Localization::Translate("Border Sizes:").c_str());
 		ImGui::Separator();
 		DrawStyleFloat("WindowBorderSize", s.WindowBorderSize, 0.f, 8.f);
 		DrawStyleFloat("FrameBorderSize", s.FrameBorderSize, 0.f, 8.f);
@@ -286,7 +287,7 @@ namespace YimMenu
 	static void DrawGlobalTab()
 	{
 		auto& s = ImGui::GetStyle();
-		ImGui::Text("Global Settings:");
+		ImGui::Text("%s", Localization::Translate("Global Settings:").c_str());
 		ImGui::Separator();
 		DrawStyleFloat("GlobalAlpha", s.Alpha, 0.1f, 1.f);
 		DrawStyleFloat("DisabledAlpha", s.DisabledAlpha, 0.f, 1.f);
@@ -298,11 +299,11 @@ namespace YimMenu
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		static float scale = io.FontGlobalScale;
-		ImGui::Text("Font Configuration:");
+		ImGui::Text("%s", Localization::Translate("Font Configuration:").c_str());
 		ImGui::Separator();
-		ImGui::Text("Current Scale: %.2f", io.FontGlobalScale);
+		ImGui::Text(Localization::Translate("Current Scale: %.2f").c_str(), io.FontGlobalScale);
 		ImGui::SliderFloat("Font Scale", &scale, 0.5f, 2.0f, "%.2f");
-		if (ImGui::Button("Apply Font Scale"))
+		if (ImGui::Button(Localization::Translate("Apply Font Scale").c_str()))
 			io.FontGlobalScale = scale;
 	}
 
@@ -311,36 +312,36 @@ namespace YimMenu
 		InitializeColorCommands();
 		auto imGuiCustomStyle = std::make_shared<Category>("Customize");
 		imGuiCustomStyle->AddItem(std::make_unique<ImGuiItem>([] {
-			ImGui::Text("%s", "ImGui 样式编辑器");
+			ImGui::Text("%s", Localization::Translate("ImGui Style Editor").c_str());
 			ImGui::Separator();
 			if (ImGui::BeginTabBar("StyleTabs"))
 			{
-				if (ImGui::BeginTabItem("Colors"))
+				if (ImGui::BeginTabItem(Localization::Translate("Colors").c_str()))
 				{
 					DrawColorsTab();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Rounding"))
+				if (ImGui::BeginTabItem(Localization::Translate("Rounding").c_str()))
 				{
 					DrawRoundingTab();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Layout"))
+				if (ImGui::BeginTabItem(Localization::Translate("Layout").c_str()))
 				{
 					DrawLayoutTab();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Border"))
+				if (ImGui::BeginTabItem(Localization::Translate("Border").c_str()))
 				{
 					DrawBorderTab();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Global"))
+				if (ImGui::BeginTabItem(Localization::Translate("Global").c_str()))
 				{
 					DrawGlobalTab();
 					ImGui::EndTabItem();
 				}
-				if (ImGui::BeginTabItem("Fonts"))
+				if (ImGui::BeginTabItem(Localization::Translate("Fonts").c_str()))
 				{
 					DrawFontTab();
 					ImGui::EndTabItem();

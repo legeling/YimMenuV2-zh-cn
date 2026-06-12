@@ -153,6 +153,11 @@ namespace YimMenu::Localization
 		    {"Saved Vehicles"sv, "已保存载具"sv},
 		    {"New Vehicle"sv, "新载具"sv},
 		    {"Personal Vehicle"sv, "个人载具"sv},
+		    {"Are you sure you want to spawn %s?"sv, "确定要生成 %s 吗？"sv},
+		    {"Please enter GTA Online first."sv, "请先进入 GTA 在线模式。"sv},
+		    {"ImGui Style Editor"sv, "ImGui 样式编辑器"sv},
+		    {"Stat not found"sv, "未找到该属性"sv},
+		    {"Invalid index"sv, "索引无效"sv},
 		    {"Type"sv, "类型"sv},
 		    {"Category"sv, "分类"sv},
 		    {"Action"sv, "操作"sv},
@@ -1064,6 +1069,13 @@ namespace YimMenu::Localization
 		    ,{"This Treasure Chest has already been collected."sv, "该宝箱已被收集。"sv}
 		    ,{"This animal has already been photographed."sv, "该动物已被拍摄。"sv}
 		    ,{"This item has been blocked for your safety"sv, "出于安全考虑，该项目已被屏蔽"sv}
+		    ,{"Item not found!"sv, "未找到该项目！"sv}
+		    ,{"Item category {} does not match txn category {}"sv, "项目分类 {} 与交易分类 {} 不匹配"sv}
+		    ,{"Item price exceeds maximum allowed ({})"sv, "项目价格超过允许的最大值（{}）"sv}
+		    ,{"Failed to create basket"sv, "创建购物篮失败"sv}
+		    ,{"Failed to add {} (x{}) to basket"sv, "添加 {}（x{}）到购物篮失败"sv}
+		    ,{"Failed to create service"sv, "创建服务失败"sv}
+		    ,{"Failed to begin checkout"sv, "开始结账失败"sv}
 		    ,{"This product has already been collected."sv, "该货物已被收集。"sv}
 		    ,{"This stat should not be edited by the client. Right-click to force the write anyway"sv, "该属性不应由客户端修改。右键仍可强制写入"sv}
 		    ,{"This vehicle cannot be saved as a personal vehicle."sv, "该载具无法保存为个人载具。"sv}

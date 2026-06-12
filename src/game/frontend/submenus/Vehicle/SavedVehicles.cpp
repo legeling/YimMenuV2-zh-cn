@@ -30,7 +30,7 @@ namespace YimMenu::Submenus
 				if (!Self::GetVehicle() || !Self::GetVehicle().IsValid())
 					return;
 
-				if (ImGui::Button("Save"))
+				if (ImGui::Button(Localization::Translate("Save").c_str()))
 					FiberPool::Push([saveToNewFolder] {
 						std::string fileName = vehicle_file_name_input;
 						strcpy(vehicle_file_name_input, "");
@@ -55,14 +55,14 @@ namespace YimMenu::Submenus
 						SavedVehicles::RefreshList(folder, folders, files);
 					});
 				ImGui::SameLine();
-				if (ImGui::Button("Populate Name"))
+				if (ImGui::Button(Localization::Translate("Populate Name").c_str()))
 					FiberPool::Push([] {
 						std::string name = Self::GetVehicle().GetFullName();
 						strcpy(vehicle_file_name_input, name.c_str());
 					});
 			};
 
-			if (ImGui::Button("Refresh List"))
+			if (ImGui::Button(Localization::Translate("Refresh List").c_str()))
 				FiberPool::Push([] {
 					SavedVehicles::RefreshList(folder, folders, files);
 				});
@@ -96,7 +96,7 @@ namespace YimMenu::Submenus
 			static std::string search;
 
 			ImGui::SetNextItemWidth(300);
-			if (ImGui::InputTextWithHint("###veh_name", "Search", &search))
+			if (ImGui::InputTextWithHint("###veh_name", Localization::Translate("Search").c_str(), &search))
 				std::transform(search.begin(), search.end(), search.begin(), tolower);
 
 			ImGui::Text("%s", Localization::Translate("Saved Vehicles").c_str());
@@ -145,9 +145,9 @@ namespace YimMenu::Submenus
 				ImGui::OpenPopup("##spawncarmodel2");
 			if (ImGui::BeginPopupModal("##spawncarmodel2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove))
 			{
-				ImGui::Text("确定要生成 %s 吗？", file.c_str());
+				ImGui::Text(Localization::Translate("Are you sure you want to spawn %s?").c_str(), file.c_str());
 				ImGui::Spacing();
-				if (ImGui::Button("Yes"))
+				if (ImGui::Button(Localization::Translate("Yes").c_str()))
 				{
 					FiberPool::Push([] {
 						SavedVehicles::Load(folder, file, spawnInsideSavedVehicle.GetState());
@@ -156,7 +156,7 @@ namespace YimMenu::Submenus
 					ImGui::CloseCurrentPopup();
 				}
 				ImGui::SameLine();
-				if (ImGui::Button("No"))
+				if (ImGui::Button(Localization::Translate("No").c_str()))
 				{
 					open_modal = false;
 					ImGui::CloseCurrentPopup();

@@ -195,7 +195,7 @@ namespace YimMenu::Submenus
 
 					if (!NETSHOPPING::NET_GAMESERVER_BASKET_START(&txn_id, info.m_Category.m_Hash, info.m_Action.m_Hash, 4))
 					{
-						Notifications::Show("Transactions", "Failed to create basket", NotificationType::Error);
+						Notifications::Show(Localization::Translate("Transactions"), Localization::Translate("Failed to create basket"), NotificationType::Error);
 						txn_failed = true;
 						NETSHOPPING::NET_GAMESERVER_BASKET_END();
 						return;
@@ -220,8 +220,8 @@ namespace YimMenu::Submenus
 
 						if (!NETSHOPPING::NET_GAMESERVER_BASKET_ADD_ITEM(&scr_item, item.m_Quantity))
 						{
-							Notifications::Show("Transactions",
-							    std::format("Failed to add {} (x{}) to basket", item.m_PrimaryItem.m_Name, item.m_Quantity),
+							Notifications::Show(Localization::Translate("Transactions"),
+							    std::format(Localization::Translate("Failed to add {} (x{}) to basket"), item.m_PrimaryItem.m_Name, item.m_Quantity),
 							    NotificationType::Error);
 							txn_failed = true;
 							NETSHOPPING::NET_GAMESERVER_BASKET_END();
@@ -233,7 +233,7 @@ namespace YimMenu::Submenus
 				{
 					if (!NETSHOPPING::NET_GAMESERVER_BEGIN_SERVICE(&txn_id, info.m_Category.m_Hash, info.m_Service.m_Item.m_Hash, info.m_Action.m_Hash, info.m_Service.m_Price, 4))
 					{
-						Notifications::Show("Transactions", "Failed to create service", NotificationType::Error);
+						Notifications::Show(Localization::Translate("Transactions"), Localization::Translate("Failed to create service"), NotificationType::Error);
 						txn_failed = true;
 						return;
 					}
@@ -246,7 +246,7 @@ namespace YimMenu::Submenus
 
 				if (!NETSHOPPING::NET_GAMESERVER_CHECKOUT_START(txn_id))
 				{
-					Notifications::Show("Transactions", "Failed to begin checkout", NotificationType::Error);
+					Notifications::Show(Localization::Translate("Transactions"), Localization::Translate("Failed to begin checkout"), NotificationType::Error);
 					txn_failed = true;
 					return;
 				}
@@ -259,11 +259,11 @@ namespace YimMenu::Submenus
 
 				if (txn->m_Status == 3)
 				{
-					Notifications::Show("Transactions", "Transaction complete", NotificationType::Success);
+					Notifications::Show(Localization::Translate("Transactions"), Localization::Translate("Transaction complete"), NotificationType::Success);
 				}
 				else
 				{
-					Notifications::Show("Transactions", "Transaction failed", NotificationType::Error);
+					Notifications::Show(Localization::Translate("Transactions"), Localization::Translate("Transaction failed"), NotificationType::Error);
 				}
 			}
 		});
@@ -384,7 +384,7 @@ namespace YimMenu::Submenus
 		if (
 		    required ?
 		        ImGui::InputText(label.data(), item.m_Name, sizeof(item.m_Name)) :
-		        ImGui::InputTextWithHint(label.data(), "Optional", item.m_Name, sizeof(item.m_Name)))
+		        ImGui::InputTextWithHint(label.data(), Localization::Translate("Optional").c_str(), item.m_Name, sizeof(item.m_Name)))
 		{
 			item.m_Hash = Joaat(item.m_Name);
 			if (auto cat_item = Pointers.GetCatalogItem(Pointers.NetCatalog, &item.m_Hash))
@@ -404,7 +404,7 @@ namespace YimMenu::Submenus
 
 		if (!item.m_IsValid && !empty)
 		{
-			SetTransactionError("Item not found!");
+			SetTransactionError(Localization::Translate("Item not found!"));
 			is_valid = false;
 			return false;
 		}
@@ -412,7 +412,7 @@ namespace YimMenu::Submenus
 		// TODO: maybe not check this every tick?
 		if (BANNED_ITEM_HASHES.contains(item.m_Hash))
 		{
-			SetTransactionError("This item has been blocked for your safety");
+			SetTransactionError(Localization::Translate("This item has been blocked for your safety"));
 			is_valid = false;
 			return false;
 		}
@@ -421,13 +421,13 @@ namespace YimMenu::Submenus
 		{
 			if (info.m_Type == TransactionInfo::Type::SERVICE)
 			{
-				SetTransactionError(std::format("Item category {} does not match txn category {}", CategoryNameFromHash(item.m_IntendedCategory), info.m_Category.m_Name));
+				SetTransactionError(std::format(Localization::Translate("Item category {} does not match txn category {}"), CategoryNameFromHash(item.m_IntendedCategory), info.m_Category.m_Name));
 				is_valid = false;
 				return false;
 			}
 			else
 			{
-				SetTransactionWarning(std::format("Item category {} does not match txn category {}", CategoryNameFromHash(item.m_IntendedCategory), info.m_Category.m_Name));
+				SetTransactionWarning(std::format(Localization::Translate("Item category {} does not match txn category {}"), CategoryNameFromHash(item.m_IntendedCategory), info.m_Category.m_Name));
 			}
 		}
 
@@ -495,7 +495,7 @@ namespace YimMenu::Submenus
 			ImGui::InputInt(Localization::Translate("Price").c_str(), &info.m_Service.m_Price);
 			if (info.m_Service.m_Price > info.m_Service.m_Item.m_IntendedPrice && info.m_Action.m_Hash == "NET_SHOP_ACTION_EARN"_J)
 			{
-				SetTransactionError(std::format("Item price exceeds maximum allowed ({})", info.m_Service.m_Item.m_IntendedPrice));
+				SetTransactionError(std::format(Localization::Translate("Item price exceeds maximum allowed ({})"), info.m_Service.m_Item.m_IntendedPrice));
 				txn_valid = false;
 			}
 		}
