@@ -693,6 +693,233 @@ namespace YimMenu::Localization
 		    ,{"Photograph Animal"sv, "拍摄动物"sv}
 		    ,{"Teleport to Product"sv, "传送到货物"sv}
 		    ,{"Collect Product"sv, "收集货物"sv}
+		    ,{"UI Style"sv, "界面风格"sv}
+		    ,{"Choose the UI style"sv, "选择界面风格"sv}
+		    ,{"Claim Safe Earnings"sv, "领取保险箱收益"sv}
+		    ,{"Open Gun Locker"sv, "打开武器柜"sv}
+		    ,{"Call Mechanic"sv, "呼叫技工"sv}
+		    ,{"Join YimMenu-only Sessions"sv, "加入仅限 YimMenu 的战局"sv}
+		    ,{"Fast Join"sv, "快速加入"sv}
+		    ,{"Spoof Matchmaking Region"sv, "伪装匹配地区"sv}
+		    ,{"Overlay Enabled"sv, "启用叠加层"sv}
+		    ,{"Overlay Show FPS"sv, "叠加层显示帧率"sv}
+		    ,{"Show an info overlay at the top left corner of the screen"sv, "在屏幕左上角显示信息叠加层"sv}
+		    ,{"Show frame rate in the info overlay"sv, "在信息叠加层中显示帧率"sv}
+		    ,{"Clear Chat"sv, "清空聊天"sv}
+		    ,{"Use this to clear the chat"sv, "用于清空聊天内容"sv}
+		    ,{"Use this to open the chat"sv, "用于打开聊天窗口"sv}
+		    ,{"Pause Game"sv, "暂停游戏"sv}
+		    ,{"Allow Gender Change"sv, "允许更改性别"sv}
+		    ,{"No Change Appearance Cooldown"sv, "移除外观更改冷却"sv}
+		    ,{"Unlock GTA+"sv, "解锁 GTA+"sv}
+		    ,{"Weapon Explosion RadiusScale"sv, "武器爆炸范围倍率"sv}
+		    ,{"Modifying Weapon Explosion RadiusScale"sv, "修改武器爆炸范围倍率"sv}
+		    ,{"RP Multiplier Input"sv, "RP 倍率输入"sv}
+		    ,{"RP Mulitplier (< 0 = 0 -> No RP)"sv, "RP 倍率（< 0 则视为 0，即无 RP）"sv}
+		    ,{"IPL set to load"sv, "要加载的 IPL 集"sv}
+		    ,{"Business to claim earning from."sv, "要领取保险箱收益的产业。"sv}
+		    ,{"Bounty Amount"sv, "悬赏金额"sv}
+		    ,{"Anonymous Bounty"sv, "匿名悬赏"sv}
+		    ,{"Send to Interior Index"sv, "发送到室内索引"sv}
+		    ,{"The interior index to send the player(s) to"sv, "要将玩家发送到的室内索引"sv}
+		    ,{"Send to Property Index"sv, "发送到房产索引"sv}
+		    ,{"The property index to send the player(s) to"sv, "要将玩家发送到的房产索引"sv}
+		    ,{"Player 1"sv, "玩家 1"sv}
+		    ,{"Player 2"sv, "玩家 2"sv}
+		    ,{"Player 3"sv, "玩家 3"sv}
+		    ,{"Player 4"sv, "玩家 4"sv}
+		    ,{"Player 1 cut"sv, "玩家 1 分红"sv}
+		    ,{"Player 2 cut"sv, "玩家 2 分红"sv}
+		    ,{"Player 3 cut"sv, "玩家 3 分红"sv}
+		    ,{"Player 4 cut"sv, "玩家 4 分红"sv}
+		    ,{"Difficulty"sv, "难度"sv}
+		    ,{"Weapon"sv, "武器"sv}
+		    ,{"Primary Target"sv, "主要目标"sv}
+		    ,{"Potential Take"sv, "预计收入"sv}
+		    ,{"Updates potential take"sv, "更新预计收入"sv}
+		    ,{"Instant Finish (Act: III)"sv, "立即完成（第三幕）"sv}
+		    ,{"Instantly passes Doomsday Scenario Act: III"sv, "立即通过《末日将至》第三幕"sv}
+		    ,{"Aggressor"sv, "突击手"sv}
+		    ,{"Conspirator"sv, "密谋者"sv}
+		    ,{"Crack Shot"sv, "神枪手"sv}
+		    ,{"Saboteur"sv, "破坏者"sv}
+		    ,{"Marksman"sv, "精准射手"sv}
+		    ,{"MK II Rifle Loadout"sv, "Mk II 步枪套装"sv}
+		    ,{"MK II SMG Loadout"sv, "Mk II 冲锋枪套装"sv}
+		    ,{"MK II Shotgun Loadout"sv, "Mk II 霰弹枪套装"sv}
+		    ,{"Combat MG Loadout"sv, "战斗机枪套装"sv}
+		    ,{"Combat PDW Loadout"sv, "战斗 PDW 套装"sv}
+		    ,{"Machine Pistol Loadout"sv, "机器手枪套装"sv}
+		    ,{"Micro SMG Loadout"sv, "微型冲锋枪套装"sv}
+		    ,{"Revolver Loadout"sv, "左轮手枪套装"sv}
+		    ,{"Rifle Loadout"sv, "步枪套装"sv}
+		    ,{"SMG Loadout"sv, "冲锋枪套装"sv}
+		    ,{"Shotgun Loadout"sv, "霰弹枪套装"sv}
+		    ,{"Hidden Caches"sv, "隐藏补给箱"sv}
+		    ,{"Buried Stashes"sv, "埋藏战利品"sv}
+		    ,{"Junk Energy Skydives"sv, "Junk Energy 高空跳伞"sv}
+		    ,{"Time Trials"sv, "时间挑战赛"sv}
+		    ,{"Street Dealers"sv, "街头贩子"sv}
+		    ,{"LS Tags"sv, "洛圣都涂鸦"sv}
+		    ,{"Madrazo Hits"sv, "玛德拉索暗杀"sv}
+		    ,{"Golden Clover"sv, "金色四叶草"sv}
+		    ,{"Stash House"sv, "藏匿屋"sv}
+		    ,{"Treasure Chests"sv, "宝箱"sv}
+		    ,{"Hidden Cache 1"sv, "隐藏补给箱 1"sv}
+		    ,{"Hidden Cache 2"sv, "隐藏补给箱 2"sv}
+		    ,{"Hidden Cache 3"sv, "隐藏补给箱 3"sv}
+		    ,{"Hidden Cache 4"sv, "隐藏补给箱 4"sv}
+		    ,{"Hidden Cache 5"sv, "隐藏补给箱 5"sv}
+		    ,{"Hidden Cache 6"sv, "隐藏补给箱 6"sv}
+		    ,{"Hidden Cache 7"sv, "隐藏补给箱 7"sv}
+		    ,{"Hidden Cache 8"sv, "隐藏补给箱 8"sv}
+		    ,{"Hidden Cache 9"sv, "隐藏补给箱 9"sv}
+		    ,{"Hidden Cache 10"sv, "隐藏补给箱 10"sv}
+		    ,{"Treasure Chest 1"sv, "宝箱 1"sv}
+		    ,{"Treasure Chest 2"sv, "宝箱 2"sv}
+		    ,{"Buried Stash 1"sv, "埋藏战利品 1"sv}
+		    ,{"Buried Stash 2"sv, "埋藏战利品 2"sv}
+		    ,{"Skydive 1"sv, "高空跳伞 1"sv}
+		    ,{"Skydive 2"sv, "高空跳伞 2"sv}
+		    ,{"Skydive 3"sv, "高空跳伞 3"sv}
+		    ,{"Skydive 4"sv, "高空跳伞 4"sv}
+		    ,{"Skydive 5"sv, "高空跳伞 5"sv}
+		    ,{"Skydive 6"sv, "高空跳伞 6"sv}
+		    ,{"Skydive 7"sv, "高空跳伞 7"sv}
+		    ,{"Skydive 8"sv, "高空跳伞 8"sv}
+		    ,{"Skydive 9"sv, "高空跳伞 9"sv}
+		    ,{"Skydive 10"sv, "高空跳伞 10"sv}
+		    ,{"Street Dealer 1"sv, "街头贩子 1"sv}
+		    ,{"Street Dealer 2"sv, "街头贩子 2"sv}
+		    ,{"Street Dealer 3"sv, "街头贩子 3"sv}
+		    ,{"LS Tag 1"sv, "洛圣都涂鸦 1"sv}
+		    ,{"LS Tag 2"sv, "洛圣都涂鸦 2"sv}
+		    ,{"LS Tag 3"sv, "洛圣都涂鸦 3"sv}
+		    ,{"LS Tag 4"sv, "洛圣都涂鸦 4"sv}
+		    ,{"LS Tag 5"sv, "洛圣都涂鸦 5"sv}
+		    ,{"Animal 1"sv, "动物 1"sv}
+		    ,{"Animal 2"sv, "动物 2"sv}
+		    ,{"Animal 3"sv, "动物 3"sv}
+		    ,{"Product 1"sv, "货物 1"sv}
+		    ,{"Product 2"sv, "货物 2"sv}
+		    ,{"Product 3"sv, "货物 3"sv}
+		    ,{"Product 4"sv, "货物 4"sv}
+		    ,{"Product 5"sv, "货物 5"sv}
+		    ,{"Product 6"sv, "货物 6"sv}
+		    ,{"Product 7"sv, "货物 7"sv}
+		    ,{"Product 8"sv, "货物 8"sv}
+		    ,{"Product 9"sv, "货物 9"sv}
+		    ,{"Product 10"sv, "货物 10"sv}
+		    ,{"Auto Teleport to Waypoint"sv, "自动传送到导航点"sv}
+		    ,{"Automatically teleports you to the waypoint"sv, "自动将你传送到导航点"sv}
+		    ,{"Bypass Casino Restrictions"sv, "绕过赌场限制"sv}
+		    ,{"Change Appearance For Free"sv, "免费更改外观"sv}
+		    ,{"Delete All Cameras"sv, "删除所有摄像头"sv}
+		    ,{"Deletes all cameras"sv, "删除所有摄像头"sv}
+		    ,{"Despawn Personal Vehicle"sv, "收回个人载具"sv}
+		    ,{"Exotic Exports"sv, "异域出口"sv}
+		    ,{"Force Script Host"sv, "强制脚本主机"sv}
+		    ,{"Force Thunder"sv, "强制雷暴"sv}
+		    ,{"Force Weather"sv, "强制天气"sv}
+		    ,{"Give All Weapons"sv, "给予全部武器"sv}
+		    ,{"Give Max Ammo"sv, "补满弹药"sv}
+		    ,{"Gives you all weapons"sv, "给予你全部武器"sv}
+		    ,{"Refills your ammo to max."sv, "将你的弹药补充至上限。"sv}
+		    ,{"Load IPL"sv, "加载 IPL"sv}
+		    ,{"Unload IPL"sv, "卸载 IPL"sv}
+		    ,{"Teleport to IPL"sv, "传送到 IPL"sv}
+		    ,{"Teleport to the selected IPL"sv, "传送到所选 IPL"sv}
+		    ,{"Play All Missions Solo"sv, "单人游玩所有任务"sv}
+		    ,{"Remove LSC Restrictions"sv, "移除洛圣都改车王限制"sv}
+		    ,{"Removes Los Santos Customs vehicle modification restrictions"sv, "移除洛圣都改车王的载具改装限制"sv}
+		    ,{"Request Personal Vehicle"sv, "请求个人载具"sv}
+		    ,{"Save Personal Vehicle"sv, "保存个人载具"sv}
+		    ,{"Silence Phone Calls"sv, "静音来电"sv}
+		    ,{"Teleport to Waypoint"sv, "传送到导航点"sv}
+		    ,{"Teleports you to the waypoint"sv, "将你传送到导航点"sv}
+		    ,{"Teleport to Objective"sv, "传送到目标点"sv}
+		    ,{"Teleports you to the Objective"sv, "将你传送到目标点"sv}
+		    ,{"Take Control"sv, "接管控制"sv}
+		    ,{"Player Name"sv, "玩家名称"sv}
+		    ,{"Player Name Color"sv, "玩家名称颜色"sv}
+		    ,{"Player Skeleton"sv, "玩家骨骼"sv}
+		    ,{"Player Skeleton Color"sv, "玩家骨骼颜色"sv}
+		    ,{"Player Distance"sv, "玩家距离"sv}
+		    ,{"Player Distance Color"sv, "玩家距离颜色"sv}
+		    ,{"Ped Model"sv, "NPC 模型"sv}
+		    ,{"Ped Distance"sv, "NPC 距离"sv}
+		    ,{"Ped Skeleton"sv, "NPC 骨骼"sv}
+		    ,{"Ped Skeleton Color"sv, "NPC 骨骼颜色"sv}
+		    ,{"Object Distance"sv, "物体距离"sv}
+		    ,{"Show Player Name"sv, "显示玩家名称"sv}
+		    ,{"Show Player Skeleton"sv, "显示玩家骨骼"sv}
+		    ,{"Show Player Distance"sv, "显示玩家距离"sv}
+		    ,{"Show Ped Model"sv, "显示 NPC 模型"sv}
+		    ,{"Show Ped Distance"sv, "显示 NPC 距离"sv}
+		    ,{"Show Ped Skeleton"sv, "显示 NPC 骨骼"sv}
+		    ,{"Show Object Distance"sv, "显示物体距离"sv}
+		    ,{"Should the ESP draw player names?"sv, "ESP 是否显示玩家名称？"sv}
+		    ,{"Should the ESP draw player skeletons?"sv, "ESP 是否显示玩家骨骼？"sv}
+		    ,{"Should the ESP draw player distance?"sv, "ESP 是否显示玩家距离？"sv}
+		    ,{"Should the ESP draw ped models?"sv, "ESP 是否显示 NPC 模型？"sv}
+		    ,{"Should the ESP draw distance?"sv, "ESP 是否显示距离？"sv}
+		    ,{"Should the ESP draw the skeleton?"sv, "ESP 是否显示骨骼？"sv}
+		    ,{"Should the ESP draw special objects?"sv, "ESP 是否显示特殊物体？"sv}
+		    ,{"Should the ESP draw dead players?"sv, "ESP 是否显示已死亡玩家？"sv}
+		    ,{"Should the ESP draw dead peds?"sv, "ESP 是否显示已死亡 NPC？"sv}
+		    ,{"Draw Players"sv, "显示玩家"sv}
+		    ,{"Draw Peds"sv, "显示 NPC"sv}
+		    ,{"Draw Special Objects"sv, "显示特殊物体"sv}
+		    ,{"Draw Dead Players"sv, "显示死亡玩家"sv}
+		    ,{"Draw Dead Peds"sv, "显示死亡 NPC"sv}
+		    ,{"Allow MP Vehicles in SP"sv, "在单机模式允许多人载具"sv}
+		    ,{"Allows MP vehicles to be used in SP"sv, "允许在单机模式中使用多人模式载具"sv}
+		    ,{"Delete Player Vehicles"sv, "删除玩家载具"sv}
+		    ,{"Delete Vehicle"sv, "删除载具"sv}
+		    ,{"Deliver Next Exotic Exports Vehicle"sv, "交付下一辆异域出口载具"sv}
+		    ,{"Directly delivers the next Exotic Exports vehicle."sv, "直接交付下一辆异域出口载具。"sv}
+		    ,{"Enter Message"sv, "输入消息"sv}
+		    ,{"Failed to call the mechanic."sv, "呼叫技工失败。"sv}
+		    ,{"Failed to open the wardrobe."sv, "打开衣柜失败。"sv}
+		    ,{"Give All Weapon the player"sv, "给予该玩家全部武器"sv}
+		    ,{"Invalid model name provided."sv, "提供的模型名称无效。"sv}
+		    ,{"Invalid vehicle model name provided."sv, "提供的载具模型名称无效。"sv}
+		    ,{"Keep Fixed"sv, "保持修复状态"sv}
+		    ,{"Lower Stance"sv, "降低姿态"sv}
+		    ,{"Lower Vehicle Stance"sv, "降低载具姿态"sv}
+		    ,{"No model name provided."sv, "未提供模型名称。"sv}
+		    ,{"No vehicle model name provided."sv, "未提供载具模型名称。"sv}
+		    ,{"No vehicles to fix."sv, "没有可修复的载具。"sv}
+		    ,{"Not safe to call the mechanic at the moment."sv, "当前不适合呼叫技工。"sv}
+		    ,{"Not safe to open the wardrobe at the moment."sv, "当前不适合打开衣柜。"sv}
+		    ,{"Plate Style"sv, "车牌样式"sv}
+		    ,{"Spawn Object"sv, "生成物体"sv}
+		    ,{"Spawns a ped at your current location."sv, "在当前位置生成一个 NPC。"sv}
+		    ,{"Wheel Type"sv, "轮毂类型"sv}
+		    ,{"Window Tint"sv, "车窗贴膜"sv}
+		    ,{"Horizontal"sv, "水平"sv}
+		    ,{"Vertical"sv, "垂直"sv}
+		    ,{"Agency"sv, "事务所"sv}
+		    ,{"Arcade"sv, "游戏厅"sv}
+		    ,{"Accessories"sv, "配件"sv}
+		    ,{"Active"sv, "启用中"sv}
+		    ,{"Air Defence"sv, "防空系统"sv}
+		    ,{"Amount"sv, "数量"sv}
+		    ,{"Anonymous"sv, "匿名"sv}
+		    ,{"Armor"sv, "护甲"sv}
+		    ,{"Bags"sv, "包袋"sv}
+		    ,{"Bike"sv, "摩托车"sv}
+		    ,{"Blackjack"sv, "二十一点"sv}
+		    ,{"Blimp"sv, "飞艇"sv}
+		    ,{"Boost behavior"sv, "推进器行为"sv}
+		    ,{"Bring"sv, "拉近"sv}
+		    ,{"Bring All"sv, "拉近全部"sv}
+		    ,{"Challenges"sv, "挑战"sv}
+		    ,{"Cleanup"sv, "清理"sv}
+		    ,{"Components"sv, "组件"sv}
+		    ,{"Cops Dispatch"sv, "警察调度"sv}
+		    ,{"Decals"sv, "贴花"sv}
+		    ,{"Default"sv, "默认"sv}
 		};
 	}
 
