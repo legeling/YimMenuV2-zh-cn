@@ -28,6 +28,7 @@ namespace YimMenu::Localization
 		    {"Saved..."sv, "已保存..."sv},
 		    {"Yes"sv, "是"sv},
 		    {"No"sv, "否"sv},
+		    {"Default"sv, "默认"sv},
 		    {"Join"sv, "加入"sv},
 		    {"Refresh"sv, "刷新"sv},
 		    {"Write"sv, "写入"sv},
@@ -178,6 +179,15 @@ namespace YimMenu::Localization
 		    {"Data has not been fetched yet"sv, "数据尚未拉取"sv},
 		    {"Transactions are unavailable while FSL local saves are enabled"sv, "启用 FSL 本地存档时不支持交易功能"sv},
 		    {"Catalog is not loaded"sv, "目录尚未加载"sv},
+		    {"Ctrl+Click to set as player model"sv, "Ctrl+点击可设为玩家模型"sv},
+		    {"Invincible"sv, "无敌"sv},
+		    {"Spawn Dead"sv, "生成死亡状态"sv},
+		    {"Spawn as Bodyguard"sv, "作为保镖生成"sv},
+		    {"Spawn as Cop"sv, "作为警察生成"sv},
+		    {"Spawn in My Vehicle"sv, "生成到我的载具中"sv},
+		    {"Spawn as Prostitute"sv, "作为妓女生成"sv},
+		    {"Blip Ped"sv, "为 NPC 添加标记"sv},
+		    {"Remove All"sv, "移除全部"sv},
 		    {"Give Weapon"sv, "给予武器"sv},
 		    {"Remove Weapon"sv, "移除武器"sv},
 		    {"Kills With: %d"sv, "击杀数：%d"sv},
@@ -256,6 +266,7 @@ namespace YimMenu::Localization
 		    {"Closed Friend"sv, "封闭好友"sv},
 		    {"Find Friend"sv, "寻找好友"sv},
 		    {"Invite Only"sv, "仅邀请"sv},
+		    {"Friends Only"sv, "仅好友"sv},
 		    {"Solo"sv, "单人"sv},
 		    {"Chinese (Simplified)"sv, "简体中文"sv},
 		    {"Chinese (Traditional)"sv, "繁体中文"sv},
@@ -280,6 +291,7 @@ namespace YimMenu::Localization
 		    {"US West"sv, "美国西部"sv},
 		    {"Unknown"sv, "未知"sv},
 		    {"Saved Players"sv, "已保存玩家"sv},
+		    {"Player Tracker"sv, "玩家追踪"sv},
 		    {"Player Database Auto Update"sv, "玩家数据库自动更新"sv},
 		    {"Tracking Notifications"sv, "追踪通知"sv},
 		    {"Auto Update"sv, "自动更新"sv},
@@ -311,10 +323,50 @@ namespace YimMenu::Localization
 		    {"Host of Job Lobby: %s"sv, "任务大厅主持人：%s"sv},
 		    {"Mission Type: %s"sv, "任务类型：%s"sv},
 		    {"Mission Name: %s"sv, "任务名称：%s"sv},
+		    {"{} is no longer online"sv, "{} 已离线"sv},
+		    {"{} is now in a joinable session"sv, "{} 当前已可加入"sv},
+		    {"{} is now online"sv, "{} 已上线"sv},
+		    {"{} is no longer in a joinable session"sv, "{} 当前不可加入"sv},
+		    {"{} is now in a {} session"sv, "{} 当前处于{}战局"sv},
+		    {"{} is no longer in a {}"sv, "{} 已不在{}中"sv},
+		    {"{} is now in a {}"sv, "{} 当前正在进行{}"sv},
+		    {"{} has hosted a job lobby"sv, "{} 创建了一个任务大厅"sv},
+		    {"{} has joined a job lobby"sv, "{} 加入了一个任务大厅"sv},
+		    {"{} is no longer in a job lobby"sv, "{} 已离开任务大厅"sv},
+		    {"Invalid"sv, "无效"sv},
+		    {"Hidden by Modder"sv, "被 Mod 玩家隐藏"sv},
+		    {"Job"sv, "任务"sv},
+		    {"Mission"sv, "任务"sv},
+		    {"Deathmatch"sv, "死斗"sv},
+		    {"Race"sv, "竞速"sv},
+		    {"Survival"sv, "生存战"sv},
+		    {"Gang Attack"sv, "帮派攻击"sv},
+		    {"Golf"sv, "高尔夫"sv},
+		    {"Tennis"sv, "网球"sv},
+		    {"Shooting Range"sv, "射击场"sv},
 		    {"Freemode global block is not loaded."sv, "自由模式全局块未加载。"sv},
 		    {"Random Events are not initialized."sv, "随机事件尚未初始化。"sv},
 		    {"Freemode stack is not valid."sv, "自由模式堆栈无效。"sv},
 		    {"Freemode is not running."sv, "自由模式未运行。"sv},
+		    {"Completed all activities, switch session to apply the changes."sv, "已完成所有活动，请切换战局以应用更改。"sv},
+		    {"Reset all activities, switch session to apply the changes."sv, "已重置所有活动，请切换战局以应用更改。"sv},
+		    {"This Hidden Cache has already been collected."sv, "这个隐藏补给箱已经领取过了。"sv},
+		    {"This Treasure Chest has already been collected."sv, "这个宝箱已经领取过了。"sv},
+		    {"Shipwreck has already been collected."sv, "这艘沉船已经领取过了。"sv},
+		    {"This Buried Stash has already been collected."sv, "这个埋藏战利品已经领取过了。"sv},
+		    {"This Time Trial has already been beaten."sv, "这个时间挑战赛已经完成过了。"sv},
+		    {"Please enable the blip from the Interaction Menu."sv, "请先在互动菜单中启用该标记。"sv},
+		    {"You have already delivered all the vehicles."sv, "你已经交付了全部载具。"sv},
+		    {"You have just delivered a vehicle, wait a moment."sv, "你刚刚交付过一辆载具，请稍等片刻。"sv},
+		    {"G's Cache has already been collected."sv, "G 的藏匿点已经领取过了。"sv},
+		    {"Stash House has already been raided."sv, "藏匿屋已经洗劫过了。"sv},
+		    {"This LS Tag has already been sprayed."sv, "这个洛圣都涂鸦已经喷涂过了。"sv},
+		    {"You must own a Bail Office."sv, "你必须先拥有一间保释事务所。"sv},
+		    {"Madrazo Hit has already been completed."sv, "这次玛德拉索暗杀已经完成过了。"sv},
+		    {"This animal has already been photographed."sv, "这只动物已经拍摄过了。"sv},
+		    {"You must own a Smoke on the Water property."sv, "你必须先拥有水上烟火产业。"sv},
+		    {"This product has already been collected."sv, "这件货物已经领取过了。"sv},
+		    {"Golden Clover has already been collected."sv, "金色四叶草已经领取过了。"sv},
 		    {"Active Events: %d/%d"sv, "活动事件：%d/%d"sv},
 		    {"Launch Event"sv, "启动事件"sv},
 		    {"Kill Event"sv, "终止事件"sv},
@@ -711,6 +763,42 @@ namespace YimMenu::Localization
 		    ,{"UI Style"sv, "界面风格"sv}
 		    ,{"Choose the UI style"sv, "选择界面风格"sv}
 		    ,{"Claim Safe Earnings"sv, "领取保险箱收益"sv}
+		    ,{"Force-updates all saved players"sv, "强制立即更新所有已保存玩家"sv}
+		    ,{"Set All Activities Completed"sv, "完成全部活动"sv}
+		    ,{"Reset All Activities"sv, "重置全部活动"sv}
+		    ,{"Complete All Challenges"sv, "完成全部挑战"sv}
+		    ,{"Teleport to Hidden Cache"sv, "传送到隐藏补给箱"sv}
+		    ,{"Collect Hidden Cache"sv, "领取隐藏补给箱"sv}
+		    ,{"Teleport to Treasure Chest"sv, "传送到宝箱"sv}
+		    ,{"Collect Treasure Chest"sv, "领取宝箱"sv}
+		    ,{"Enable Treasure Chests in LS"sv, "在洛圣都启用宝箱"sv}
+		    ,{"Teleport to Shipwreck"sv, "传送到沉船"sv}
+		    ,{"Collect Shipwreck"sv, "领取沉船奖励"sv}
+		    ,{"Teleport to Buried Stash"sv, "传送到埋藏战利品"sv}
+		    ,{"Collect Buried Stash"sv, "领取埋藏战利品"sv}
+		    ,{"Enable Buried Stashes in LS"sv, "在洛圣都启用埋藏战利品"sv}
+		    ,{"Teleport to Skydive"sv, "传送到高空跳伞点"sv}
+		    ,{"Complete Skydive"sv, "完成高空跳伞"sv}
+		    ,{"Teleport to Time Trial"sv, "传送到时间挑战赛"sv}
+		    ,{"Beat Time Trial"sv, "完成时间挑战赛"sv}
+		    ,{"Teleport to Exotic Exports Vehicle"sv, "传送到出口珍品载具"sv}
+		    ,{"Deliver Next Exotic Exports Vehicle"sv, "交付下一辆出口珍品载具"sv}
+		    ,{"Teleport to G's Cache"sv, "传送到 G 的藏匿点"sv}
+		    ,{"Collect G's Cache"sv, "领取 G 的藏匿点"sv}
+		    ,{"Teleport to Stash House"sv, "传送到藏匿屋"sv}
+		    ,{"Enter Stash House Safe Code"sv, "输入藏匿屋保险箱密码"sv}
+		    ,{"Teleport to Dealer"sv, "传送到街头贩子"sv}
+		    ,{"Open Street Dealer Menu"sv, "打开街头贩子菜单"sv}
+		    ,{"Teleport to LS Tag"sv, "传送到洛圣都涂鸦"sv}
+		    ,{"Spray LS Tag"sv, "喷涂洛圣都涂鸦"sv}
+		    ,{"Teleport to Madrazo Hit"sv, "传送到玛德拉索暗杀"sv}
+		    ,{"Teleport to Madrazo Hit Target"sv, "传送到玛德拉索暗杀目标"sv}
+		    ,{"Spawn Animal"sv, "生成动物"sv}
+		    ,{"Photograph Animal"sv, "拍摄动物"sv}
+		    ,{"Teleport to Product"sv, "传送到货物"sv}
+		    ,{"Collect Product"sv, "领取货物"sv}
+		    ,{"Teleport to Golden Clover"sv, "传送到金色四叶草"sv}
+		    ,{"Collect Golden Clover"sv, "领取金色四叶草"sv}
 		    ,{"Open Gun Locker"sv, "打开武器柜"sv}
 		    ,{"Call Mechanic"sv, "呼叫技工"sv}
 		    ,{"Join YimMenu-only Sessions"sv, "加入仅限 YimMenu 的战局"sv}
@@ -733,6 +821,40 @@ namespace YimMenu::Localization
 		    ,{"RP Mulitplier (< 0 = 0 -> No RP)"sv, "RP 倍率（< 0 则视为 0，即无 RP）"sv}
 		    ,{"IPL set to load"sv, "要加载的 IPL 集"sv}
 		    ,{"Business to claim earning from."sv, "要领取保险箱收益的产业。"sv}
+		    ,{"Hands on Car Wash"sv, "亲力亲为洗车行"sv}
+		    ,{"Switch session to apply the changes."sv, "请切换战局以应用更改。"sv}
+		    ,{"Completes all the Daily Objectives and the Weekly Challenge."sv, "完成全部每日目标和每周挑战。"sv}
+		    ,{"Teleports to the selected Hidden Cache."sv, "传送到所选隐藏补给箱。"sv}
+		    ,{"Collects the selected Hidden Cache."sv, "领取所选隐藏补给箱。"sv}
+		    ,{"Teleports to the selected Treasure Chest."sv, "传送到所选宝箱。"sv}
+		    ,{"Collects the selected Treasure Chest."sv, "领取所选宝箱。"sv}
+		    ,{"Enables Treasure Chests in Los Santos, so you don't have to go to Cayo Perico."sv, "在洛圣都启用宝箱，这样你就不用前往佩里科岛了。"sv}
+		    ,{"Teleports to Shipwreck."sv, "传送到沉船位置。"sv}
+		    ,{"Collects Shipwreck."sv, "领取沉船奖励。"sv}
+		    ,{"Teleports to the selected Buried Stash."sv, "传送到所选埋藏战利品。"sv}
+		    ,{"Collects the selected Buried Stash."sv, "领取所选埋藏战利品。"sv}
+		    ,{"Enables Buried Stashes in Los Santos, so you don't have to go to Cayo Perico."sv, "在洛圣都启用埋藏战利品，这样你就不用前往佩里科岛了。"sv}
+		    ,{"Teleports to the selected Skydive."sv, "传送到所选高空跳伞点。"sv}
+		    ,{"Completes the selected Skydive."sv, "完成所选高空跳伞。"sv}
+		    ,{"Teleports to the selected Time Trial."sv, "传送到所选时间挑战赛。"sv}
+		    ,{"Completes the selected Time Trial."sv, "完成所选时间挑战赛。"sv}
+		    ,{"Teleports to the next Exotic Exports vehicle."sv, "传送到下一辆出口珍品载具。"sv}
+		    ,{"Directly delivers the next Exotic Exports vehicle."sv, "直接交付下一辆出口珍品载具。"sv}
+		    ,{"Teleports to G's Cache."sv, "传送到 G 的藏匿点。"sv}
+		    ,{"Collects G's Cache."sv, "领取 G 的藏匿点。"sv}
+		    ,{"Teleports to Stash House."sv, "传送到藏匿屋。"sv}
+		    ,{"Enters the Stash House safe code."sv, "输入藏匿屋保险箱密码。"sv}
+		    ,{"Allows you to access the selected Street Dealer remotely."sv, "允许你远程打开所选街头贩子的菜单。"sv}
+		    ,{"Teleports to the selected LS Tag."sv, "传送到所选洛圣都涂鸦。"sv}
+		    ,{"Sprays the selected LS Tag."sv, "喷涂所选洛圣都涂鸦。"sv}
+		    ,{"Teleports to Madrazo Hit."sv, "传送到玛德拉索暗杀位置。"sv}
+		    ,{"Teleports to Madrazo Hit Target."sv, "传送到玛德拉索暗杀目标位置。"sv}
+		    ,{"Spawns the selected animal."sv, "生成所选动物。"sv}
+		    ,{"Photographs the selected animal."sv, "拍摄所选动物。"sv}
+		    ,{"Teleports to the selected product."sv, "传送到所选货物。"sv}
+		    ,{"Collects the selected product."sv, "领取所选货物。"sv}
+		    ,{"Teleports to the Golden Clover."sv, "传送到金色四叶草。"sv}
+		    ,{"Collects the Golden Clover."sv, "领取金色四叶草。"sv}
 		    ,{"Bounty Amount"sv, "悬赏金额"sv}
 		    ,{"Anonymous Bounty"sv, "匿名悬赏"sv}
 		    ,{"Send to Interior Index"sv, "发送到室内索引"sv}
@@ -1164,6 +1286,7 @@ namespace YimMenu::Localization
 		    ,{"Select"sv, "选择"sv}
 		    ,{"Empty"sv, "空"sv}
 		    ,{"None"sv, "无"sv}
+		    ,{"MOC"sv, "机动作战中心"sv}
 		    ,{"Top"sv, "顶部"sv}
 		    ,{"Mechanic"sv, "技工"sv}
 		    ,{"Nightclub"sv, "夜总会"sv}

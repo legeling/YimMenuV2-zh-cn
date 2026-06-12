@@ -198,17 +198,17 @@ namespace YimMenu::Submenus
 
 			ImGui::SameLine();
 			ImGui::BeginGroup();
-			ImGui::BulletText("%s", "Ctrl+点击可设为玩家模型");
-			ImGui::Checkbox("无敌", &invincible);
-			ImGui::Checkbox("生成死亡状态", &spawnDead);
-			ImGui::Checkbox("作为保镖生成", &spawnAsBodyguard);
-			ImGui::Checkbox("作为警察生成", &spawnAsCop);
-			ImGui::Checkbox("生成到我的载具中", &spawnInMyVehicle);
-			ImGui::Checkbox("给予全部武器", &giveAllWeapons);
-			ImGui::Checkbox("作为妓女生成", &spawnAsProstitute);
-			ImGui::Checkbox("随机服装", &randomizeOutfit);
-			ImGui::Checkbox("为 NPC 添加标记", &blipPed);
-			if (ImGui::Button("移除全部"))
+			ImGui::BulletText("%s", Localization::Translate("Ctrl+Click to set as player model").c_str());
+			ImGui::Checkbox(Localization::Translate("Invincible").c_str(), &invincible);
+			ImGui::Checkbox(Localization::Translate("Spawn Dead").c_str(), &spawnDead);
+			ImGui::Checkbox(Localization::Translate("Spawn as Bodyguard").c_str(), &spawnAsBodyguard);
+			ImGui::Checkbox(Localization::Translate("Spawn as Cop").c_str(), &spawnAsCop);
+			ImGui::Checkbox(Localization::Translate("Spawn in My Vehicle").c_str(), &spawnInMyVehicle);
+			ImGui::Checkbox(Localization::Translate("Give All Weapons").c_str(), &giveAllWeapons);
+			ImGui::Checkbox(Localization::Translate("Spawn as Prostitute").c_str(), &spawnAsProstitute);
+			ImGui::Checkbox(Localization::Translate("Randomize Outfit").c_str(), &randomizeOutfit);
+			ImGui::Checkbox(Localization::Translate("Blip Ped").c_str(), &blipPed);
+			if (ImGui::Button(Localization::Translate("Remove All").c_str()))
 			{
 				FiberPool::Push([] {
 					for (auto& ped : spawnedPeds)

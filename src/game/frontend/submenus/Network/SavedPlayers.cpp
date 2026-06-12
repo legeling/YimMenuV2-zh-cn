@@ -64,7 +64,10 @@ namespace YimMenu::Submenus
 		}
 
 		if (data->m_FetchedData && ImGui::IsItemHovered())
-			ImGui::SetTooltip("%s", FetchedPlayerData::GameStateToString(data->m_FetchedData->m_GameState).data());
+		{
+			const auto gameState = Localization::Translate(FetchedPlayerData::GameStateToString(data->m_FetchedData->m_GameState));
+			ImGui::SetTooltip("%s", gameState.c_str());
+		}
 
 		ImGui::PopID();
 	}
