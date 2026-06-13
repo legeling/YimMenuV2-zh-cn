@@ -24,7 +24,7 @@ namespace YimMenu::Features
 			}
 
 			if (count > 0)
-				Notifications::Show(Localization::Translate("修复所有载具"), std::format(Localization::Translate("已修复 {} 辆载具。"), count), NotificationType::Success);
+				Notifications::Show(Localization::Translate("修复所有载具"), std::format("已修复 {} 辆载具。", count), NotificationType::Success);
 			else
 				Notifications::Show(Localization::Translate("修复所有载具"), Localization::Translate("没有可修复的载具。"));
 		}
