@@ -60,7 +60,7 @@ namespace YimMenu::Submenus
 			constexpr auto allText = "全部";
 			if (ImGui::BeginCombo("类别", selectedClass == -1 ? allText : g_VehicleClassNames[selectedClass]))
 			{
-				if (ImGui::Selectable(allText.c_str(), selectedClass == -1))
+				if (ImGui::Selectable(allText, selectedClass == -1))
 				{
 					selectedClass = -1;
 				}
@@ -152,7 +152,7 @@ namespace YimMenu::Submenus
 			constexpr auto allText = "全部";
 			if (ImGui::BeginCombo("车库", selectedGarageStr.empty() ? allText : selectedGarageStr.c_str()))
 			{
-				if (ImGui::Selectable(allText.c_str(), selectedGarageStr.empty()))
+				if (ImGui::Selectable(allText, selectedGarageStr.empty()))
 				{
 					selectedGarageStr.clear();
 				}

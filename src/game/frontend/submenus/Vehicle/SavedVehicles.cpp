@@ -72,7 +72,7 @@ namespace YimMenu::Submenus
 			auto folder_display = folder.empty() ? rootText : folder.c_str();
 			if (ImGui::BeginCombo("文件夹", folder_display))
 			{
-				if (ImGui::Selectable(rootText.c_str(), folder == ""))
+				if (ImGui::Selectable(rootText, folder == ""))
 				{
 					folder.clear();
 					FiberPool::Push([] {
