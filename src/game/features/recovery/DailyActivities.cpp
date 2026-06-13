@@ -32,7 +32,7 @@
 
 namespace YimMenu::Features
 {
-	static void ShowLocalizedNotification(std::string_view title, std::string_view message, NotificationType type = NotificationType::Default)
+	static void ShowLocalizedNotification(std::string_view title, std::string_view message, NotificationType type = NotificationType::Info)
 	{
 		Notifications::Show(Localization::Translate(title), Localization::Translate(message), type);
 	}
