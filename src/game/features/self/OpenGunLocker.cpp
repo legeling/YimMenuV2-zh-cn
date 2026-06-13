@@ -69,13 +69,13 @@ namespace YimMenu::Features
 		{
 			if (!*Pointers.IsSessionStarted)
 			{
-				Notifications::Show(Localization::Translate("Open Gun Locker"), Localization::Translate("Please join GTA Online."), NotificationType::Error);
+				Notifications::Show(Localization::Translate("打开武器柜"), Localization::Translate("请先进入 GTA 在线模式。"), NotificationType::Error);
 				return;
 			}
 
 			if (GlobalPlayerBD::Get()->Entries[Self::GetPlayer().GetId()].SimpleInteriorData.Index != eSimpleInteriorIndex::SIMPLE_INTERIOR_INVALID)
 			{
-				Notifications::Show(Localization::Translate("Open Gun Locker"), Localization::Translate("Cannot open gun locker while in an interior."), NotificationType::Error);
+				Notifications::Show(Localization::Translate("打开武器柜"), Localization::Translate("在室内时无法打开武器柜。"), NotificationType::Error);
 				return;
 			}
 
@@ -83,5 +83,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static _OpenGunLocker __OpenGunLocker{"opengunlocker", "Open Gun Locker", "Allows you to access gun locker remotely."};
+	static _OpenGunLocker __OpenGunLocker{"opengunlocker", "打开武器柜", "允许你远程访问武器柜。"};
 }

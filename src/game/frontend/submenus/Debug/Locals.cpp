@@ -32,10 +32,10 @@ namespace YimMenu::Submenus
 
 	std::shared_ptr<Category> BuildLocalsMenu()
 	{
-		auto locals = std::make_unique<Category>("Locals");
+		auto locals = std::make_unique<Category>("局部变量");
 
-		auto editor = std::make_unique<Group>("Editor");
-		auto saved = std::make_unique<Group>("Saved");
+		auto editor = std::make_unique<Group>("编辑器");
+		auto saved = std::make_unique<Group>("已保存");
 
 		static bool ensureVarsLoaded = ([] {
 			SavedVariables::Init();
@@ -49,11 +49,11 @@ namespace YimMenu::Submenus
 
 		editor->AddItem(std::make_unique<ImGuiItem>([] {
 			ImGui::SetNextItemWidth(200.f);
-			ImGui::InputText(Localization::Translate("Script").c_str(), scriptName, sizeof(scriptName));
+			ImGui::InputText("脚本", scriptName, sizeof(scriptName));
 
 			curThread = Scripts::FindScriptThread(Joaat(scriptName));
 			if (!curThread)
-				return ImGui::TextDisabled("%s", Localization::Translate("Invalid").c_str());
+				return ImGui::TextDisabled("%s", "无效");
 
 			DrawSavedVariable(curLocal);
 			DrawSavedVariableEdit(curLocal, curLocal.Read(curThread));
@@ -61,7 +61,7 @@ namespace YimMenu::Submenus
 
 		saved->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!curThread)
-				return ImGui::TextDisabled("%s", Localization::Translate("Invalid").c_str());
+				return ImGui::TextDisabled("%s", "无效");
 
 			auto scriptIdf = curThread->m_ScriptHash;
 			if (scriptIdf != curLocal.script)
@@ -103,13 +103,13 @@ namespace YimMenu::Submenus
 			ImGui::SetNextItemWidth(200.f);
 			ImGui::InputText("##localname", localName, sizeof(localName));
 			ImGui::SameLine();
-			if (ImGui::Button(Localization::Translate("Save").c_str()))
+			if (ImGui::Button("保存"))
 			{
 				curLocal.name = localName;
 				SaveLocal(curLocal);
 			}
 			ImGui::SameLine();
-			if (ImGui::Button(Localization::Translate("Delete").c_str()))
+			if (ImGui::Button("删除"))
 			{
 				curLocal.name = localName;
 				DeleteLocal(curLocal);

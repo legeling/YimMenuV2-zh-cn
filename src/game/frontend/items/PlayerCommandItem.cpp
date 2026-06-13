@@ -17,7 +17,7 @@ namespace YimMenu
 	{
 		if (!m_Command)
 		{
-			ImGui::Text("%s", Localization::Translate("Unknown!").c_str());
+			ImGui::Text("%s", "未知！");
 			return;
 		}
 

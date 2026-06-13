@@ -1,12 +1,21 @@
 #include "Vehicle.hpp"
 #include "Natives.hpp"
 #include "core/backend/ScriptMgr.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/pointers/Pointers.hpp"
 #include "game/gta/data/VehicleValues.hpp"
 #include "game/gta/data/Vehicles.hpp"
 
 namespace YimMenu
 {
+	namespace
+	{
+		bool IsInvalidVehicleText(std::string_view text)
+		{
+			return text.empty() || text == "NULL" || text == "CARNOTFOUND";
+		}
+	}
+
 	Vehicle Vehicle::Create(std::uint32_t model, rage::fvector3 coords, float heading, bool setOnGroundProperly)
 	{
 		ENTITY_ASSERT_SCRIPT_CONTEXT();
@@ -189,22 +198,36 @@ namespace YimMenu
 		return VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(GetHandle(), 5.f);
 	}
 
-	std::string Vehicle::GetFullName()
+	std::string Vehicle::GetLocalizedDisplayName(joaat_t model, bool includeMaker, bool includeClass)
 	{
-		auto model = ENTITY::GET_ENTITY_MODEL(GetHandle());
 		std::string gxt = VEHICLE::GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(model);
 		std::string display = HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(gxt.c_str());
+		std::string finalName = IsInvalidVehicleText(display) ? gxt : display;
+		finalName = Localization::Translate(finalName);
 
-		std::string finalName = display == "NULL" ? gxt : display;
+		if (includeMaker)
+		{
+			std::string maker = HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(VEHICLE::GET_MAKE_NAME_FROM_VEHICLE_MODEL(model));
+			if (!IsInvalidVehicleText(maker))
+			{
+				maker = Localization::Translate(maker);
+				finalName = std::format("{} {}", maker, finalName);
+			}
+		}
 
-		std::string maker = HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(VEHICLE::GET_MAKE_NAME_FROM_VEHICLE_MODEL(model));
-		if (maker != "NULL")
-			finalName = maker + " " + finalName;
-
-		int id = VEHICLE::GET_VEHICLE_CLASS_FROM_NAME(model);
-		finalName = std::string(g_VehicleClassNames[id]) + " " + finalName;
+		if (includeClass)
+		{
+			int id = VEHICLE::GET_VEHICLE_CLASS_FROM_NAME(model);
+			if (id >= 0 && id < static_cast<int>(g_VehicleClassNames.size()))
+				finalName = std::format("{} {}", g_VehicleClassNames[id], finalName);
+		}
 
 		return finalName;
+	}
+
+	std::string Vehicle::GetFullName()
+	{
+		return GetLocalizedDisplayName(ENTITY::GET_ENTITY_MODEL(GetHandle()), true, true);
 	}
 
 	std::map<int, int32_t> Vehicle::GetOwnedMods()

@@ -262,5 +262,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static PlayAllMissionsSolo _PlayAllMissionsSolo{"playallmissionssolo", "Play All Missions Solo", "Allows you to play any mission solo. Note that some missions might break if there aren't enough players"};
+	static PlayAllMissionsSolo _PlayAllMissionsSolo{"playallmissionssolo", "单人进行全部任务", "允许你单人进行任意任务。注意某些任务在人数不足时可能会异常"};
 }

@@ -88,7 +88,7 @@ namespace YimMenu
 
 	std::shared_ptr<Category> CreateOutfitsMenu()
 	{
-		auto category = std::make_shared<Category>("Outfit Editor");
+		auto category = std::make_shared<Category>("服装编辑器");
 
 		category->AddItem(std::make_shared<ImGuiItem>([] {
 			if (!NativeInvoker::AreHandlersCached())
@@ -116,7 +116,7 @@ namespace YimMenu
 			{
 				const char* name;
 				int slot;
-			} componentSlots[] = {{"Top", 11}, {"Undershirt", 8}, {"Legs", 4}, {"Feet", 6}, {"Accessories", 7}, {"Bags", 5}, {"Mask", 1}, {"Gloves", 3}, {"Decals", 10}, {"Armor", 9}};
+			} componentSlots[] = {{"上衣", 11}, {"内搭", 8}, {"裤装", 4}, {"鞋子", 6}, {"配饰", 7}, {"包袋", 5}, {"面具", 1}, {"手套", 3}, {"贴花", 10}, {"护甲", 9}};
 
 			bool first_iter = true;
 			for (const auto& component : componentSlots)
@@ -162,7 +162,7 @@ namespace YimMenu
 			{
 				const char* name;
 				int slot;
-			} propSlots[] = {{"Hats", 0}, {"Glasses", 1}, {"Ears", 2}, {"Watches", 6}};
+			} propSlots[] = {{"帽子", 0}, {"眼镜", 1}, {"耳饰", 2}, {"手表", 6}};
 
 			first_iter = true;
 			for (const auto& prop : propSlots)
@@ -202,7 +202,7 @@ namespace YimMenu
 
 			ImGui::Columns(1);
 
-			if (ImGui::Button(Localization::Translate("Randomize Outfit").c_str()))
+			if (ImGui::Button("随机服装"))
 			{
 				std::random_device rd;
 				std::mt19937 gen(rd());

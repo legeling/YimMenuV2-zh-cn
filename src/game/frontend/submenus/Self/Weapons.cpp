@@ -11,8 +11,186 @@
 #include "core/commands/Commands.hpp"
 #include "game/features/self/CustomWeapon.hpp"
 
+#include <string_view>
+#include <unordered_map>
+#include <utility>
+
 namespace YimMenu::Submenus
 {
+	namespace
+	{
+		using namespace std::literals;
+
+		bool ContainsCjk(std::string_view text)
+		{
+			for (unsigned char ch : text)
+				if (ch & 0x80)
+					return true;
+
+			return false;
+		}
+
+		bool IsInvalidWeaponText(std::string_view text)
+		{
+			return text.empty() || text == "NULL"sv || text == "Invalid"sv;
+		}
+
+		const std::unordered_map<joaat_t, std::string_view> g_WeaponNameFallbacks = {
+		    {"WEAPON_UNARMED"_J, "徒手"sv},
+		    {"WEAPON_KNIFE"_J, "小刀"sv},
+		    {"WEAPON_NIGHTSTICK"_J, "警棍"sv},
+		    {"WEAPON_HAMMER"_J, "铁锤"sv},
+		    {"WEAPON_BAT"_J, "棒球棍"sv},
+		    {"WEAPON_GOLFCLUB"_J, "高尔夫球杆"sv},
+		    {"WEAPON_CROWBAR"_J, "撬棍"sv},
+		    {"WEAPON_PISTOL"_J, "手枪"sv},
+		    {"WEAPON_COMBATPISTOL"_J, "战斗手枪"sv},
+		    {"WEAPON_APPISTOL"_J, "穿甲手枪"sv},
+		    {"WEAPON_PISTOL50"_J, ".50 手枪"sv},
+		    {"WEAPON_MICROSMG"_J, "微型冲锋枪"sv},
+		    {"WEAPON_SMG"_J, "冲锋枪"sv},
+		    {"WEAPON_ASSAULTSMG"_J, "突击冲锋枪"sv},
+		    {"WEAPON_ASSAULTRIFLE"_J, "突击步枪"sv},
+		    {"WEAPON_CARBINERIFLE"_J, "卡宾步枪"sv},
+		    {"WEAPON_ADVANCEDRIFLE"_J, "高级步枪"sv},
+		    {"WEAPON_MG"_J, "机枪"sv},
+		    {"WEAPON_COMBATMG"_J, "战斗机枪"sv},
+		    {"WEAPON_PUMPSHOTGUN"_J, "泵动式霰弹枪"sv},
+		    {"WEAPON_SAWNOFFSHOTGUN"_J, "短管霰弹枪"sv},
+		    {"WEAPON_ASSAULTSHOTGUN"_J, "突击霰弹枪"sv},
+		    {"WEAPON_BULLPUPSHOTGUN"_J, "无托式霰弹枪"sv},
+		    {"WEAPON_STUNGUN"_J, "电击枪"sv},
+		    {"WEAPON_SNIPERRIFLE"_J, "狙击步枪"sv},
+		    {"WEAPON_HEAVYSNIPER"_J, "重型狙击步枪"sv},
+		    {"WEAPON_REMOTESNIPER"_J, "遥控狙击枪"sv},
+		    {"WEAPON_GRENADELAUNCHER"_J, "榴弹发射器"sv},
+		    {"WEAPON_GRENADELAUNCHER_SMOKE"_J, "烟雾榴弹发射器"sv},
+		    {"WEAPON_RPG"_J, "火箭推进榴弹发射器"sv},
+		    {"WEAPON_MINIGUN"_J, "火神机枪"sv},
+		    {"WEAPON_GRENADE"_J, "手榴弹"sv},
+		    {"WEAPON_STICKYBOMB"_J, "黏弹"sv},
+		    {"WEAPON_SMOKEGRENADE"_J, "催泪瓦斯"sv},
+		    {"WEAPON_BZGAS"_J, "毒气弹"sv},
+		    {"WEAPON_MOLOTOV"_J, "燃烧瓶"sv},
+		    {"WEAPON_FIREEXTINGUISHER"_J, "灭火器"sv},
+		    {"WEAPON_PETROLCAN"_J, "汽油桶"sv},
+		    {"WEAPON_BALL"_J, "棒球"sv},
+		    {"WEAPON_FLARE"_J, "信号棒"sv},
+		    {"WEAPON_BOTTLE"_J, "破瓶"sv},
+		    {"WEAPON_SNSPISTOL"_J, "SNS 手枪"sv},
+		    {"WEAPON_HEAVYPISTOL"_J, "重型手枪"sv},
+		    {"WEAPON_BULLPUPRIFLE"_J, "无托式步枪"sv},
+		    {"WEAPON_SPECIALCARBINE"_J, "特制卡宾步枪"sv},
+		    {"WEAPON_SNSPISTOL_MK2"_J, "SNS 手枪 Mk II"sv},
+		    {"WEAPON_SPECIALCARBINE_MK2"_J, "特制卡宾步枪 Mk II"sv},
+		    {"WEAPON_PUMPSHOTGUN_MK2"_J, "泵动式霰弹枪 Mk II"sv},
+		    {"WEAPON_BULLPUPRIFLE_MK2"_J, "无托式步枪 Mk II"sv},
+		    {"WEAPON_MARKSMANRIFLE_MK2"_J, "精准步枪 Mk II"sv},
+		    {"WEAPON_CANDYCANE"_J, "糖果手杖"sv},
+		    {"WEAPON_PISTOLXM3"_J, "XM3 手枪"sv},
+		    {"WEAPON_RAILGUNXM3"_J, "XM3 电磁步枪"sv},
+		    {"WEAPON_ACIDPACKAGE"_J, "迷幻药包"sv},
+		    {"WEAPON_HOMINGLAUNCHER"_J, "追踪发射器"sv},
+		    {"WEAPON_PROXMINE"_J, "感应地雷"sv},
+		    {"WEAPON_SNOWBALL"_J, "雪球"sv},
+		    {"WEAPON_DOUBLEACTION"_J, "双动式左轮手枪"sv},
+		    {"WEAPON_REVOLVER_MK2"_J, "重型左轮手枪 Mk II"sv},
+		    {"WEAPON_RAYPISTOL"_J, "原子能枪"sv},
+		    {"WEAPON_RAYCARBINE"_J, "邪恶冥王"sv},
+		    {"WEAPON_RAYMINIGUN"_J, "寡妇制造者"sv},
+		    {"WEAPON_GUSENBERG"_J, "古森柏冲锋枪"sv},
+		    {"WEAPON_DAGGER"_J, "匕首"sv},
+		    {"WEAPON_VINTAGEPISTOL"_J, "古董手枪"sv},
+		    {"WEAPON_FIREWORK"_J, "烟火发射器"sv},
+		    {"WEAPON_MUSKET"_J, "火枪"sv},
+		    {"WEAPON_HATCHET"_J, "短柄斧"sv},
+		    {"WEAPON_RAILGUN"_J, "电磁步枪"sv},
+		    {"WEAPON_MARKSMANRIFLE"_J, "精准步枪"sv},
+		    {"WEAPON_HEAVYSHOTGUN"_J, "重型霰弹枪"sv},
+		    {"WEAPON_CERAMICPISTOL"_J, "陶瓷手枪"sv},
+		    {"WEAPON_MILITARYRIFLE"_J, "军用步枪"sv},
+		    {"WEAPON_GADGETPISTOL"_J, "特工手枪"sv},
+		    {"WEAPON_HAZARDCAN"_J, "危化桶"sv},
+		    {"WEAPON_COMBATSHOTGUN"_J, "战斗霰弹枪"sv},
+		    {"WEAPON_NAVYREVOLVER"_J, "海军左轮手枪"sv},
+		    {"WEAPON_FLAREGUN"_J, "信号枪"sv},
+		    {"WEAPON_KNUCKLE"_J, "指虎"sv},
+		    {"WEAPON_COMBATPDW"_J, "战斗 PDW"sv},
+		    {"WEAPON_MARKSMANPISTOL"_J, "神射手手枪"sv},
+		    {"WEAPON_DBSHOTGUN"_J, "双管霰弹枪"sv},
+		    {"WEAPON_COMPACTRIFLE"_J, "精简步枪"sv},
+		    {"WEAPON_MACHINEPISTOL"_J, "冲锋手枪"sv},
+		    {"WEAPON_MACHETE"_J, "砍刀"sv},
+		    {"WEAPON_FLASHLIGHT"_J, "手电筒"sv},
+		    {"WEAPON_SWITCHBLADE"_J, "弹簧刀"sv},
+		    {"WEAPON_REVOLVER"_J, "重型左轮手枪"sv},
+		    {"WEAPON_WRENCH"_J, "管钳"sv},
+		    {"WEAPON_POOLCUE"_J, "台球杆"sv},
+		    {"WEAPON_MINISMG"_J, "迷你冲锋枪"sv},
+		    {"WEAPON_BATTLEAXE"_J, "战斧"sv},
+		    {"WEAPON_AUTOSHOTGUN"_J, "自动霰弹枪"sv},
+		    {"WEAPON_COMPACTLAUNCHER"_J, "精简榴弹发射器"sv},
+		    {"WEAPON_PIPEBOMB"_J, "土制炸弹"sv},
+		    {"WEAPON_SMG_MK2"_J, "冲锋枪 Mk II"sv},
+		    {"WEAPON_COMBATMG_MK2"_J, "战斗机枪 Mk II"sv},
+		    {"WEAPON_CARBINERIFLE_MK2"_J, "卡宾步枪 Mk II"sv},
+		    {"WEAPON_ASSAULTRIFLE_MK2"_J, "突击步枪 Mk II"sv},
+		    {"WEAPON_HEAVYSNIPER_MK2"_J, "重型狙击步枪 Mk II"sv},
+		    {"WEAPON_PISTOL_MK2"_J, "手枪 Mk II"sv},
+		    {"WEAPON_STONE_HATCHET"_J, "石斧"sv},
+		    {"WEAPON_TACTICALRIFLE"_J, "战术步枪"sv},
+		    {"WEAPON_PRECISIONRIFLE"_J, "精确步枪"sv},
+		    {"WEAPON_HEAVYRIFLE"_J, "重型步枪"sv},
+		    {"WEAPON_FERTILIZERCAN"_J, "肥料桶"sv},
+		    {"WEAPON_EMPLAUNCHER"_J, "电磁脉冲发射器"sv},
+		    {"WEAPON_STUNGUN_MP"_J, "电击枪（在线版）"sv},
+		    {"WEAPON_TECPISTOL"_J, "战术冲锋手枪"sv},
+		    {"WEAPON_SNOWLAUNCHER"_J, "雪球发射器"sv},
+		    {"WEAPON_HACKINGDEVICE"_J, "黑客装置"sv},
+		    {"WEAPON_BATTLERIFLE"_J, "战斗步枪"sv},
+		    {"WEAPON_STUNROD"_J, "电击棒"sv},
+		    {"WEAPON_STRICKLER"_J, "斯特里克勒"sv},
+		    {"WEAPON_BRIEFCASE_03"_J, "公文包"sv},
+		    {"WEAPON_NEWSPAPER"_J, "报纸"sv},
+		};
+
+		std::string LocalizeWeaponName(joaat_t weaponHash, std::string_view display)
+		{
+			if (!IsInvalidWeaponText(display) && ContainsCjk(display))
+				return std::string(display);
+
+			if (!IsInvalidWeaponText(display))
+			{
+				const auto translatedDisplay = Localization::Translate(display);
+				if (translatedDisplay != display)
+					return translatedDisplay;
+			}
+
+			if (const auto it = g_WeaponNameFallbacks.find(weaponHash); it != g_WeaponNameFallbacks.end())
+				return std::string(it->second);
+
+			if (IsInvalidWeaponText(display))
+				return {};
+
+			return std::string(display);
+		}
+
+		std::string LocalizeWeaponDescription(std::string_view display)
+		{
+			if (IsInvalidWeaponText(display))
+				return {};
+
+			if (ContainsCjk(display))
+				return std::string(display);
+
+			const auto translatedDisplay = Localization::Translate(display);
+			if (translatedDisplay != display)
+				return translatedDisplay;
+
+			return {};
+		}
+	}
+
 	struct WeaponDisplay
 	{
 		std::string name;
@@ -50,7 +228,7 @@ namespace YimMenu::Submenus
 	static void RenderAmmuNationMenu()
 	{
 		static std::vector<WeaponDisplay> weaponDisplays;
-		static std::string selectedWeapon{"Select"};
+		static std::string selectedWeapon{"请选择"};
 		static joaat_t selectedWeaponHash{};
 		static char searchWeapon[64];
 
@@ -83,7 +261,10 @@ namespace YimMenu::Submenus
 							std::string nameDisplay = HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(nameGxt.c_str());
 							std::string descDisplay = HUD::GET_FILENAME_FOR_AUDIO_CONVERSATION(descGxt.c_str());
 
-							weaponDisplays.push_back({((nameDisplay.empty() || nameDisplay == "NULL" || nameDisplay == "Invalid") ? "" : nameDisplay), ((descDisplay.empty() || descDisplay == "NULL" || descDisplay == "Invalid") ? "" : descDisplay), weap});
+							auto localizedName = LocalizeWeaponName(weap, nameDisplay);
+							auto localizedDesc = LocalizeWeaponDescription(descDisplay);
+
+							weaponDisplays.push_back({std::move(localizedName), std::move(localizedDesc), weap});
 						}
 
 						thread->Kill();
@@ -94,7 +275,7 @@ namespace YimMenu::Submenus
 			return true;
 		}();
 
-		ImGui::BeginCombo(Localization::Translate("Weapons").c_str(), selectedWeapon.c_str());
+		ImGui::BeginCombo("武器", selectedWeapon.c_str());
 		if (ImGui::IsItemActive() && !ImGui::IsPopupOpen("##weaponspopup"))
 		{
 			ImGui::OpenPopup("##weaponspopup");
@@ -102,7 +283,7 @@ namespace YimMenu::Submenus
 		}
 		if (ImGui::BeginPopup("##weaponspopup", ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove))
 		{
-			ImGui::Text("%s", Localization::Translate("Search:").c_str());
+			ImGui::Text("%s", "搜索：");
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(250.f);
 			ImGui::InputText("##searchweapon", searchWeapon, sizeof(searchWeapon));
@@ -142,14 +323,14 @@ namespace YimMenu::Submenus
 			ImGui::EndPopup();
 		}
 
-		if (ImGui::Button(Localization::Translate("Give Weapon").c_str()))
+		if (ImGui::Button("给予武器"))
 		{
 			FiberPool::Push([] {
 				Self::GetPed().GiveWeapon(selectedWeaponHash, true);
 			});
 		}
 		ImGui::SameLine();
-		if (ImGui::Button(Localization::Translate("Remove Weapon").c_str()))
+		if (ImGui::Button("移除武器"))
 		{
 			FiberPool::Push([] {
 				Self::GetPed().RemoveWeapon(selectedWeaponHash);
@@ -158,17 +339,17 @@ namespace YimMenu::Submenus
 
 		if (*Pointers.IsSessionStarted && selectedWeaponHash != 0)
 		{
-			ImGui::Text(Localization::Translate("Kills With: %d").c_str(), kills);
-			ImGui::Text(Localization::Translate("Deaths By: %d").c_str(), deaths);
-			ImGui::Text(Localization::Translate("K/D Ratio: %.2f").c_str(), kdRatio);
-			ImGui::Text(Localization::Translate("Headshots: %d").c_str(), headshots);
-			ImGui::Text(Localization::Translate("Accuracy: %d%%").c_str(), accuracy);
+			ImGui::Text("击杀数：%d", kills);
+			ImGui::Text("死亡数：%d", deaths);
+			ImGui::Text("击杀/死亡比：%.2f", kdRatio);
+			ImGui::Text("爆头数：%d", headshots);
+			ImGui::Text("命中率：%d%%", accuracy);
 		}
 	}
 
 	static std::shared_ptr<Group> RenderCustomWeaponsMenu()
 	{
-		auto customWeaponsGroup = std::make_shared<Group>("Custom Weapons");
+		auto customWeaponsGroup = std::make_shared<Group>("自定义武器");
 
 		auto cutomWeaponTypes = std::make_shared<Group>("", 1);
 		auto customWeapons = std::make_shared<Group>("");
@@ -209,12 +390,12 @@ namespace YimMenu::Submenus
 
 	std::shared_ptr<Category> BuildWeaponsMenu()
 	{
-		auto weapons = std::make_shared<Category>("Weapons");
+		auto weapons = std::make_shared<Category>("武器");
 
-		auto weaponsGlobalsGroup = std::make_shared<Group>("Globals", 12);
-		auto weaponsToolsGroup = std::make_shared<Group>("Tools", 1);
-		auto weaponsAmmuNationGroup = std::make_shared<Group>("Ammu-Nation");
-		auto weaponsAimbotGroup = std::make_shared<Group>("Aimbot", 1);
+		auto weaponsGlobalsGroup = std::make_shared<Group>("全局", 12);
+		auto weaponsToolsGroup = std::make_shared<Group>("工具", 1);
+		auto weaponsAmmuNationGroup = std::make_shared<Group>("武装国度");
+		auto weaponsAimbotGroup = std::make_shared<Group>("自瞄", 1);
 
 		weaponsGlobalsGroup->AddItem(std::make_shared<BoolCommandItem>("infiniteammo"_J));
 		weaponsGlobalsGroup->AddItem(std::make_shared<BoolCommandItem>("infiniteclip"_J));

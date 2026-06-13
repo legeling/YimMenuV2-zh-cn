@@ -17,5 +17,5 @@ namespace YimMenu
 		}
 	};
 
-	static RequestPersonalVehicle _RequestPersonalVehicle{"requestpv", "Request Personal Vehicle", "Requests your current Personal Vehicle."};
+	static RequestPersonalVehicle _RequestPersonalVehicle{"requestpv", "请求个人载具", "请求你当前绑定的个人载具。"};
 }

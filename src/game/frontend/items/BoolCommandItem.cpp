@@ -17,7 +17,7 @@ namespace YimMenu
 	{
 		if (!m_Command)
 		{
-			ImGui::Text("%s", Localization::Translate("Unknown!").c_str());
+			ImGui::Text("%s", "未知！");
 			return;
 		}
 
@@ -41,13 +41,13 @@ namespace YimMenu
 		ImGui::SetNextWindowSize(ImVec2(500, 120));
 		if (ImGui::BeginPopupModal(windowLabel.data(), nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar))
 		{
-			ImGui::BulletText("%s", Localization::Translate("Hover over the command name to change its hotkey").c_str());
-			ImGui::BulletText("%s", Localization::Translate("Press any registered key to remove").c_str());
+			ImGui::BulletText("%s", "将鼠标悬停在命令名称上即可修改它的热键。");
+			ImGui::BulletText("%s", "按下任意已登记的按键即可移除。");
 			ImGui::Separator();
 
 
 			ImGui::Spacing();
-			if (ImGui::Button(Localization::Translate("Close").c_str()) || ((!ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) && ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
+			if (ImGui::Button("关闭") || ((!ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) && ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
 				ImGui::CloseCurrentPopup();
 
 			ImGui::EndPopup();

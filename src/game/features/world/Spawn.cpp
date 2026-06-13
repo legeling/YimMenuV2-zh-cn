@@ -7,8 +7,8 @@
 
 namespace YimMenu::Features
 {
-	static StringCommand _PedModelName{"pedmodelname", "Ped Model", "The model name of the ped you wish to spawn."};
-	static StringCommand _ObjectModelName{"objectmodelname", "Object Model", "The model name of the object you wish to spawn."};
+	static StringCommand _PedModelName{"pedmodelname", "行人模型", "要生成的行人模型名称。"};
+	static StringCommand _ObjectModelName{"objectmodelname", "物体模型", "要生成的物体模型名称。"};
 
 
 	class SpawnPed : public Command
@@ -20,7 +20,7 @@ namespace YimMenu::Features
 			auto model = _PedModelName.GetString();
 			if (!model.length())
 			{
-				Notifications::Show(Localization::Translate("Spawn Ped"), Localization::Translate("No model name provided."), NotificationType::Error);
+				Notifications::Show(Localization::Translate("生成行人"), Localization::Translate("未提供模型名称。"), NotificationType::Error);
 				return;
 			}
 
@@ -31,7 +31,7 @@ namespace YimMenu::Features
 			}
 			else
 			{
-				Notifications::Show(Localization::Translate("Spawn Ped"), Localization::Translate("Invalid model name provided."), NotificationType::Error);
+				Notifications::Show(Localization::Translate("生成行人"), Localization::Translate("提供的模型名称无效。"), NotificationType::Error);
 			}
 		}
 	};
@@ -45,7 +45,7 @@ namespace YimMenu::Features
 			auto model = _ObjectModelName.GetString();
 			if (!model.length())
 			{
-				Notifications::Show(Localization::Translate("Spawn Object"), Localization::Translate("No model name provided."), NotificationType::Error);
+				Notifications::Show(Localization::Translate("生成物体"), Localization::Translate("未提供模型名称。"), NotificationType::Error);
 				return;
 			}
 
@@ -56,11 +56,11 @@ namespace YimMenu::Features
 			}
 			else
 			{
-				Notifications::Show(Localization::Translate("Spawn Object"), Localization::Translate("Invalid model name provided."), NotificationType::Error);
+				Notifications::Show(Localization::Translate("生成物体"), Localization::Translate("提供的模型名称无效。"), NotificationType::Error);
 			}
 		}
 	};
 
-	static SpawnPed _SpawnPed{"spawnped", "Spawn Ped", "Spawns a ped at your current location."};
-	static SpawnObject _SpawnObject{"spawnobject", "Spawn Object", "Spawns an object at your current location."};
+	static SpawnPed _SpawnPed{"spawnped", "生成行人", "在你当前位置生成一个行人。"};
+	static SpawnObject _SpawnObject{"spawnobject", "生成物体", "在你当前位置生成一个物体。"};
 }

@@ -17,7 +17,7 @@ namespace YimMenu
 	{
 		if (!m_Command)
 		{
-			ImGui::Text("%s", Localization::Translate("Unknown color picker!").c_str());
+			ImGui::Text("%s", "未知颜色选择器！");
 			return;
 		}
 

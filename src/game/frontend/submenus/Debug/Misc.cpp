@@ -14,10 +14,10 @@ namespace YimMenu::Submenus
 {
 	std::shared_ptr<Category> BuildMiscMenu()
 	{
-		auto misc = std::make_unique<Category>("Misc");
+		auto misc = std::make_unique<Category>("杂项");
 
 		misc->AddItem(std::make_unique<ImGuiItem>([] {
-			if (ImGui::Button(Localization::Translate("Network Bail").c_str()))
+			if (ImGui::Button("网络脱离"))
 			{
 				FiberPool::Push([] {
 					NETWORK::NETWORK_BAIL(0, 24, 0);
@@ -25,12 +25,12 @@ namespace YimMenu::Submenus
 			}
 
 			static int interiorIndex = 0;
-			ImGui::InputInt(Localization::Translate("Interior Index").c_str(), &interiorIndex);
+			ImGui::InputInt("室内索引", &interiorIndex);
 
 			static bool enterOwnerInterior = false;
-			ImGui::Checkbox(Localization::Translate("Enter Owner Interior").c_str(), &enterOwnerInterior);
+			ImGui::Checkbox("进入房主室内", &enterOwnerInterior);
 
-			if (ImGui::Button(Localization::Translate("Do Teleport").c_str()))
+			if (ImGui::Button("执行传送"))
 			{
 				FiberPool::Push([] {
 					SCRIPT_EVENT_SEND_TO_INTERIOR message;
@@ -49,8 +49,8 @@ namespace YimMenu::Submenus
 			}
 
 			static int team;
-			ImGui::InputInt(Localization::Translate("Team").c_str(), &team);
-			if (ImGui::Button(Localization::Translate("Do Team Swap").c_str()))
+			ImGui::InputInt("队伍", &team);
+			if (ImGui::Button("执行队伍切换"))
 			{
 				FiberPool::Push([] {
 					static ScriptFunction DoTeamSwap("fm_mission_controller"_J, ScriptPointer("DoTeamSwap", "2D 02 04 00 00 38 00 50"));

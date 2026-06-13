@@ -26,5 +26,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static FillInventory _FillInventory{"fillinventory", "Fill Inventory", "Fills all of your snacks and armours."};
+	static FillInventory _FillInventory{"fillinventory", "补满库存", "补满你的全部零食与护甲。"};
 }

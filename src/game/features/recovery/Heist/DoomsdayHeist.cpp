@@ -11,10 +11,10 @@ namespace YimMenu::Features
 {
 	namespace DoomsdayHeist
 	{
-		static IntCommand _DoomsdayHeistCut1{"doomsdayheistcut1", "Player 1", "Player 1 cut", std::nullopt, std::nullopt, 0};
-		static IntCommand _DoomsdayHeistCut2{"doomsdayheistcut2", "Player 2", "Player 2 cut", std::nullopt, std::nullopt, 0};
-		static IntCommand _DoomsdayHeistCut3{"doomsdayheistcut3", "Player 3", "Player 3 cut", std::nullopt, std::nullopt, 0};
-		static IntCommand _DoomsdayHeistCut4{"doomsdayheistcut4", "Player 4", "Player 4 cut", std::nullopt, std::nullopt, 0};
+		static IntCommand _DoomsdayHeistCut1{"doomsdayheistcut1", "玩家 1", "玩家 1 分红", std::nullopt, std::nullopt, 0};
+		static IntCommand _DoomsdayHeistCut2{"doomsdayheistcut2", "玩家 2", "玩家 2 分红", std::nullopt, std::nullopt, 0};
+		static IntCommand _DoomsdayHeistCut3{"doomsdayheistcut3", "玩家 3", "玩家 3 分红", std::nullopt, std::nullopt, 0};
+		static IntCommand _DoomsdayHeistCut4{"doomsdayheistcut4", "玩家 4", "玩家 4 分红", std::nullopt, std::nullopt, 0};
 
 		class SetCuts : public Command
 		{
@@ -48,11 +48,11 @@ namespace YimMenu::Features
 		};
 
 		static std::vector<std::pair<int, const char*>> doomsdayHeistCategory = {
-			{0, "The Data Breaches"},
-			{1, "The Bogdan Problem"},
-			{2, "The Doomsday Senario"}
+			{0, "数据泄露"},
+			{1, "波格丹危机"},
+			{2, "末日将至"}
 		};
-		static ListCommand _DoomsdayHeistCategory{"doomsdayheistcategory", "Select Heist", "Heist categories", doomsdayHeistCategory, 0};
+		static ListCommand _DoomsdayHeistCategory{"doomsdayheistcategory", "选择抢劫任务", "抢劫任务章节", doomsdayHeistCategory, 0};
 
 		class Setup : public Command
 		{
@@ -142,11 +142,11 @@ namespace YimMenu::Features
 			}
 		};
 
-		static SetCuts _DoomsdayHeistSetCuts{"doomsdayheistsetcuts", "Set Cuts", "Sets heist cut"};
-		static ForceReady _DoomsdayHeistForceReady{"doomsdayheistforceready", "Force Ready", "Forces all players to be ready"};
-		static Setup _DoomsdayHeistSetup{"doomsdayheistsetup", "Setup", "Sets up doomsday heist"};
-		static SkipHacking _DoomsdayHeistSkipHacking{"doomsdayheistskiphacking", "Skip Hacking", "Skips hacking process"};
-		static InstantFinish _DoomsdayHeistInstantFinish{"doomsdayheistinstantfinish", "Instant Finish", "Instantly passes the heist"};
-		static InstantFinishAct3 _DoomsdayHeistInstantFinishAct3{"doomsdayheistinstantfinishact3", "Instant Finish (Act: III)", "Instantly passes Doomsday Scenario Act: III"};
+		static SetCuts _DoomsdayHeistSetCuts{"doomsdayheistsetcuts", "设置分红", "设置抢劫分红"};
+		static ForceReady _DoomsdayHeistForceReady{"doomsdayheistforceready", "强制准备", "强制所有玩家准备完成"};
+		static Setup _DoomsdayHeistSetup{"doomsdayheistsetup", "设置任务", "设置末日豪劫任务"};
+		static SkipHacking _DoomsdayHeistSkipHacking{"doomsdayheistskiphacking", "跳过黑客破解", "跳过黑客破解流程"};
+		static InstantFinish _DoomsdayHeistInstantFinish{"doomsdayheistinstantfinish", "瞬间完成", "立即完成抢劫任务"};
+		static InstantFinishAct3 _DoomsdayHeistInstantFinishAct3{"doomsdayheistinstantfinishact3", "瞬间完成（第三章）", "立即完成末日将至第三章"};
 	}
 }

@@ -19,7 +19,7 @@ namespace YimMenu::Features
 		{
 			if (!*Pointers.IsSessionStarted || Scripts::IsScriptActive("AM_CONTACT_REQUESTS"_J))
 			{
-				Notifications::Show(Localization::Translate("Mechanic"), Localization::Translate("Not safe to call the mechanic at the moment."), NotificationType::Error);
+				Notifications::Show("技工", "当前不适合呼叫技工。", NotificationType::Error);
 				return;
 			}
 
@@ -42,11 +42,11 @@ namespace YimMenu::Features
 				}
 				else
 				{
-					Notifications::Show(Localization::Translate("Mechanic"), Localization::Translate("Failed to call the mechanic."), NotificationType::Error);
+					Notifications::Show("技工", "呼叫技工失败。", NotificationType::Error);
 				}
 			}
 		}
 	};
 
-	static CallMechanic _CallMechanic{"callmechanic", "Call Mechanic", "Allows you to request your personal vehicles."};
+	static CallMechanic _CallMechanic{"callmechanic", "呼叫技工", "允许你请求个人载具。"};
 }

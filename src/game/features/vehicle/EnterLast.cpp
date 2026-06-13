@@ -14,5 +14,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static EnterLastVehicle _EnterLastVehicle{"enterlastvehicle", "Enter last vehicle", "Enters the last vehicle you were in"};
+	static EnterLastVehicle _EnterLastVehicle{"enterlastvehicle", "进入上一辆载具", "进入你上一辆驾驶过的载具"};
 };

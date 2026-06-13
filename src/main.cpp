@@ -6,6 +6,7 @@
 #include "core/settings/Settings.hpp"
 #include "core/filemgr/FileMgr.hpp"
 #include "core/frontend/Notifications.hpp"
+#include "core/localization/Localization.hpp"
 #include "core/hooking/Hooking.hpp"
 #include "core/hooking/CallHook.hpp"
 #include "core/memory/ModuleMgr.hpp"
@@ -83,7 +84,7 @@ namespace YimMenu
 		if (!Pointers.LateInit())
 			LOG(WARNING) << "Socialclub patterns failed to load";
 
-		Notifications::Show("YimMenuV2", "Loaded succesfully", NotificationType::Success);
+		Notifications::Show("YimMenuV2", Localization::Translate("Loaded successfully."), NotificationType::Success);
 
 		if (InWine().value_or(false))
 		    LOG(INFO) << "Running in Wine!";

@@ -65,16 +65,16 @@ namespace YimMenu::Submenus
 		switch (GSBDRandomEvents->EventData[selectedEvent].State)
 		{
 		case eRandomEventState::INACTIVE:
-			return std::format("{}{}", Localization::Translate("Inactive - launching in "), GSBDRandomEvents->EventData[selectedEvent].TimerState.GetRemainingTimeStr(FMRandomEvents->EventData[selectedEvent].InactiveTime));
+			return std::format("{}{}", "未激活，启动倒计时：", GSBDRandomEvents->EventData[selectedEvent].TimerState.GetRemainingTimeStr(FMRandomEvents->EventData[selectedEvent].InactiveTime));
 		case eRandomEventState::AVAILABLE:
-			return std::format("{}{}", Localization::Translate("Available - deactivating in "), GSBDRandomEvents->EventData[selectedEvent].TimerState.GetRemainingTimeStr(FMRandomEvents->EventData[selectedEvent].AvailableTime));
+			return std::format("{}{}", "可用，失效倒计时：", GSBDRandomEvents->EventData[selectedEvent].TimerState.GetRemainingTimeStr(FMRandomEvents->EventData[selectedEvent].AvailableTime));
 		case eRandomEventState::ACTIVE:
-			return Localization::Translate("Active");
+			return "激活中";
 		case eRandomEventState::CLEANUP:
-			return Localization::Translate("Cleanup");
+			return "清理中";
 		}
 
-		return Localization::Translate("N/A");
+		return "无";
 	}
 
 	static int GetNumLocallyActiveEvents()
@@ -135,7 +135,7 @@ namespace YimMenu::Submenus
 		}
 		else
 		{
-			Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Event script is not active. Are you a participant?"), NotificationType::Error);
+			Notifications::Show("随机事件", "事件脚本未激活。你是参与者吗？", NotificationType::Error);
 		}
 	}
 
@@ -152,30 +152,30 @@ namespace YimMenu::Submenus
 		for (auto& patch : sendUpdateRECoordsTSECooldownPatches)
 			patch->Enable();
 
-		auto menu = std::make_shared<Category>("Random Events");
+		auto menu = std::make_shared<Category>("随机事件");
 
 		menu->AddItem(std::make_unique<ImGuiItem>([] {
 			GPBDFM2 = GPBD_FM_2::Get();
 			GSBDRandomEvents = GSBD_RandomEvents::Get();
 			if (!GPBDFM2 || !GSBDRandomEvents)
-				return ImGui::Text("%s", Localization::Translate("Freemode global block is not loaded.").c_str());
+				return ImGui::Text("%s", "自由模式全局块未加载。");
 
 			if (GPBDFM2->Entries[Self::GetPlayer().GetId()].RandomEventsClientData.InitState != eRandomEventClientInitState::INITIALIZED)
-				return ImGui::Text("%s", Localization::Translate("Random Events are not initialized.").c_str());
+				return ImGui::Text("%s", "随机事件尚未初始化。");
 
 			if (auto freemode = Scripts::FindScriptThread("freemode"_J))
 			{
 				FMRandomEvents = RANDOM_EVENTS_FREEMODE_DATA::Get(freemode);
 				if (!FMRandomEvents)
-					return ImGui::Text("%s", Localization::Translate("Freemode stack is not valid.").c_str());
+					return ImGui::Text("%s", "自由模式堆栈无效。");
 			}
 			else
 			{
-				return ImGui::Text("%s", Localization::Translate("Freemode is not running.").c_str());
+				return ImGui::Text("%s", "自由模式未运行。");
 			}
 
 			const auto selectedEventName = Localization::Translate(randomEventNames[selectedEvent]);
-			if (ImGui::BeginCombo(Localization::Translate("Select Event").c_str(), selectedEventName.c_str()))
+			if (ImGui::BeginCombo("选择事件", selectedEventName.c_str()))
 			{
 				for (int event = DRUG_VEHICLE; event < MAX_EVENTS; event++)
 				{
@@ -208,7 +208,7 @@ namespace YimMenu::Submenus
 				ImGui::EndCombo();
 			}
 
-			auto locationLabel = std::format("{} (0-{})", Localization::Translate("Select Location"), numSubvariations);
+			auto locationLabel = std::format("{} (0-{})", "选择地点", numSubvariations);
 			if (ImGui::InputInt(locationLabel.c_str(), &selectedSubvariation))
 			{
 				selectedSubvariation = std::clamp(selectedSubvariation, 0, numSubvariations);
@@ -218,11 +218,11 @@ namespace YimMenu::Submenus
 			static Tunable maxEventsTune{"FMREMAXACTIVATEDEVENTS"_J};
 			int maxActiveEvents = maxEventsTune.IsReady() ? maxEventsTune.Get<int>() : 0;
 			if (numActiveEvents >= maxActiveEvents)
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), Localization::Translate("Active Events: %d/%d").c_str(), numActiveEvents, maxActiveEvents);
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "活动事件：%d/%d", numActiveEvents, maxActiveEvents);
 			else
-				ImGui::Text(Localization::Translate("Active Events: %d/%d").c_str(), numActiveEvents, maxActiveEvents);
+				ImGui::Text("活动事件：%d/%d", numActiveEvents, maxActiveEvents);
 
-			if (ImGui::Button(Localization::Translate("Launch Event").c_str()))
+			if (ImGui::Button("启动事件"))
 			{
 				FiberPool::Push([] {
 					if (GSBDRandomEvents->EventData[selectedEvent].State != eRandomEventState::ACTIVE)
@@ -235,21 +235,21 @@ namespace YimMenu::Submenus
 						ScriptMgr::Yield(100ms);
 						if (GSBDRandomEvents->EventData[selectedEvent].State == eRandomEventState::INACTIVE)
 						{
-							Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Failed to launch event. Are you freemode host?"), NotificationType::Error);
+							Notifications::Show("随机事件", "启动事件失败。你是自由模式主机吗？", NotificationType::Error);
 						}
 					}
 					else
 					{
-						Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Event is already active."), NotificationType::Error);
+						Notifications::Show("随机事件", "事件已激活。", NotificationType::Error);
 					}
 				});
 			}
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("%s", Localization::Translate("Freemode script host is required.").c_str());
+				ImGui::SetTooltip("%s", "需要自由模式脚本主机权限。");
 
 			ImGui::SameLine();
 
-			if (ImGui::Button(Localization::Translate("Kill Event").c_str()))
+			if (ImGui::Button("终止事件"))
 			{
 				FiberPool::Push([] {
 					if (GSBDRandomEvents->EventData[selectedEvent].State == eRandomEventState::AVAILABLE)
@@ -262,14 +262,14 @@ namespace YimMenu::Submenus
 					}
 					else
 					{
-						Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Event is not active."), NotificationType::Error);
+						Notifications::Show("随机事件", "事件未激活。", NotificationType::Error);
 					}
 				});
 			}
 
 			ImGui::SameLine();
 
-			if (ImGui::Button(Localization::Translate("Teleport to Event").c_str()))
+			if (ImGui::Button("传送到事件"))
 			{
 				FiberPool::Push([] {
 					if (GSBDRandomEvents->EventData[selectedEvent].State >= eRandomEventState::AVAILABLE)
@@ -280,12 +280,12 @@ namespace YimMenu::Submenus
 						}
 						else // Either update event coords TSE not sent yet or event doesn't register a trigger point
 						{
-							Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Failed to teleport to event. Coordinates are not valid."), NotificationType::Error);
+							Notifications::Show("随机事件", "传送到事件失败，坐标无效。", NotificationType::Error);
 						}
 					}
 					else
 					{
-						Notifications::Show(Localization::Translate("Random Events"), Localization::Translate("Event is not active."), NotificationType::Error);
+						Notifications::Show("随机事件", "事件未激活。", NotificationType::Error);
 					}
 				});
 			}
@@ -298,11 +298,11 @@ namespace YimMenu::Submenus
 					{
 						if (auto host = netComponent->GetHost())
 						{
-							ImGui::Text(Localization::Translate("Host: %s").c_str(), host->GetName());
+							ImGui::Text("主机：%s", host->GetName());
 						}
 						ImGui::SameLine();
 						ImGui::BeginDisabled(netComponent->IsLocalPlayerHost());
-						if (ImGui::SmallButton(Localization::Translate("Take Control").c_str()))
+						if (ImGui::SmallButton("接管控制"))
 						{
 							FiberPool::Push([eventThread] {
 								Scripts::ForceScriptHost(eventThread);
@@ -314,42 +314,42 @@ namespace YimMenu::Submenus
 			}
 
 			const auto eventState = Localization::Translate(GetEventStateString());
-			ImGui::Text(Localization::Translate("State: %s").c_str(), eventState.c_str());
+			ImGui::Text("状态：%s", eventState.c_str());
 			if (GSBDRandomEvents->EventData[selectedEvent].State == eRandomEventState::INACTIVE)
 			{
-				ImGui::Text("%s", Localization::Translate("Location: N/A").c_str());
-				ImGui::Text("%s", Localization::Translate("Trigger Range: N/A").c_str());
+				ImGui::Text("%s", "地点：无");
+				ImGui::Text("%s", "触发范围：无");
 			}
 			else
 			{
-				ImGui::Text(Localization::Translate("Location: %d").c_str(), GSBDRandomEvents->EventData[selectedEvent].Subvariation);
-				ImGui::Text(Localization::Translate("Trigger Range: %.2f").c_str(), GSBDRandomEvents->EventData[selectedEvent].TriggerRange); // Default value is 400, it will be updated once the event switches to the available state
+				ImGui::Text("地点：%d", GSBDRandomEvents->EventData[selectedEvent].Subvariation);
+				ImGui::Text("触发范围：%.2f", GSBDRandomEvents->EventData[selectedEvent].TriggerRange); // Default value is 400, it will be updated once the event switches to the available state
 			}
 
 			// We should probably put this into a separate group, but I just don't want to do the same safety checks before rendering it
-			ImGui::SeparatorText(Localization::Translate("Cooldown and Availability").c_str());
+			ImGui::SeparatorText("冷却与可用时间");
 
 			ImGui::InputInt("##cooldown", &setCooldown);
 			ImGui::SameLine();
-			if (ImGui::Button(Localization::Translate("Set Cooldown").c_str()))
+			if (ImGui::Button("设置冷却"))
 			{
 				int value = applyInMinutes ? (setCooldown * 60000) : setCooldown;
 				FMRandomEvents->EventData[selectedEvent].InactiveTime = value;
 			}
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("%s", Localization::Translate("Freemode script host is required.").c_str());
+				ImGui::SetTooltip("%s", "需要自由模式脚本主机权限。");
 
 			ImGui::InputInt("##availability", &setAvailability);
 			ImGui::SameLine();
-			if (ImGui::Button(Localization::Translate("Set Availability").c_str()))
+			if (ImGui::Button("设置可用时间"))
 			{
 				int value = applyInMinutes ? (setAvailability * 60000) : setAvailability;
 				FMRandomEvents->EventData[selectedEvent].AvailableTime = value;
 			}
 			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("%s", Localization::Translate("Freemode script host is required.").c_str());
+				ImGui::SetTooltip("%s", "需要自由模式脚本主机权限。");
 
-			ImGui::Checkbox(Localization::Translate("Apply in Minutes").c_str(), &applyInMinutes);
+			ImGui::Checkbox("按分钟应用", &applyInMinutes);
 		}));
 
 		return menu;

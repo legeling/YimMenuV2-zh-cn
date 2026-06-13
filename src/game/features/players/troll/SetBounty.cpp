@@ -6,8 +6,8 @@
 
 namespace YimMenu::Features
 {
-	static IntCommand _BountyAmount{"bountyamount", "Bounty Amount", "The bounty amount to set", 1, 10000, 9000};
-	static BoolCommand _AnonymousBounty{"anonymousbounty", "Anonymous Bounty", "Sets the bounty as anonymous"};
+	static IntCommand _BountyAmount{"bountyamount", "赏金金额", "要设置的赏金金额", 1, 10000, 9000};
+	static BoolCommand _AnonymousBounty{"anonymousbounty", "匿名赏金", "将赏金设置为匿名"};
 
 	class SetBounty : public PlayerCommand
 	{
@@ -27,5 +27,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static SetBounty _SetBounty{"setbounty", "Set Bounty", "Sets the specified bounty to the player"};
+	static SetBounty _SetBounty{"setbounty", "设置赏金", "为玩家设置指定赏金"};
 }

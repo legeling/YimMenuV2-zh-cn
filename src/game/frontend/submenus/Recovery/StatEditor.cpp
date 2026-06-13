@@ -234,26 +234,26 @@ namespace YimMenu::Submenus
 		switch (data->GetType())
 		{
 		case sStatData::Type::_BOOL:
-			return ImGui::Checkbox(Localization::Translate("Value").c_str(), &value.m_AsBool);
+			return ImGui::Checkbox("值", &value.m_AsBool);
 		case sStatData::Type::FLOAT:
-			return ImGui::InputFloat(Localization::Translate("Value").c_str(), &value.m_AsFloat);
+			return ImGui::InputFloat("值", &value.m_AsFloat);
 		case sStatData::Type::INT:
-			return ImGui::InputInt(Localization::Translate("Value").c_str(), &value.m_AsInt);
+			return ImGui::InputInt("值", &value.m_AsInt);
 		case sStatData::Type::UINT32:
-			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_U32, &value.m_AsInt);
+			return ImGui::InputScalar("值", ImGuiDataType_U32, &value.m_AsInt);
 		case sStatData::Type::UINT16:
-			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_U16, &value.m_AsInt);
+			return ImGui::InputScalar("值", ImGuiDataType_U16, &value.m_AsInt);
 		case sStatData::Type::UINT8:
-			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_U8, &value.m_AsInt);
+			return ImGui::InputScalar("值", ImGuiDataType_U8, &value.m_AsInt);
 		case sStatData::Type::INT64:
-			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_S64, &value.m_AsInt);
+			return ImGui::InputScalar("值", ImGuiDataType_S64, &value.m_AsInt);
 		case sStatData::Type::UINT64:
-			return ImGui::InputScalar(Localization::Translate("Value").c_str(), ImGuiDataType_U64, &value.m_AsInt);
+			return ImGui::InputScalar("值", ImGuiDataType_U64, &value.m_AsInt);
 		case sStatData::Type::STRING:
-			return ImGui::InputText(Localization::Translate("Value").c_str(), value.m_AsString, sizeof(value.m_AsString));
+			return ImGui::InputText("值", value.m_AsString, sizeof(value.m_AsString));
 		default:
 			ImGui::BeginDisabled();
-			ImGui::Text("%s", Localization::Translate("Data type not supported").c_str());
+			ImGui::Text("%s", "不支持该数据类型");
 			ImGui::EndDisabled();
 			return false; // data type not supported
 		}
@@ -307,18 +307,18 @@ namespace YimMenu::Submenus
 	{
 		ImGui::SetNextItemWidth(150.f);
 		if (info.m_IsBoolStat)
-			return ImGui::Checkbox(Localization::TranslateLabel("Value##packed").c_str(), &value.m_AsBool);
+			return ImGui::Checkbox("值##packed", &value.m_AsBool);
 		else
-			return ImGui::InputScalar(Localization::TranslateLabel("Value##packed").c_str(), ImGuiDataType_U8, &value.m_AsInt);
+			return ImGui::InputScalar("值##packed", ImGuiDataType_U8, &value.m_AsInt);
 	}
 
 	std::shared_ptr<Category> BuildStatEditorMenu()
 	{
-		auto menu = std::make_shared<Category>("Stat Editor");
-		auto normal = std::make_shared<Group>("Regular");
-		auto packed = std::make_shared<Group>("Packed");
-		auto packed_range = std::make_shared<Group>("Packed Range");
-		auto from_clipboard = std::make_shared<Group>("From Clipboard");
+		auto menu = std::make_shared<Category>("数据编辑器");
+		auto normal = std::make_shared<Group>("常规");
+		auto packed = std::make_shared<Group>("打包");
+		auto packed_range = std::make_shared<Group>("打包范围");
+		auto from_clipboard = std::make_shared<Group>("从剪贴板");
 
 		normal->AddItem(std::make_unique<ImGuiItem>([] {
 			if (!NativeInvoker::AreHandlersCached())
@@ -329,7 +329,7 @@ namespace YimMenu::Submenus
 			static StatValue value{};
 
 			ImGui::SetNextItemWidth(300.f);
-			if (ImGui::InputText(Localization::Translate("Name").c_str(), stat_buf, sizeof(stat_buf)))
+			if (ImGui::InputText("名称", stat_buf, sizeof(stat_buf)))
 			{
 				current_info = GetStatInfo(stat_buf);
 				if (current_info.IsValid())
@@ -340,18 +340,18 @@ namespace YimMenu::Submenus
 				return ImGui::TextDisabled("%s", Localization::Translate("Stat not found").c_str());
 			else if (current_info.m_Normalized)
 			{
-				ImGui::Text(Localization::Translate("Normalized name to: %s").c_str(), current_info.m_Name.data());
+				ImGui::Text("名称规范化为：%s", current_info.m_Name.data());
 			}
 
 			bool can_edit = !current_info.m_Data->IsControlledByNetshop();
 
 			RenderStatEditor(value, current_info.m_Data);
 
-			if (ImGui::Button(Localization::Translate("Refresh").c_str()))
+			if (ImGui::Button("刷新"))
 				ReadStat(value, current_info.m_Data);
 			ImGui::SameLine();
 			ImGui::BeginDisabled(!can_edit);
-			if (ImGui::Button(Localization::Translate("Write").c_str()))
+			if (ImGui::Button("写入"))
 				FiberPool::Push([] {
 					WriteStat(current_info.m_NameHash, value, current_info.m_Data);
 				});
@@ -360,7 +360,7 @@ namespace YimMenu::Submenus
 					WriteStat(current_info.m_NameHash, value, current_info.m_Data);
 				});
 			if (!can_edit && ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
-				ImGui::SetTooltip("%s", Localization::Translate("This stat should not be edited by the client. Right-click to force the write anyway").c_str());
+				ImGui::SetTooltip("%s", "该数据不应由客户端修改。若仍要写入，请右键强制执行。");
 			ImGui::EndDisabled();
 		}));
 
@@ -373,7 +373,7 @@ namespace YimMenu::Submenus
 			static StatValue value{};
 
 			ImGui::SetNextItemWidth(200.f);
-			if (ImGui::InputInt(Localization::Translate("Index").c_str(), &current_info.m_Index))
+			if (ImGui::InputInt("索引", &current_info.m_Index))
 			{
 				current_info = GetPackedStatInfo(current_info.m_Index);
 				if (current_info.IsValid())
@@ -385,10 +385,10 @@ namespace YimMenu::Submenus
 
 			RenderPackedStatEditor(value, current_info);
 
-			if (ImGui::Button(Localization::TranslateLabel("Refresh##packed").c_str()))
+			if (ImGui::Button("刷新##packed"))
 				ReadPackedStat(value, current_info);
 			ImGui::SameLine();
-			if (ImGui::Button(Localization::TranslateLabel("Write##packed").c_str()))
+			if (ImGui::Button("写入##packed"))
 				FiberPool::Push([] {
 					WritePackedStat(value, current_info);
 				});
@@ -401,14 +401,14 @@ namespace YimMenu::Submenus
 			static int start{}, end{}, value{};
 
 			ImGui::SetNextItemWidth(150.f);
-			ImGui::InputInt(Localization::Translate("Start").c_str(), &start);
+			ImGui::InputInt("起始", &start);
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(150.f);
-			ImGui::InputInt(Localization::Translate("End").c_str(), &end);
+			ImGui::InputInt("结束", &end);
 			ImGui::SetNextItemWidth(150.f);
-			ImGui::InputScalar(Localization::TranslateLabel("Value##packed_range").c_str(), ImGuiDataType_U8, &value);
+			ImGui::InputScalar("值##packed_range", ImGuiDataType_U8, &value);
 			ImGui::SameLine();
-			if (ImGui::Button(Localization::TranslateLabel("Write##packed_range").c_str()))
+			if (ImGui::Button("写入##packed_range"))
 				FiberPool::Push([] {
 					WritePackedStatRange(start, end, value);
 				});
@@ -418,7 +418,7 @@ namespace YimMenu::Submenus
 			if (!NativeInvoker::AreHandlersCached())
 				return ImGui::TextDisabled("%s", Localization::Translate("Natives not cached yet.").c_str());
 
-			if (ImGui::Button(Localization::Translate("Load from Clipboard").c_str()))
+			if (ImGui::Button("从剪贴板加载"))
 			{
 				auto clip_text = std::string(ImGui::GetClipboardText());
 				FiberPool::Push([clip_text] {

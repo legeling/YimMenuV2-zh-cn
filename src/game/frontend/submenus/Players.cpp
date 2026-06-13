@@ -23,16 +23,16 @@ namespace YimMenu::Submenus
 		std::vector<Tag> tags;
 
 		if (player.IsHost())
-			tags.push_back({"HOST", ImGui::Colors::DeepSkyBlue});
+			tags.push_back({"主机", ImGui::Colors::DeepSkyBlue});
 
 		if (player.IsModder())
-			tags.push_back({"MOD", ImGui::Colors::DeepPink});
+			tags.push_back({"作弊者", ImGui::Colors::DeepPink});
 
 		if (player.GetPed() && player.GetPed().IsInvincible())
-			tags.push_back({"GOD", ImGui::Colors::Crimson});
+			tags.push_back({"无敌", ImGui::Colors::Crimson});
 
 		if (player.GetPed() && !player.GetPed().IsVisible() && false) // doesn't really seem to work on GTA
-			tags.push_back({"INVIS", ImGui::Colors::MediumPurple});
+			tags.push_back({"隐身", ImGui::Colors::MediumPurple});
 
 		return tags;
 	}
@@ -57,7 +57,7 @@ namespace YimMenu::Submenus
 			ImGui::SetNextWindowPos(
 			    ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowSize().x + offset, ImGui::GetWindowPos().y));
 			ImGui::SetNextWindowSize(ImVec2(215, ImGui::GetWindowSize().y));
-			ImGui::Begin(Localization::Translate("Player List").c_str(), nullptr, ImGuiWindowFlags_NoDecoration);
+			ImGui::Begin("玩家列表", nullptr, ImGuiWindowFlags_NoDecoration);
 
 			BoolCommandItem("spectate"_J).Draw();
 			for (auto& [id, player] : sortedPlayers)
@@ -100,7 +100,7 @@ namespace YimMenu::Submenus
 		}
 		else
 		{
-			if (ImGui::BeginCombo(Localization::Translate("Players").c_str(), YimMenu::Players::GetSelected().GetName()))
+			if (ImGui::BeginCombo("玩家", YimMenu::Players::GetSelected().GetName()))
 			{
 				for (auto& [id, player] : sortedPlayers)
 				{
@@ -116,7 +116,7 @@ namespace YimMenu::Submenus
 
 	Players::Players() :
 		#define ICON_FA_USERS "\xef\x83\x80"
-	    Submenu::Submenu("Players", ICON_FA_USERS)
+	    Submenu::Submenu("玩家", ICON_FA_USERS)
 	{
 		AddCategory(std::move(BuildInfoMenu()));
 		AddCategory(std::move(BuildTrollMenu()));

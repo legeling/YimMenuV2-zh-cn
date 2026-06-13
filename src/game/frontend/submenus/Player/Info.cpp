@@ -21,10 +21,10 @@ namespace YimMenu::Submenus
 
 	std::shared_ptr<Category> BuildInfoMenu()
 	{
-		auto menu = std::make_shared<Category>("Info");
+		auto menu = std::make_shared<Category>("信息");
 
-		auto teleportGroup = std::make_shared<Group>("Teleport");
-		auto playerOptionsGroup = std::make_shared<Group>("Info");
+		auto teleportGroup = std::make_shared<Group>("传送");
+		auto playerOptionsGroup = std::make_shared<Group>("信息");
 
 		playerOptionsGroup->AddItem(std::make_shared<ImGuiItem>([] {
 			if (Players::GetSelected().IsValid())
@@ -34,32 +34,32 @@ namespace YimMenu::Submenus
 		playerOptionsGroup->AddItem(std::make_shared<ImGuiItem>([] {
 			if (Players::GetSelected().IsValid())
 			{
-				ImGui::Text(Localization::Translate("Rank: %d (%d RP)").c_str(), Players::GetSelected().GetRank(), Players::GetSelected().GetRP());
-				ImGui::Text(Localization::Translate("Money: %d").c_str(), Players::GetSelected().GetMoney());
+				ImGui::Text("等级：%d（%d RP）", Players::GetSelected().GetRank(), Players::GetSelected().GetRP());
+				ImGui::Text("金钱：%d", Players::GetSelected().GetMoney());
 
 				if (Players::GetSelected().GetPed())
 				{
 					auto health = Players::GetSelected().GetPed().GetHealth();
 					auto maxHealth = Players::GetSelected().GetPed().GetMaxHealth();
-					std::string healthStr = std::format(Localization::Translate("HP: {}/{} ({:.2f}%)"), health, maxHealth, (float)health / maxHealth * 100.0f);
+					std::string healthStr = std::format("生命值：{}/{}（{:.2f}%）", health, maxHealth, (float)health / maxHealth * 100.0f);
 					ImGui::Text("%s", healthStr.c_str());
 
 					auto coords = Players::GetSelected().GetPed().GetPosition();
-					ImGui::Text(Localization::Translate("Coords: %.2f, %.2f, %.2f").c_str(), coords.x, coords.y, coords.z);
+					ImGui::Text("坐标：%.2f, %.2f, %.2f", coords.x, coords.y, coords.z);
 
 					auto distance = Players::GetSelected().GetPed().GetPosition().GetDistance(Self::GetPed().GetPosition());
-					ImGui::Text(Localization::Translate("Distance: %.2f").c_str(), distance);
+					ImGui::Text("距离：%.2f", distance);
 				}
 				else
 				{
-					ImGui::Text("%s", Localization::Translate("Ped missing or deleted").c_str());
+					ImGui::Text("%s", "角色实体不存在或已被删除");
 				}
 
 				auto rid1 = Players::GetSelected().GetRID();
 
 				std::string ridStr = std::to_string(rid1);
 
-				ImGui::Text("%s", Localization::Translate("RID:").c_str());
+				ImGui::Text("%s", "R 星 ID：");
 				ImGui::SameLine();
 				if (ImGui::SmallButton(std::to_string(rid1).c_str()))
 				{
@@ -70,7 +70,7 @@ namespace YimMenu::Submenus
 				switch (platformAccountId.m_Platform)
 				{
 				case PlatformAccountId::PLATFORM_XBOX:
-					ImGui::Text("%s", Localization::Translate("Xbox User ID:").c_str());
+					ImGui::Text("%s", "Xbox 用户 ID：");
 					ImGui::SameLine();
 					if (ImGui::SmallButton(std::to_string(platformAccountId.m_XboxUserId).c_str()))
 					{
@@ -78,7 +78,7 @@ namespace YimMenu::Submenus
 					}
 					break;
 				case PlatformAccountId::PLATFORM_STEAM:
-					ImGui::Text("%s", Localization::Translate("Steam ID:").c_str());
+					ImGui::Text("%s", "Steam ID：");
 					ImGui::SameLine();
 					if (ImGui::SmallButton(std::to_string(platformAccountId.m_SteamId).c_str()))
 					{
@@ -86,7 +86,7 @@ namespace YimMenu::Submenus
 					}
 					break;
 				case PlatformAccountId::PLATFORM_EPIC:
-					ImGui::Text("%s", Localization::Translate("Epic Account ID:").c_str());
+					ImGui::Text("%s", "Epic 账号 ID：");
 					ImGui::SameLine();
 					if (ImGui::SmallButton(platformAccountId.m_EpicAccountId))
 					{
@@ -102,43 +102,42 @@ namespace YimMenu::Submenus
 
 				auto addr2 = BuildIPStr(ip.m_IpAddress.m_Field1, ip.m_IpAddress.m_Field2, ip.m_IpAddress.m_Field3, ip.m_IpAddress.m_Field4);
 
-				ImGui::Text("%s", Localization::Translate("IP Address:").c_str());
+				ImGui::Text("%s", "IP 地址：");
 				ImGui::SameLine();
 				if (ImGui::SmallButton(addr2.c_str()))
 				{
 					ImGui::SetClipboardText(addr2.c_str());
 				}
 
-				if (ImGui::Button(Localization::Translate("Add to Saved").c_str()))
+				if (ImGui::Button("添加到已保存"))
 					SavedPlayers::GetPlayerData(Players::GetSelected());
 				ImGui::SameLine();
-				if (ImGui::Button(Localization::Translate("View SC Profile").c_str()))
+				if (ImGui::Button("查看 SC 档案"))
 					FiberPool::Push([] {
 						uint64_t handle[13];
 						NETWORK::NETWORK_HANDLE_FROM_PLAYER(Players::GetSelected().GetId(), handle, std::size(handle));
 						NETWORK::NETWORK_SHOW_PROFILE_UI(handle);
 					});
 				ImGui::SameLine();
-				if (ImGui::Button(Localization::Translate("Add Friend").c_str()))
+				if (ImGui::Button("添加好友"))
 					FiberPool::Push([] {
 						uint64_t handle[13];
 						NETWORK::NETWORK_HANDLE_FROM_PLAYER(Players::GetSelected().GetId(), handle, std::size(handle));
 						NETWORK::NETWORK_ADD_FRIEND(handle, "");
 					});
 
-				if (ImGui::Button(Localization::Translate("More Info").c_str()))
-					ImGui::OpenPopup("More Info");
+				if (ImGui::Button("更多信息"))
+					ImGui::OpenPopup("更多信息");
 
 				ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f), ImGuiCond_Always, ImVec2(0.5f, 0.5f));
-				auto moreInfo = Localization::Translate("More Info");
-				if (ImGui::BeginPopupModal(moreInfo.c_str(), nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_Modal | ImGuiWindowFlags_AlwaysAutoResize))
+				if (ImGui::BeginPopupModal("更多信息", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_Modal | ImGuiWindowFlags_AlwaysAutoResize))
 				{
-					ImGui::Text(Localization::Translate("Average Latency: %.2f").c_str(), Players::GetSelected().GetAverageLatency());
-					ImGui::Text(Localization::Translate("Packet Loss: %.2f").c_str(), Players::GetSelected().GetAveragePacketLoss());
+					ImGui::Text("平均延迟：%.2f", Players::GetSelected().GetAverageLatency());
+					ImGui::Text("丢包率：%.2f", Players::GetSelected().GetAveragePacketLoss());
 
 					ImGui::Spacing();
 
-					if (ImGui::Button(Localization::Translate("Close").c_str()) || ((!ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) && ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
+					if (ImGui::Button("关闭") || ((!ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) && ImGui::IsMouseClicked(ImGuiMouseButton_Left)))
 						ImGui::CloseCurrentPopup();
 
 					ImGui::EndPopup();
@@ -147,7 +146,7 @@ namespace YimMenu::Submenus
 			else
 			{
 				Players::SetSelected(Self::GetPlayer());
-				ImGui::Text("%s", Localization::Translate("No players yet!").c_str());
+				ImGui::Text("%s", "当前还没有玩家。");
 			}
 		}));
 
@@ -156,7 +155,7 @@ namespace YimMenu::Submenus
 		
 		auto customPlayerTp = std::make_shared<Group>("", 1);
 		customPlayerTp->AddItem(std::make_shared<Vector3CommandItem>("playertpcoord"_J, ""));
-		customPlayerTp->AddItem(std::make_shared<PlayerCommandItem>("tpplayertocoord"_J, "Teleport"));
+		customPlayerTp->AddItem(std::make_shared<PlayerCommandItem>("tpplayertocoord"_J));
 		auto tpToProperty = std::make_shared<Group>("", 1);
 		tpToProperty->AddItem(std::make_shared<ListCommandItem>("sendtopropertyindex"_J, "##selproperty"));
 		tpToProperty->AddItem(std::make_shared<PlayerCommandItem>("sendtoproperty"_J));
@@ -165,7 +164,7 @@ namespace YimMenu::Submenus
 		tpToInterior->AddItem(std::make_shared<PlayerCommandItem>("sendtointerior"_J));
 		teleportGroup->AddItem(tpToProperty);
 		teleportGroup->AddItem(tpToInterior);
-		teleportGroup->AddItem(std::make_shared<PlayerCommandItem>("tptoplayer"_J, "Teleport To"));
+		teleportGroup->AddItem(std::make_shared<PlayerCommandItem>("tptoplayer"_J));
 		teleportGroup->AddItem(std::make_shared<PlayerCommandItem>("bring"_J));
 		teleportGroup->AddItem(customPlayerTp);
 

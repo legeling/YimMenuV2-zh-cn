@@ -19,15 +19,15 @@ namespace YimMenu::Features
 	};
 
 	static std::vector<std::pair<int, const char*>> businessNames = {
-	    {static_cast<int>(eAppVinewoodMenuSafe::NIGHTCLUB), "Nightclub"},
-	    {static_cast<int>(eAppVinewoodMenuSafe::ARCADE), "Arcade"},
-	    {static_cast<int>(eAppVinewoodMenuSafe::AGENCY), "Agency"},
-	    {static_cast<int>(eAppVinewoodMenuSafe::SALVAGE_YARD), "Salvage Yard"},
-	    {static_cast<int>(eAppVinewoodMenuSafe::BAIL_OFFICE), "Bail Office"},
-	    {static_cast<int>(eAppVinewoodMenuSafe::GARMENT_FACTORY), "Garment Factory"},
-	    {static_cast<int>(eAppVinewoodMenuSafe::HANDS_ON_CAR_WASH), "Hands on Car Wash"}};
+	    {static_cast<int>(eAppVinewoodMenuSafe::NIGHTCLUB), "夜总会"},
+	    {static_cast<int>(eAppVinewoodMenuSafe::ARCADE), "游戏厅"},
+	    {static_cast<int>(eAppVinewoodMenuSafe::AGENCY), "事务所"},
+	    {static_cast<int>(eAppVinewoodMenuSafe::SALVAGE_YARD), "废车回收场"},
+	    {static_cast<int>(eAppVinewoodMenuSafe::BAIL_OFFICE), "保释事务所"},
+	    {static_cast<int>(eAppVinewoodMenuSafe::GARMENT_FACTORY), "制衣厂"},
+	    {static_cast<int>(eAppVinewoodMenuSafe::HANDS_ON_CAR_WASH), "亲力亲为洗车行"}};
 
-	static ListCommand _SelectedBusiness{"businesssafe", "Business", "Business to claim earning from.", businessNames, 0};
+	static ListCommand _SelectedBusiness{"businesssafe", "产业", "要领取保险箱收益的产业", businessNames, 0};
 
 	class ClaimSafeEarnings : public Command
 	{
@@ -86,5 +86,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static ClaimSafeEarnings _ClaimSafeEarnings{"claimsafeearnings", "Claim Safe Earnings", "Claims your safe earnings from the selected business."};
+	static ClaimSafeEarnings _ClaimSafeEarnings{"claimsafeearnings", "领取保险箱收益", "从所选产业领取保险箱收益"};
 }

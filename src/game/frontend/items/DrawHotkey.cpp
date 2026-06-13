@@ -24,9 +24,9 @@ namespace YimMenu
 		if (link->m_Chain.empty())
 		{
 			if (active)
-				ImGui::Text("%s", Localization::Translate("Press any button...").c_str());
+				ImGui::Text("%s", "请按任意按键...");
 			else
-				ImGui::Text("%s", Localization::Translate("No hotkey assigned").c_str());
+				ImGui::Text("%s", "未分配热键");
 		}
 		else
 		{
@@ -54,7 +54,7 @@ namespace YimMenu
 			ImGui::PopItemWidth();
 
 			ImGui::SameLine();
-			if (ImGui::Button(Localization::Translate("Clear").c_str()))
+			if (ImGui::Button("清除"))
 			{
 				link->m_Chain.clear();
 				g_HotkeySystem.MarkStateDirty();

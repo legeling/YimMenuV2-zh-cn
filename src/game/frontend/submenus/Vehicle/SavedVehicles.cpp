@@ -12,7 +12,7 @@
 
 namespace YimMenu::Submenus
 {
-	static BoolCommand spawnInsideSavedVehicle{"spawninsidesavedveh", "Spawn Inside", "Spawn inside the vehicle."};
+	static BoolCommand spawnInsideSavedVehicle{"spawninsidesavedveh", "车内生成", "在载具内部生成。"};
 
 	std::shared_ptr<Category> BuildSavedVehiclesMenu()
 	{
@@ -21,7 +21,7 @@ namespace YimMenu::Submenus
 		static char vehicle_file_name_input[64]{};
 		static char newFolder[50]{};
 
-		auto persistCar = std::make_shared<Category>("Saved Vehicles");
+		auto persistCar = std::make_shared<Category>("保存载具");
 
 		persistCar->AddItem(std::make_shared<BoolCommandItem>("spawninsidesavedveh"_J));
 
@@ -30,7 +30,7 @@ namespace YimMenu::Submenus
 				if (!Self::GetVehicle() || !Self::GetVehicle().IsValid())
 					return;
 
-				if (ImGui::Button(Localization::Translate("Save").c_str()))
+				if (ImGui::Button("保存"))
 					FiberPool::Push([saveToNewFolder] {
 						std::string fileName = vehicle_file_name_input;
 						strcpy(vehicle_file_name_input, "");
@@ -55,22 +55,22 @@ namespace YimMenu::Submenus
 						SavedVehicles::RefreshList(folder, folders, files);
 					});
 				ImGui::SameLine();
-				if (ImGui::Button(Localization::Translate("Populate Name").c_str()))
+				if (ImGui::Button("填充名称"))
 					FiberPool::Push([] {
 						std::string name = Self::GetVehicle().GetFullName();
 						strcpy(vehicle_file_name_input, name.c_str());
 					});
 			};
 
-			if (ImGui::Button(Localization::Translate("Refresh List").c_str()))
+			if (ImGui::Button("刷新列表"))
 				FiberPool::Push([] {
 					SavedVehicles::RefreshList(folder, folders, files);
 				});
 
 			ImGui::SetNextItemWidth(300.f);
-			auto rootText = Localization::Translate("Root");
-			auto folder_display = folder.empty() ? rootText.c_str() : folder.c_str();
-			if (ImGui::BeginCombo(Localization::Translate("Folder").c_str(), folder_display))
+			constexpr auto rootText = "根目录";
+			auto folder_display = folder.empty() ? rootText : folder.c_str();
+			if (ImGui::BeginCombo("文件夹", folder_display))
 			{
 				if (ImGui::Selectable(rootText.c_str(), folder == ""))
 				{
@@ -96,10 +96,10 @@ namespace YimMenu::Submenus
 			static std::string search;
 
 			ImGui::SetNextItemWidth(300);
-			if (ImGui::InputTextWithHint("###veh_name", Localization::Translate("Search").c_str(), &search))
+			if (ImGui::InputTextWithHint("###veh_name", "搜索", &search))
 				std::transform(search.begin(), search.end(), search.begin(), tolower);
 
-			ImGui::Text("%s", Localization::Translate("Saved Vehicles").c_str());
+			ImGui::Text("%s", "已保存载具");
 
 			static const auto over_30 = (30 * ImGui::GetTextLineHeightWithSpacing() + 2);
 			const auto box_height = files.size() <= 30 ? (files.size() * ImGui::GetTextLineHeightWithSpacing() + 2) : over_30;
@@ -125,13 +125,13 @@ namespace YimMenu::Submenus
 			ImGui::SameLine();
 			ImGui::BeginGroup();
 			{
-				ImGui::Text("%s", Localization::Translate("File Name").c_str());
+				ImGui::Text("%s", "文件名");
 				ImGui::SetNextItemWidth(250);
 				ImGui::InputText("##vehiclefilename", vehicle_file_name_input, IM_ARRAYSIZE(vehicle_file_name_input));
 
 				if (folder.empty())
 				{
-					ImGui::Text("%s", Localization::Translate("Folder Name").c_str());
+					ImGui::Text("%s", "文件夹名");
 					ImGui::SetNextItemWidth(250);
 					ImGui::InputText("##foldername", newFolder, IM_ARRAYSIZE(newFolder));
 					drawSaveVehicleButton(true);
@@ -145,9 +145,9 @@ namespace YimMenu::Submenus
 				ImGui::OpenPopup("##spawncarmodel2");
 			if (ImGui::BeginPopupModal("##spawncarmodel2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove))
 			{
-				ImGui::Text(Localization::Translate("Are you sure you want to spawn %s?").c_str(), file.c_str());
+				ImGui::Text("确定要生成 %s 吗？", file.c_str());
 				ImGui::Spacing();
-				if (ImGui::Button(Localization::Translate("Yes").c_str()))
+				if (ImGui::Button("是"))
 				{
 					FiberPool::Push([] {
 						SavedVehicles::Load(folder, file, spawnInsideSavedVehicle.GetState());
@@ -156,7 +156,7 @@ namespace YimMenu::Submenus
 					ImGui::CloseCurrentPopup();
 				}
 				ImGui::SameLine();
-				if (ImGui::Button(Localization::Translate("No").c_str()))
+				if (ImGui::Button("否"))
 				{
 					open_modal = false;
 					ImGui::CloseCurrentPopup();

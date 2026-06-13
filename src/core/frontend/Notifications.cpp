@@ -3,6 +3,7 @@
 #include "core/logger/LogHelper.hpp"
 #include "core/backend/FiberPool.hpp"
 #include "core/util/Joaat.hpp"
+#include "core/localization/Localization.hpp"
 
 #include <mutex>
 
@@ -37,7 +38,7 @@ namespace YimMenu
 		if (context_function)
 		{
 			notification.m_ContextFunc = context_function;
-			notification.m_ContextFuncName = context_function_name.empty() ? "Context Function" : context_function_name;
+			notification.m_ContextFuncName = context_function_name.empty() ? Localization::Translate("Context Function") : context_function_name;
 		}
 
 		std::lock_guard<std::mutex> lock(m_mutex);

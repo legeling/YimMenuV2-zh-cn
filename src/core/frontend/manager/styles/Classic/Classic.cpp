@@ -1,6 +1,7 @@
 #include "game/pointers/Pointers.hpp"
 #include "game/frontend/Menu.hpp"
 #include "core/frontend/manager/UIManager.hpp"
+#include "core/localization/Localization.hpp"
 #include "game/frontend/submenus/Settings/GUISettings.hpp"
 
 namespace YimMenu
@@ -28,7 +29,7 @@ namespace YimMenu
 
 				for (auto& submenu : submenus)
 				{
-					if (ImGui::Selectable(submenu->m_Name.data(), (submenu == activeSubmenu)))
+					if (ImGui::Selectable(Localization::Translate(submenu->m_Name).c_str(), (submenu == activeSubmenu)))
 					{
 						YimMenu::UIManager::SetActiveSubmenu(submenu);
 						YimMenu::UIManager::SetShowContentWindow(true);

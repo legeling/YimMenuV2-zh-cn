@@ -24,11 +24,11 @@ namespace YimMenu::Features
 			}
 
 			if (count > 0)
-				Notifications::Show(Localization::Translate("Fix All Vehicles"), std::format(Localization::Translate("{} vehicles fixed."), count), NotificationType::Success);
+				Notifications::Show(Localization::Translate("修复所有载具"), std::format(Localization::Translate("已修复 {} 辆载具。"), count), NotificationType::Success);
 			else
-				Notifications::Show(Localization::Translate("Fix All Vehicles"), Localization::Translate("No vehicles to fix."));
+				Notifications::Show(Localization::Translate("修复所有载具"), Localization::Translate("没有可修复的载具。"));
 		}
 	};
 
-	static FixAllVehicles _FixAllVehicles{"fixallvehicles", "Fix All Vehicles", "Fixes all of your destroyed personal vehicles."};
+	static FixAllVehicles _FixAllVehicles{"fixallvehicles", "修复所有载具", "修复你所有已损毁的个人载具。"};
 }

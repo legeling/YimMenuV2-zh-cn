@@ -45,6 +45,7 @@ namespace YimMenu
 		static Vector3 GetSpawnLocRelToPed(int ped, joaat_t hash);
 
 		// description
+		static std::string GetLocalizedDisplayName(joaat_t model, bool includeMaker = true, bool includeClass = false);
 		std::string GetFullName();
 	};
 }
