@@ -1,6 +1,9 @@
 name: Nightly Build
 
 on:
+  push:
+    tags:
+      - "v*"
   workflow_dispatch:
 
 concurrency:
@@ -29,7 +32,7 @@ jobs:
     runs-on: windows-latest
     name: Build Nightly
     needs: check_recent_commit
-    if: needs.check_recent_commit.outputs.should_run == 'true'
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     outputs:
       full_sha: ${{ steps.var.outputs.full_sha }}
       short_sha: ${{ steps.var.outputs.short_sha }}
@@ -70,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Recreate Release
     needs: build_nightly
-    if: needs.check_recent_commit.outputs.should_run == 'true'
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/checkout@v4
 
