@@ -24,34 +24,37 @@ namespace YimMenu
 		int current_val = m_Command->GetState();
 		auto& list = m_Command->GetList();
 		std::string largestString;
-		std::size_t largest_string_len = 0;
+		std::size_t largestStringLen = 0;
+		const auto label = Localization::TranslateLabel(m_LabelOverride.value_or(m_Command->GetLabel()));
 
-		if (!m_SelectedItem.has_value() || !m_ItemWidth.has_value())
+		m_SelectedItem.reset();
+		for (auto& item : list)
 		{
-			for (auto& item : list)
+			if (item.first == current_val)
 			{
-				if (item.first == current_val)
-				{
-					m_SelectedItem = Localization::Translate(item.second);
-				}
-
-				auto translatedItem = Localization::Translate(item.second);
-				if (translatedItem.length() > largest_string_len)
-				{
-					largestString = std::move(translatedItem);
-					largest_string_len = largestString.length();
-				}
+				m_SelectedItem = Localization::Translate(item.second);
 			}
 
-			if (!m_SelectedItem.has_value())
-				m_SelectedItem = "";
-
-			auto size = ImGui::CalcTextSize(largestString.c_str());
-			m_ItemWidth = size.x + 40.0f;
+			auto translatedItem = Localization::Translate(item.second);
+			if (translatedItem.length() > largestStringLen)
+			{
+				largestString = std::move(translatedItem);
+				largestStringLen = largestString.length();
+			}
 		}
 
+		if (!m_SelectedItem.has_value())
+			m_SelectedItem = "";
+
+		const auto previewText = m_SelectedItem->length() > largestStringLen ? *m_SelectedItem : largestString;
+		const auto previewSize = ImGui::CalcTextSize(previewText.c_str());
+		const auto labelSize = label.empty() ? ImVec2{} : ImGui::CalcTextSize(label.c_str());
+		const auto framePadding = ImGui::GetStyle().FramePadding.x * 2.0f;
+		const auto arrowWidth = ImGui::GetFrameHeight();
+		const auto spacing = label.empty() ? 0.0f : ImGui::GetStyle().ItemInnerSpacing.x;
+		m_ItemWidth = static_cast<int>(std::max(220.0f, previewSize.x + labelSize.x + framePadding + arrowWidth + spacing + 48.0f));
+
 		ImGui::SetNextItemWidth(m_ItemWidth.value());
-		const auto label = Localization::TranslateLabel(m_LabelOverride.value_or(m_Command->GetLabel()));
 		if (ImGui::BeginCombo(label.c_str(), m_SelectedItem.value().c_str()))
 		{
 			for (auto& el : list)
