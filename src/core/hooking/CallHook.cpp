@@ -1,34 +1,118 @@
 #include "CallHook.hpp"
 
-namespace YimMenu
+#include <algorithm>
+#include <limits>
+#include <stdexcept>
+
+namespace
 {
-	CallHookMemory::CallHookMemory()
+	constexpr std::size_t CallHookMemorySize = 1024;
+	constexpr std::size_t JumpSequenceSize = 12;
+	constexpr std::uintptr_t MaximumRel32BackwardDistance = 2147483643ULL;
+	constexpr std::uintptr_t MaximumRel32ForwardDistance = 2147483652ULL;
+
+	bool FitsRel32(void* location, void* destination)
 	{
-		m_Memory = VirtualAlloc((void*)((uintptr_t)GetModuleHandle(0) + 0x40000000), 1024, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-		if (!m_Memory)
-		{
-			LOGF(FATAL, "CallHookMemory: Failed to allocate jump sequence memory");
-			throw std::runtime_error("Failed to allocate call hook memory within rel32 range");
-		}
-		m_Offset = 0;
+		const auto displacement = static_cast<std::int64_t>(reinterpret_cast<std::uintptr_t>(destination))
+		    - static_cast<std::int64_t>(reinterpret_cast<std::uintptr_t>(location)) - 5;
+		return displacement >= std::numeric_limits<std::int32_t>::min() && displacement <= std::numeric_limits<std::int32_t>::max();
 	}
 
-	void* CallHookMemory::AllocateJumpSequenceImpl(void* func)
+	void* AllocateNear(void* location)
 	{
-		m_Offset = m_Offset + ((16 - (m_Offset % 16)) % 16);
+		SYSTEM_INFO systemInfo{};
+		GetSystemInfo(&systemInfo);
+
+		const auto origin = reinterpret_cast<std::uintptr_t>(location);
+		const auto minimumApplicationAddress = reinterpret_cast<std::uintptr_t>(systemInfo.lpMinimumApplicationAddress);
+		const auto maximumApplicationAddress = reinterpret_cast<std::uintptr_t>(systemInfo.lpMaximumApplicationAddress);
+		const auto lowerCandidate = origin > MaximumRel32BackwardDistance ? origin - MaximumRel32BackwardDistance : std::uintptr_t{0};
+		const auto lowerBound = std::max(minimumApplicationAddress, lowerCandidate);
+		const auto upperCandidate = origin <= std::numeric_limits<std::uintptr_t>::max() - MaximumRel32ForwardDistance
+		    ? origin + MaximumRel32ForwardDistance
+		    : std::numeric_limits<std::uintptr_t>::max();
+		const auto upperBound = std::min(maximumApplicationAddress, upperCandidate - static_cast<std::uintptr_t>(CallHookMemorySize));
+		const auto granularity = static_cast<std::uintptr_t>(systemInfo.dwAllocationGranularity);
+
+		auto cursor = lowerBound;
+		while (cursor < upperBound)
+		{
+			MEMORY_BASIC_INFORMATION memoryInfo{};
+			if (VirtualQuery(reinterpret_cast<void*>(cursor), &memoryInfo, sizeof(memoryInfo)) != sizeof(memoryInfo))
+				break;
+
+			const auto regionStart = std::max(cursor, reinterpret_cast<std::uintptr_t>(memoryInfo.BaseAddress));
+			const auto regionEnd = std::min(upperBound, reinterpret_cast<std::uintptr_t>(memoryInfo.BaseAddress) + memoryInfo.RegionSize);
+			if (memoryInfo.State == MEM_FREE)
+			{
+				const auto candidate = (regionStart + granularity - 1) & ~(granularity - 1);
+				if (candidate <= regionEnd && CallHookMemorySize <= regionEnd - candidate)
+				{
+					if (auto memory = VirtualAlloc(reinterpret_cast<void*>(candidate), CallHookMemorySize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE))
+					{
+						if (FitsRel32(location, memory))
+							return memory;
+						VirtualFree(memory, 0, MEM_RELEASE);
+					}
+				}
+			}
+
+			if (regionEnd <= cursor)
+				break;
+			cursor = regionEnd;
+		}
+
+		return nullptr;
+	}
+}
+
+namespace YimMenu
+{
+	CallHookMemory::CallHookMemory() :
+	    m_Memory(nullptr),
+	    m_Offset(0)
+	{
+	}
+
+	void* CallHookMemory::AllocateJumpSequenceImpl(void* func, void* location)
+	{
+		if (!m_Memory)
+		{
+			m_Memory = AllocateNear(location);
+			if (!m_Memory)
+			{
+				LOGF(FATAL, "CallHookMemory: Failed to allocate jump sequence memory within rel32 range");
+				throw std::runtime_error("Failed to allocate call hook memory within rel32 range");
+			}
+		}
+
+		const auto alignedOffset = m_Offset + ((16 - (m_Offset % 16)) % 16);
+		if (alignedOffset + JumpSequenceSize > CallHookMemorySize)
+			throw std::runtime_error("Call hook jump sequence memory exhausted");
+
+		m_Offset = alignedOffset;
+		auto sequence = m_Memory.Add(m_Offset).As<void*>();
+		if (!FitsRel32(location, sequence))
+			throw std::runtime_error("Call hook jump sequence is outside rel32 range");
 
 		*m_Memory.Add(m_Offset).As<int16_t*>() = 0xB848;
 		*m_Memory.Add(m_Offset).Add(2).As<void**>() = func;
 		*m_Memory.Add(m_Offset).Add(10).As<int16_t*>() = 0xE0FF;
 
-		m_Offset += 12;
+		m_Offset += JumpSequenceSize;
+		FlushInstructionCache(GetCurrentProcess(), sequence, JumpSequenceSize);
 
-		return m_Memory.Add(m_Offset).Sub(12).As<void*>();
+		return sequence;
 	}
 
 	void CallHookMemory::DestroyImpl()
 	{
-		VirtualFree(m_Memory.As<void*>(), 0, MEM_RELEASE);
+		if (m_Memory)
+		{
+			VirtualFree(m_Memory.As<void*>(), 0, MEM_RELEASE);
+			m_Memory = nullptr;
+			m_Offset = 0;
+		}
 	}
 
 	CallSiteHook::Hook::Hook(void* location, void* hook) :
@@ -36,9 +120,15 @@ namespace YimMenu
 	    m_Hook(hook),
 	    m_Enabled(false)
 	{
-		auto seq = CallHookMemory::AllocateJumpSequence(hook);
+		if (!location || !hook)
+			throw std::invalid_argument("Call hook location and target must be valid");
+
+		auto seq = CallHookMemory::AllocateJumpSequence(hook, location);
 		m_PatchedBytes[0] = 0xE8;
-		*(int32_t*)&m_PatchedBytes[1] = (int32_t)((uint64_t)seq - (uint64_t)location - 5);
+		const auto displacement = static_cast<std::int64_t>(reinterpret_cast<std::uintptr_t>(seq))
+		    - static_cast<std::int64_t>(reinterpret_cast<std::uintptr_t>(location)) - 5;
+		const auto relativeDisplacement = static_cast<std::int32_t>(displacement);
+		memcpy(&m_PatchedBytes[1], &relativeDisplacement, sizeof(relativeDisplacement));
 		memcpy(m_OriginalBytes, location, 5);
 		m_OriginalFunction = PointerCalculator(location).Add(1).Rip().As<void*>();
 	}
@@ -95,8 +185,6 @@ namespace YimMenu
 
 	void CallSiteHook::DestroyImpl()
 	{
-		const bool hasAllocatedJumpSequences = !m_Hooks.empty();
-
 		for (auto& hook : m_Hooks)
 		{
 			if (hook)
@@ -104,7 +192,6 @@ namespace YimMenu
 		}
 
 		m_Hooks.clear();
-		if (hasAllocatedJumpSequences)
-			CallHookMemory::Destroy();
+		CallHookMemory::Destroy();
 	}
 }
