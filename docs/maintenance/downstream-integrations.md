@@ -28,6 +28,7 @@
 
 | 官方 PR | 锁定上游提交 | 中文提交 | 内容 | 吸收方式 | 当前状态 |
 | --- | --- | --- | --- | --- | --- |
+| [#985](https://github.com/YimMenu/YimMenuV2/pull/985) | `3037a5e` | `29bfba5`、`c8124bb` | 修复通知并发、Hook 状态、渲染帧同步、Lua 资源循环、PatternScanner 性能和启动错误处理；下游同时修正原 PR 中的跳板分配、Call Site/IAT 内存保护、异常上下文和宏安全问题 | `cherry-pick -x` 后追加审查修复 | 已提前吸收，等待官方处理 |
 | [#973](https://github.com/YimMenu/YimMenuV2/pull/973) | `187b910` | `703bc45` | 更新游戏升级后失效的网络伤害、事件确认、遥测、BattlEye 状态、加入战局和战局池相关特征码与偏移 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
 | [#970](https://github.com/YimMenu/YimMenuV2/pull/970) | `24219c5`、`b57c52b`、`5030953` | `a28e89e`、`6ed8d61`、`d297bdc` | 适配 GTA 1.73 / 1158.13：更新车辆列表、Script Global 基址、`GPBD_FM_2` 结构尺寸和衣柜脚本签名 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
 | [#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `e075bd4` | `907dd05` | 更新赌场老虎机结果表和旋转状态的 script local 索引 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
@@ -35,15 +36,19 @@
 
 ## 验证记录
 
-2026-07-15 对上述四个提前吸收的 PR 完成了以下检查：
+2026-07-15 对上述提前吸收的 PR 完成了以下检查：
 
 - 核对 PR 基线、头提交和改动文件，确认审查期间提交未漂移。
 - `GPBD_FM`、`GPBD_FM_2`、`GPBD_FM_3` 头文件通过本机 Clang C++23 语法检查和结构尺寸 `static_assert`。
 - PR #973 的 6 组新增特征码通过 token 和十六进制格式检查。
+- PR #985 按文件复审，并处理了官方 Copilot 指出的 5 项问题：检查 `VirtualProtect` 结果、避免无效的任意地址跳板、保持异常上下文一致，以及将 `REL` 宏改为语句安全形式。
+- PR #985 的 `APPDATA` 失败路径改为直接卸载，避免 `goto` 跨越 `std::filesystem::path` 初始化；`SizeOfImage` 扫描范围改动因当前 PatternScanner 不会跳过不可读页面而未保留。
 - 全仓库通过 `git diff --check`，不存在冲突标记。
 - 普通 `main` 推送未触发 CI/CD；只有 `v*-zh-cn.*` 标签会触发构建和发布。
 
 本机没有完成 Windows 全量构建，也没有完成 GTA 1.73 / 1158.13 实机验证。PR #970 更新的是 typed global 基址，不包含抢劫分红功能中单独硬编码的 `ScriptGlobal(...)` 地址，因此不能据此确认分红功能已经适配该游戏版本。
+
+PR #985 的构建验证同样受本机缺少 Windows/MinGW 交叉编译工具链限制。Hook、Renderer 和异常处理改动必须在 Windows 构建及游戏注入环境中继续验证。
 
 ## 维护规则
 
