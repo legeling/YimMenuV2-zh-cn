@@ -22,7 +22,7 @@
 
 ## 使用方法
 
-1. 下载最新版 [FSL](https://www.unknowncheats.me/forum/grand-theft-auto-v/616977-fsl-local-gtao-saves.html)，将 `version.dll` 放入 GTA V 目录。FSL 现在是可选组件，但出于账号安全考虑仍强烈建议使用。
+1. 下载最新版 [FSL](https://www.unknowncheats.me/forum/grand-theft-auto-v/616977-fsl-local-gtao-saves.html)，将 `WINMM.dll` 放入 GTA V 目录。FSL 现在是可选组件，但出于账号安全考虑仍强烈建议使用。
 2. 从[中文版本 Releases](https://github.com/legeling/YimMenuV2-zh-cn/releases)下载 `YimMenuV2.dll`。
 3. 下载注入器，例如 [Xenos](https://www.unknowncheats.me/forum/general-programming-and-reversing/124013-xenos-injector-v2-3-2-a.html)。
 4. 打开 Rockstar Launcher，选择 Grand Theft Auto V Enhanced，在设置中禁用 BattlEye。通过 Steam 或 Epic Games 启动时，可能还需要添加 `-nobattleye` 启动参数。
