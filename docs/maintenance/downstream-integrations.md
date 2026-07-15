@@ -28,7 +28,7 @@
 
 | 官方 PR | 锁定上游提交 | 中文提交 | 内容 | 吸收方式 | 当前状态 |
 | --- | --- | --- | --- | --- | --- |
-| [#985](https://github.com/YimMenu/YimMenuV2/pull/985) | `3037a5e` | `29bfba5`、`c8124bb`、`13756c0` | 修复通知并发、Hook 状态、渲染帧同步、Lua 资源循环、PatternScanner 性能和启动错误处理；下游同时完善近地址跳板分配、完整镜像安全扫描、Call Site/IAT 内存保护、异常上下文和宏安全 | `cherry-pick -x` 后追加审查修复 | 已提前吸收，等待官方处理 |
+| [#985](https://github.com/YimMenu/YimMenuV2/pull/985) | `3037a5e` | `29bfba5`、`c8124bb`、`13756c0`、`a56e02d` | 修复通知并发、Hook 状态、渲染帧同步、Lua 资源循环、PatternScanner 性能和启动错误处理；下游同时完善近地址跳板分配、完整镜像安全扫描、Call Site/IAT 内存保护、异常上下文、宏安全及 Hook 失败回滚 | `cherry-pick -x` 后追加审查修复 | 已提前吸收，等待官方处理 |
 | [#973](https://github.com/YimMenu/YimMenuV2/pull/973) | `187b910` | `703bc45` | 更新游戏升级后失效的网络伤害、事件确认、遥测、BattlEye 状态、加入战局和战局池相关特征码与偏移 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
 | [#970](https://github.com/YimMenu/YimMenuV2/pull/970) | `24219c5`、`b57c52b`、`5030953` | `a28e89e`、`6ed8d61`、`d297bdc` | 适配 GTA 1.73 / 1158.13：更新车辆列表、Script Global 基址、`GPBD_FM_2` 结构尺寸和衣柜脚本签名 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
 | [#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `e075bd4` | `907dd05` | 更新赌场老虎机结果表和旋转状态的 script local 索引 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
@@ -45,12 +45,15 @@
 - PR #985 的 `APPDATA` 失败路径改为直接卸载，避免 `goto` 跨越 `std::filesystem::path` 初始化。
 - PatternScanner 保留 `SizeOfImage` 完整镜像范围，但改为只扫描已提交且可读的内存区域；缓存命中前会重新校验地址、保护属性和签名字节。
 - Call Hook 跳板改为围绕实际调用点搜索空闲区域，并对每个跳板验证 `rel32` 位移和容量，不再依赖固定地址或不受约束的回退分配。
+- 后续白盒复审修复了 Hook 在 `MH_ApplyQueued` 前提前提交状态、批量应用失败后未回滚、构造失败遗留悬空注册指针和初始化失败仍继续启动的问题。
+- PatternScanner 现在会收集全部异步任务结果，手动映射模式也会扫描全部待查模式；缓存和内存区域边界计算增加了防越界及防整数溢出检查。
+- 异常恢复逻辑改为线程局部去重，并修正 `REX.R` 对 `R8` 至 `R15` 寄存器编号的扩展计算；同时清除了 Windows `ERROR` 宏导致的日志级别编译错误。
 - 全仓库通过 `git diff --check`，不存在冲突标记。
 - 普通 `main` 推送未触发 CI/CD；只有 `v*-zh-cn.*` 标签会触发构建和发布。
 
 本机没有完成 Windows 全量构建，也没有完成 GTA 1.73 / 1158.13 实机验证。PR #970 更新的是 typed global 基址，不包含抢劫分红功能中单独硬编码的 `ScriptGlobal(...)` 地址，因此不能据此确认分红功能已经适配该游戏版本。
 
-PR #985 的构建验证同样受本机缺少 Windows/MinGW 交叉编译工具链限制。Hook、Renderer 和异常处理改动必须在 Windows 构建及游戏注入环境中继续验证。
+PR #985 已使用仓库内 Zig 工具链完成全部 C/C++ 编译单元检查，并据此发现和修复日志级别错误；但本机 macOS 的 CMake 4.3 / Zig 0.16 组合把最终 `.dll` 链接成了归档文件，因此该结果不能视为有效 Windows DLL。Hook、Renderer 和异常处理改动仍必须在 Windows 构建及游戏注入环境中继续验证。
 
 ## 维护规则
 
