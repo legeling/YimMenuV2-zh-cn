@@ -1,29 +1,51 @@
-# YimMenuV2
+# YimMenuV2 中文维护版
 
-Experimental menu for GTA 5: Enhanced
+这是 [YimMenu/YimMenuV2](https://github.com/YimMenu/YimMenuV2) 的非官方简体中文维护版本，面向 GTA 5: Enhanced。
 
-## How to use
+- 中文仓库：[legeling/YimMenuV2-zh-cn](https://github.com/legeling/YimMenuV2-zh-cn)
+- 官方上游：[YimMenu/YimMenuV2](https://github.com/YimMenu/YimMenuV2)
+- 上游分支：`enhanced`
+- 中文主分支：`main`
+- 中文版本下载：[GitHub Releases](https://github.com/legeling/YimMenuV2-zh-cn/releases)
 
-1. Download the latest version of FSL from [here](https://www.unknowncheats.me/forum/grand-theft-auto-v/616977-fsl-local-gtao-saves.html) and place version.dll in your GTA V directory. Using FSL is now optional but highly recommended for account safety
-2. Download YimMenuV2 from [GitHub Releases](https://github.com/YimMenu/YimMenuV2/releases/tag/nightly)
-3. Download an injector, such as [Xenos](https://www.unknowncheats.me/forum/general-programming-and-reversing/124013-xenos-injector-v2-3-2-a.html)
-4. Open Rockstar Launcher, select Grand Theft Auto V Enhanced, go to settings, and disable BattlEye. If you are using Steam or Epic Games, you may have to pass the -nobattleye command line parameter as well
-5. Launch GTA V, then use your injector to inject YimMenuV2.dll at the main menu
+本仓库会在保留简体中文本地化和中文发行配置的同时，定期同步官方上游的功能与修复。它不是 YimMenu 官方发布渠道；上游项目的功能说明、风险提示和许可证仍然适用。
 
-## How to open the menu?
+## 分支与上游
 
-Press the `INSERT` key or `Ctrl+\` to open the menu
- 
-## Common issues
+| 名称 | 用途 |
+| --- | --- |
+| `main` | 中文维护版的稳定主线和发行来源 |
+| `upstream/enhanced` | 官方 YimMenuV2 的同步来源 |
+| `feature/*`、`fix/*` | 短期功能或修复分支，完成后合入 `main` |
 
-### I keep getting desynced from public sessions every five minutes
+本地 Git 约定为 `origin` 指向中文仓库、`upstream` 指向官方仓库。具体同步步骤与冲突处理原则见 [上游同步指南](docs/upstream-sync.md)。
 
-We currently do not have a BattlEye bypass, and legitimate hosts will eventually remove you due to a heartbeat failure. There is currently no way to stop this other than using an actual (private) bypass
+## 使用方法
 
-### I removed FSL and all my progress disappeared!
+1. 下载最新版 [FSL](https://www.unknowncheats.me/forum/grand-theft-auto-v/616977-fsl-local-gtao-saves.html)，将 `version.dll` 放入 GTA V 目录。FSL 现在是可选组件，但出于账号安全考虑仍强烈建议使用。
+2. 从[中文版本 Releases](https://github.com/legeling/YimMenuV2-zh-cn/releases)下载 `YimMenuV2.dll`。
+3. 下载注入器，例如 [Xenos](https://www.unknowncheats.me/forum/general-programming-and-reversing/124013-xenos-injector-v2-3-2-a.html)。
+4. 打开 Rockstar Launcher，选择 Grand Theft Auto V Enhanced，在设置中禁用 BattlEye。通过 Steam 或 Epic Games 启动时，可能还需要添加 `-nobattleye` 启动参数。
+5. 启动 GTA V，在主菜单中使用注入器注入 `YimMenuV2.dll`。
 
-FSL reroutes account save data to disk, so any progress made with FSL will only show up if you have FSL enabled. If you don't want this, you can also use YimMenuV2 without FSL, but this is not recommended
+## 打开菜单
 
-### I removed FSL and the game doesn't start up anymore
+按 `INSERT` 或 `Ctrl+\` 打开菜单。
 
-This is a known issue; delete "Documents/GTAV Enhanced/Profiles" to fix
+## 常见问题
+
+### 每隔五分钟就与公共战局失去同步
+
+目前项目不包含 BattlEye 绕过。由于心跳检测失败，正常主机会最终将你移出战局；除使用真正的私有绕过方案外，目前没有其他解决方法。
+
+### 移除 FSL 后游戏进度消失
+
+FSL 会将账号存档数据重定向到本地磁盘，因此使用 FSL 产生的进度只会在启用 FSL 时显示。你也可以不使用 FSL 运行 YimMenuV2，但不建议这样做。
+
+### 移除 FSL 后游戏无法启动
+
+这是一个已知问题。删除 `Documents/GTAV Enhanced/Profiles` 后重试。
+
+## 许可证
+
+本项目沿用上游的 [GPL-2.0 许可证](LICENSE)。
