@@ -100,7 +100,7 @@ namespace YimMenu
 					case 1: exception_info->ContextRecord->Rcx = 0; break;
 					case 2: exception_info->ContextRecord->Rdx = 0; break;
 					case 3: exception_info->ContextRecord->Rbx = 0; break;
-					case 4: exception_info->ContextRecord->Rsp = 0; break;
+					case 4: return EXCEPTION_CONTINUE_SEARCH; // zeroing RSP would cause an immediate secondary crash
 					case 5: exception_info->ContextRecord->Rbp = 0; break;
 					case 6: exception_info->ContextRecord->Rsi = 0; break;
 					case 7: exception_info->ContextRecord->Rdi = 0; break;

@@ -41,14 +41,22 @@ namespace YimMenu
 	template<typename T>
 	inline bool IATHook<T>::Enable()
 	{
+		DWORD oldProtect, temp;
+		VirtualProtect(m_HookLocation, sizeof(void*), PAGE_READWRITE, &oldProtect);
 		*m_HookLocation = m_HookFunc;
+		VirtualProtect(m_HookLocation, sizeof(void*), oldProtect, &temp);
+		m_Enabled = true;
 		return true;
 	}
 
 	template<typename T>
 	inline bool IATHook<T>::Disable()
 	{
+		DWORD oldProtect, temp;
+		VirtualProtect(m_HookLocation, sizeof(void*), PAGE_READWRITE, &oldProtect);
 		*m_HookLocation = m_OriginalFunc;
+		VirtualProtect(m_HookLocation, sizeof(void*), oldProtect, &temp);
+		m_Enabled = false;
 		return true;
 	}
 
