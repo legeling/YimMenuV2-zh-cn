@@ -109,7 +109,8 @@ namespace YimMenu
 	{
 		if (m_Memory)
 		{
-			VirtualFree(m_Memory.As<void*>(), 0, MEM_RELEASE);
+			if (!VirtualFree(m_Memory.As<void*>(), 0, MEM_RELEASE))
+				LOGF(FATAL, "Failed to release call hook memory: {}", GetLastError());
 			m_Memory = nullptr;
 			m_Offset = 0;
 		}
@@ -140,7 +141,7 @@ namespace YimMenu
 			DWORD oldProtect{};
 			if (!VirtualProtect(m_Location, 5, PAGE_EXECUTE_READWRITE, &oldProtect))
 			{
-				LOGF(ERROR, "Failed to make call site writable: {}", GetLastError());
+				LOGF(FATAL, "Failed to make call site writable: {}", GetLastError());
 				return;
 			}
 
@@ -150,7 +151,7 @@ namespace YimMenu
 			FlushInstructionCache(GetCurrentProcess(), m_Location, 5);
 			DWORD currentProtect{};
 			if (!VirtualProtect(m_Location, 5, oldProtect, &currentProtect))
-				LOGF(ERROR, "Failed to restore call site protection: {}", GetLastError());
+				LOGF(FATAL, "Failed to restore call site protection: {}", GetLastError());
 		}
 	}
 
@@ -161,7 +162,7 @@ namespace YimMenu
 			DWORD oldProtect{};
 			if (!VirtualProtect(m_Location, 5, PAGE_EXECUTE_READWRITE, &oldProtect))
 			{
-				LOGF(ERROR, "Failed to make call site writable while disabling hook: {}", GetLastError());
+				LOGF(FATAL, "Failed to make call site writable while disabling hook: {}", GetLastError());
 				return;
 			}
 
@@ -171,7 +172,7 @@ namespace YimMenu
 			FlushInstructionCache(GetCurrentProcess(), m_Location, 5);
 			DWORD currentProtect{};
 			if (!VirtualProtect(m_Location, 5, oldProtect, &currentProtect))
-				LOGF(ERROR, "Failed to restore call site protection while disabling hook: {}", GetLastError());
+				LOGF(FATAL, "Failed to restore call site protection while disabling hook: {}", GetLastError());
 		}
 	}
 

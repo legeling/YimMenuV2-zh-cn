@@ -67,7 +67,11 @@ namespace YimMenu
 
 		Players::Init();
 
-		Hooking::Init();
+		if (!Hooking::Init())
+		{
+			Hooking::Destroy();
+			goto EARLY_UNLOAD;
+		}
 
 		ScriptMgr::Init();
 		LOG(INFO) << "ScriptMgr initialized";

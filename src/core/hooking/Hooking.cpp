@@ -69,16 +69,44 @@ namespace YimMenu
 
 	bool Hooking::InitImpl()
 	{
-		BaseHook::EnableAll();
-		m_MinHook.ApplyQueued();
+		const bool queued = BaseHook::EnableAll();
+		const auto applyResult = m_MinHook.ApplyQueued();
+		const bool applied = applyResult == MH_OK;
+		BaseHook::CommitQueuedStates(applied);
+
+		if (!queued || !applied)
+		{
+			if (!applied)
+			{
+				const auto rollbackResult = MH_DisableHook(MH_ALL_HOOKS);
+				BaseHook::ReconcileEnabledStates(rollbackResult != MH_OK);
+				if (rollbackResult != MH_OK)
+					LOGF(FATAL, "Failed to roll back hooks after apply failure: {}", static_cast<int>(rollbackResult));
+			}
+			LOGF(FATAL, "Failed to enable all hooks (queued: {}, apply status: {})", queued, static_cast<int>(applyResult));
+			return false;
+		}
 
 		return true;
 	}
 
 	void Hooking::DestroyImpl()
 	{
-		BaseHook::DisableAll();
-		m_MinHook.ApplyQueued();
+		const bool queued = BaseHook::DisableAll();
+		const auto applyResult = m_MinHook.ApplyQueued();
+		const bool applied = applyResult == MH_OK;
+		BaseHook::CommitQueuedStates(applied);
+
+		if (!applied)
+		{
+			const auto fallbackResult = MH_DisableHook(MH_ALL_HOOKS);
+			BaseHook::ReconcileEnabledStates(fallbackResult != MH_OK);
+			if (fallbackResult != MH_OK)
+				LOGF(FATAL, "Failed to disable hooks after queued apply failure: {}", static_cast<int>(fallbackResult));
+		}
+
+		if (!queued || !applied)
+			LOGF(FATAL, "Failed to disable all hooks (queued: {}, apply status: {})", queued, static_cast<int>(applyResult));
 
 		for (auto it : BaseHook::Hooks())
 		{

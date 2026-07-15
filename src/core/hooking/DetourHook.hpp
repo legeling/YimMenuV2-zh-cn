@@ -3,6 +3,7 @@
 #include "core/memory/PointerCalculator.hpp"
 
 #include <MinHook.h>
+#include <optional>
 #include <string_view>
 
 namespace YimMenu
@@ -14,16 +15,19 @@ namespace YimMenu
 		void* m_TargetFunc;
 		void* m_DetourFunc;
 		void* m_OriginalFunc;
+		std::optional<bool> m_QueuedState;
 
 	public:
 		DetourHook(const std::string_view name, void* target, T detour);
-		virtual ~DetourHook();
+		virtual ~DetourHook() override;
 
-		bool Enable();
-		bool Disable();
+		bool Enable() override;
+		bool Disable() override;
 
 		bool EnableNow();
 		bool DisableNow();
+		virtual void CommitQueuedState(bool success) override;
+		virtual void ReconcileEnabledState(bool enabled) override;
 
 		T Original() const;
 
@@ -56,7 +60,7 @@ namespace YimMenu
 	template<typename T>
 	inline bool DetourHook<T>::Enable()
 	{
-		if (m_Enabled)
+		if (m_QueuedState.value_or(m_Enabled))
 			return false;
 
 		if (const auto result = MH_QueueEnableHook(m_TargetFunc); result != MH_OK)
@@ -64,14 +68,14 @@ namespace YimMenu
 			LOGF(FATAL, "Failed to queue hook to be enabled: {}", Name());
 			return false;
 		}
-		m_Enabled = true;
+		m_QueuedState = true;
 		return true;
 	}
 
 	template<typename T>
 	inline bool DetourHook<T>::Disable()
 	{
-		if (!m_Enabled)
+		if (!m_QueuedState.value_or(m_Enabled))
 			return false;
 
 		if (const auto result = MH_QueueDisableHook(m_TargetFunc); result != MH_OK)
@@ -79,8 +83,26 @@ namespace YimMenu
 			LOGF(FATAL, "Failed to queue hook to be disabled: {}", Name());
 			return false;
 		}
-		m_Enabled = false;
+		m_QueuedState = false;
 		return true;
+	}
+
+	template<typename T>
+	inline void DetourHook<T>::CommitQueuedState(bool success)
+	{
+		if (!m_QueuedState)
+			return;
+
+		if (success)
+			m_Enabled = m_QueuedState.value();
+		m_QueuedState.reset();
+	}
+
+	template<typename T>
+	inline void DetourHook<T>::ReconcileEnabledState(bool enabled)
+	{
+		m_Enabled = enabled;
+		m_QueuedState.reset();
 	}
 
 	template<typename T>

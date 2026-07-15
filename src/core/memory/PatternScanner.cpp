@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <future>
+#include <limits>
 
 namespace
 {
@@ -64,17 +65,14 @@ namespace YimMenu
 
 			for (auto& job : jobs)
 			{
-				job.wait();
-
-				if (scanSuccess)
-					scanSuccess = job.get();
+				scanSuccess = job.get() && scanSuccess;
 			}
 		}
 		else
 		{
 			// spawning threads seems to throw STATUS_THREADPOOL_FREE_LIBRARY_ON_COMPLETION_FAILED when manual mapping
 			for (const auto& [pattern, func] : m_Patterns)
-				scanSuccess = scanSuccess && PatternScanner::ScanInternal(pattern, func);
+				scanSuccess = PatternScanner::ScanInternal(pattern, func) && scanSuccess;
 		}
 
 		return scanSuccess;
@@ -95,10 +93,15 @@ namespace YimMenu
 			if (offset.has_value() && offset.value() >= 0 && static_cast<std::uintptr_t>(offset.value()) < m_Module->Size())
 			{
 				const auto address = m_Module->Base() + offset.value();
+				const auto moduleBytesRemaining = m_Module->End() - address;
 				MEMORY_BASIC_INFORMATION memoryInfo{};
-				if (VirtualQuery(reinterpret_cast<void*>(address), &memoryInfo, sizeof(memoryInfo)) == sizeof(memoryInfo)
+				const bool queried = VirtualQuery(reinterpret_cast<void*>(address), &memoryInfo, sizeof(memoryInfo)) == sizeof(memoryInfo);
+				const auto regionStart = reinterpret_cast<std::uintptr_t>(memoryInfo.BaseAddress);
+				const bool addressInRegion = queried && address >= regionStart && address - regionStart < memoryInfo.RegionSize;
+				if (addressInRegion
 				    && memoryInfo.State == MEM_COMMIT && IsReadableProtection(memoryInfo.Protect)
-				    && address + signature.size() <= reinterpret_cast<std::uintptr_t>(memoryInfo.BaseAddress) + memoryInfo.RegionSize
+				    && signature.size() <= moduleBytesRemaining
+				    && signature.size() <= memoryInfo.RegionSize - (address - regionStart)
 				    && MatchesSignature(address, signature))
 				{
 					LOGF(INFO, "Using cached pattern [{}] : [{:X}] [Hash(): {:X}]", pattern->Name(), address, pattern->Hash().Update(m_Module->Size()).m_Hash);
@@ -116,13 +119,16 @@ namespace YimMenu
 				break;
 
 			const auto queriedStart = reinterpret_cast<std::uintptr_t>(memoryInfo.BaseAddress);
-			const auto queriedEnd = queriedStart + memoryInfo.RegionSize;
+			const auto queriedEnd = memoryInfo.RegionSize <= std::numeric_limits<std::uintptr_t>::max() - queriedStart
+			    ? queriedStart + memoryInfo.RegionSize
+			    : std::numeric_limits<std::uintptr_t>::max();
 			const auto scanStart = std::max(regionStart, queriedStart);
 			const auto scanEnd = std::min(m_Module->End(), queriedEnd);
 
-			if (memoryInfo.State == MEM_COMMIT && IsReadableProtection(memoryInfo.Protect) && signature.size() <= scanEnd - scanStart)
+			if (scanStart < scanEnd && memoryInfo.State == MEM_COMMIT && IsReadableProtection(memoryInfo.Protect) && signature.size() <= scanEnd - scanStart)
 			{
-				for (auto address = scanStart; address + signature.size() <= scanEnd; ++address)
+				const auto lastAddress = scanEnd - signature.size();
+				for (auto address = scanStart; address <= lastAddress; ++address)
 				{
 					if (!MatchesSignature(address, signature))
 						continue;

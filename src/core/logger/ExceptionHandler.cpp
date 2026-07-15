@@ -36,7 +36,7 @@ namespace YimMenu
 		if (exception_code == EXCEPTION_BREAKPOINT || exception_code == DBG_PRINTEXCEPTION_C || exception_code == DBG_PRINTEXCEPTION_WIDE_C)
 			return EXCEPTION_CONTINUE_SEARCH;
 
-		static std::unordered_set<std::size_t> logged_exceptions;
+		static thread_local std::unordered_set<std::size_t> logged_exceptions;
 
 		trace.NewStackTrace(exception_info);
 		const auto trace_hash = HashStackTrace(trace.GetFramePointers());
@@ -91,7 +91,7 @@ namespace YimMenu
 			{
 				if (opcode.opcode == 0x8B && opcode.modrm_mod != 3)
 				{
-					uint8_t regId = opcode.rex_r | opcode.modrm_reg;
+					uint8_t regId = opcode.modrm_reg | (opcode.rex_r << 3);
 					if (regId == 4)
 						return EXCEPTION_CONTINUE_SEARCH;
 

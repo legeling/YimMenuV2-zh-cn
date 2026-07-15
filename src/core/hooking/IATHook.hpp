@@ -15,10 +15,10 @@ namespace YimMenu
 
 	public:
 		IATHook(const std::string_view name, Module* module, const std::string_view library, const std::string_view import, T detour);
-		virtual ~IATHook();
+		virtual ~IATHook() override;
 
-		bool Enable();
-		bool Disable();
+		bool Enable() override;
+		bool Disable() override;
 
 		T Original() const;
 	};
@@ -52,7 +52,7 @@ namespace YimMenu
 		DWORD oldProtect{};
 		if (!VirtualProtect(m_HookLocation, sizeof(void*), PAGE_READWRITE, &oldProtect))
 		{
-			LOGF(ERROR, "Failed to make IAT entry writable for hook {}: {}", Name(), GetLastError());
+			LOGF(FATAL, "Failed to make IAT entry writable for hook {}: {}", Name(), GetLastError());
 			return false;
 		}
 
@@ -62,7 +62,7 @@ namespace YimMenu
 		DWORD currentProtect{};
 		if (!VirtualProtect(m_HookLocation, sizeof(void*), oldProtect, &currentProtect))
 		{
-			LOGF(ERROR, "Failed to restore IAT protection for hook {}: {}", Name(), GetLastError());
+			LOGF(FATAL, "Failed to restore IAT protection for hook {}: {}", Name(), GetLastError());
 			return false;
 		}
 
@@ -78,7 +78,7 @@ namespace YimMenu
 		DWORD oldProtect{};
 		if (!VirtualProtect(m_HookLocation, sizeof(void*), PAGE_READWRITE, &oldProtect))
 		{
-			LOGF(ERROR, "Failed to make IAT entry writable while disabling hook {}: {}", Name(), GetLastError());
+			LOGF(FATAL, "Failed to make IAT entry writable while disabling hook {}: {}", Name(), GetLastError());
 			return false;
 		}
 
@@ -88,7 +88,7 @@ namespace YimMenu
 		DWORD currentProtect{};
 		if (!VirtualProtect(m_HookLocation, sizeof(void*), oldProtect, &currentProtect))
 		{
-			LOGF(ERROR, "Failed to restore IAT protection while disabling hook {}: {}", Name(), GetLastError());
+			LOGF(FATAL, "Failed to restore IAT protection while disabling hook {}: {}", Name(), GetLastError());
 			return false;
 		}
 
