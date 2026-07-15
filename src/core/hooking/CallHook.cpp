@@ -6,9 +6,10 @@ namespace YimMenu
 	{
 		m_Memory = VirtualAlloc((void*)((uintptr_t)GetModuleHandle(0) + 0x40000000), 1024, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 		if (!m_Memory)
-			m_Memory = VirtualAlloc(nullptr, 1024, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-		if (!m_Memory)
+		{
 			LOGF(FATAL, "CallHookMemory: Failed to allocate jump sequence memory");
+			throw std::runtime_error("Failed to allocate call hook memory within rel32 range");
+		}
 		m_Offset = 0;
 	}
 
@@ -46,11 +47,20 @@ namespace YimMenu
 	{
 		if (!m_Enabled)
 		{
-			DWORD oldProtect, temp;
-			VirtualProtect(m_Location, 5, PAGE_EXECUTE_READWRITE, &oldProtect);
+			DWORD oldProtect{};
+			if (!VirtualProtect(m_Location, 5, PAGE_EXECUTE_READWRITE, &oldProtect))
+			{
+				LOGF(ERROR, "Failed to make call site writable: {}", GetLastError());
+				return;
+			}
+
 			memcpy(m_Location, m_PatchedBytes, 5);
-			VirtualProtect(m_Location, 5, oldProtect, &temp);
 			m_Enabled = true;
+
+			FlushInstructionCache(GetCurrentProcess(), m_Location, 5);
+			DWORD currentProtect{};
+			if (!VirtualProtect(m_Location, 5, oldProtect, &currentProtect))
+				LOGF(ERROR, "Failed to restore call site protection: {}", GetLastError());
 		}
 	}
 
@@ -58,11 +68,20 @@ namespace YimMenu
 	{
 		if (m_Enabled)
 		{
-			DWORD oldProtect, temp;
-			VirtualProtect(m_Location, 5, PAGE_EXECUTE_READWRITE, &oldProtect);
+			DWORD oldProtect{};
+			if (!VirtualProtect(m_Location, 5, PAGE_EXECUTE_READWRITE, &oldProtect))
+			{
+				LOGF(ERROR, "Failed to make call site writable while disabling hook: {}", GetLastError());
+				return;
+			}
+
 			memcpy(m_Location, m_OriginalBytes, 5);
-			VirtualProtect(m_Location, 5, oldProtect, &temp);
 			m_Enabled = false;
+
+			FlushInstructionCache(GetCurrentProcess(), m_Location, 5);
+			DWORD currentProtect{};
+			if (!VirtualProtect(m_Location, 5, oldProtect, &currentProtect))
+				LOGF(ERROR, "Failed to restore call site protection while disabling hook: {}", GetLastError());
 		}
 	}
 
@@ -76,6 +95,8 @@ namespace YimMenu
 
 	void CallSiteHook::DestroyImpl()
 	{
+		const bool hasAllocatedJumpSequences = !m_Hooks.empty();
+
 		for (auto& hook : m_Hooks)
 		{
 			if (hook)
@@ -83,6 +104,7 @@ namespace YimMenu
 		}
 
 		m_Hooks.clear();
-		CallHookMemory::Destroy();
+		if (hasAllocatedJumpSequences)
+			CallHookMemory::Destroy();
 	}
 }

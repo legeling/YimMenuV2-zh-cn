@@ -35,7 +35,10 @@ namespace YimMenu
 		if (!appdata)
 		{
 			MessageBoxA(nullptr, "Failed to get APPDATA environment variable", "YimMenuV2", MB_ICONERROR);
-			goto EARLY_UNLOAD;
+			g_Running = false;
+			CloseHandle(g_MainThread);
+			FreeLibraryAndExitThread(g_DllInstance, EXIT_FAILURE);
+			return EXIT_FAILURE;
 		}
 		const auto documents = std::filesystem::path(appdata) / "YimMenuV2";
 		FileMgr::Init(documents);

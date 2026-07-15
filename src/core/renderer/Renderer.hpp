@@ -11,12 +11,15 @@
 #include <wrl/client.h>
 
 
-#define REL(o)           \
-	if (o)               \
-	{                    \
-		o->Release();    \
-		o = nullptr;     \
-	}
+#define REL(o)             \
+	do                     \
+	{                      \
+		if ((o))            \
+		{                   \
+			(o)->Release(); \
+			(o) = nullptr;  \
+		}                   \
+	} while (0)
 
 namespace YimMenu
 {

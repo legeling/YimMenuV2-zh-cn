@@ -89,18 +89,19 @@ namespace YimMenu
 			}
 			else
 			{
-				exception_info->ContextRecord->Rip += opcode.len;
-
 				if (opcode.opcode == 0x8B && opcode.modrm_mod != 3)
 				{
 					uint8_t regId = opcode.rex_r | opcode.modrm_reg;
+					if (regId == 4)
+						return EXCEPTION_CONTINUE_SEARCH;
+
+					exception_info->ContextRecord->Rip += opcode.len;
 					switch (regId)
 					{
 					case 0: exception_info->ContextRecord->Rax = 0; break;
 					case 1: exception_info->ContextRecord->Rcx = 0; break;
 					case 2: exception_info->ContextRecord->Rdx = 0; break;
 					case 3: exception_info->ContextRecord->Rbx = 0; break;
-					case 4: return EXCEPTION_CONTINUE_SEARCH; // zeroing RSP would cause an immediate secondary crash
 					case 5: exception_info->ContextRecord->Rbp = 0; break;
 					case 6: exception_info->ContextRecord->Rsi = 0; break;
 					case 7: exception_info->ContextRecord->Rdi = 0; break;
@@ -113,6 +114,10 @@ namespace YimMenu
 					case 14: exception_info->ContextRecord->R14 = 0; break;
 					case 15: exception_info->ContextRecord->R15 = 0; break;
 					}
+				}
+				else
+				{
+					exception_info->ContextRecord->Rip += opcode.len;
 				}
 			}
 		}
