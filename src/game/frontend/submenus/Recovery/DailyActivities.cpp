@@ -4,7 +4,7 @@ namespace YimMenu::Submenus
 {
 	std::shared_ptr<Category> BuildDailyActivitiesMenu()
 	{
-		auto dailyActivities = std::make_shared<Category>("每日活动");
+		auto dailyActivities = std::make_shared<Category>("日常活动");
 
 		auto challengesTab       = std::make_shared<CollapsingHeaderItem>("挑战");
 		auto hiddenCacheTab      = std::make_shared<CollapsingHeaderItem>("隐藏补给箱");

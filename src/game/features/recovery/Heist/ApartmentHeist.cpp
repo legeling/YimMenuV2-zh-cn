@@ -148,13 +148,13 @@ namespace YimMenu::Features
 			}
 		};
 
-		static SetCuts _ApartmentHeistSetCuts{"apartmentheistsetcuts", "设置分红", "设置抢劫分红"};
-		static ForceReady _ApartmentHeistForceReady{"apartmentheistforceready", "强制准备", "强制所有玩家准备完成"};
-		static Setup _ApartmentHeistSetup{"apartmentheistsetup", "设置任务", "设置当前公寓抢劫任务"};
-		static SkipHacking _ApartmentHeistSkipHacking{"apartmentheistskiphacking", "跳过黑客破解", "跳过黑客破解流程"};
+		static SetCuts _ApartmentHeistSetCuts{"apartmentheistsetcuts", "应用分红", "应用上方设置的抢劫分红比例。"};
+		static ForceReady _ApartmentHeistForceReady{"apartmentheistforceready", "强制全员准备", "将所有玩家设为已准备。"};
+		static Setup _ApartmentHeistSetup{"apartmentheistsetup", "配置任务", "配置当前公寓抢劫。"};
+		static SkipHacking _ApartmentHeistSkipHacking{"apartmentheistskiphacking", "跳过破解", "跳过黑客破解流程。"};
 		static SkipDrilling _ApartmentHeistSkipDrilling{"apartmentheistskipdrilling", "跳过钻孔", "跳过钻孔流程"};
 		static SkipSwiping _ApartmentHeistSkipSwiping{"apartmentheistskipswiping", "跳过刷卡", "跳过刷卡流程"};
-		static InstantFinish _ApartmentHeistInstantFinish{"apartmentheistinstantfinish", "瞬间完成", "立即完成抢劫任务"};
-		static InstantFinishPacific _ApartmentHeistInstantFinishPacific{"apartmentheistinstantfinishpacific", "瞬间完成（太平洋）", "立即完成太平洋标准差事"};
+		static InstantFinish _ApartmentHeistInstantFinish{"apartmentheistinstantfinish", "立即完成", "立即完成当前抢劫。"};
+		static InstantFinishPacific _ApartmentHeistInstantFinishPacific{"apartmentheistinstantfinishpacific", "立即完成（太平洋）", "立即完成太平洋标准银行差事。"};
 	}
 }

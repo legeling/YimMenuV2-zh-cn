@@ -114,7 +114,7 @@ namespace YimMenu::Features
 	    {115, "载具仓库"},
 	};
 
-	static ListCommand _SelectedProperty{"sendtopropertyindex", "发送到资产索引", "要发送玩家前往的资产索引", g_Properties, 1};
+	static ListCommand _SelectedProperty{"sendtopropertyindex", "资产", "要将玩家送往的资产", g_Properties, 1};
 
 	class SendToProperty : public PlayerCommand
 	{
@@ -141,5 +141,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static SendToProperty _SendToProperty{"sendtoproperty", "发送到资产", "将玩家发送到所选资产"};
+	static SendToProperty _SendToProperty{"sendtoproperty", "送往资产", "将玩家送往所选资产。"};
 }

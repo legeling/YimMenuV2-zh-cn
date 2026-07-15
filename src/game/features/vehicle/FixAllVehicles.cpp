@@ -30,5 +30,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static FixAllVehicles _FixAllVehicles{"fixallvehicles", "修复所有载具", "修复你所有已损毁的个人载具。"};
+	static FixAllVehicles _FixAllVehicles{"fixallvehicles", "修复全部个人载具", "修复所有已损毁的个人载具。"};
 }

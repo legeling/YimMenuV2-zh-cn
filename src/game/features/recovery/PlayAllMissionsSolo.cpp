@@ -262,5 +262,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static PlayAllMissionsSolo _PlayAllMissionsSolo{"playallmissionssolo", "单人进行全部任务", "允许你单人进行任意任务。注意某些任务在人数不足时可能会异常"};
+	static PlayAllMissionsSolo _PlayAllMissionsSolo{"playallmissionssolo", "允许单人开始任务", "允许单人开始通常有最低人数要求的任务；部分任务可能因人数不足而异常。"};
 }

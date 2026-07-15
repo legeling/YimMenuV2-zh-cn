@@ -186,7 +186,7 @@ namespace YimMenu::Features
 			}
 		};
 
-		static IntCommand _CayoPericoHeistSecondaryTakeValue{"cayopericoheistsecondarytakevalue", "次要收获价值", "更新次要收获价值", std::nullopt, std::nullopt, 0};
+		static IntCommand _CayoPericoHeistSecondaryTakeValue{"cayopericoheistsecondarytakevalue", "次要目标收益", "要设置的次要目标总收益", std::nullopt, std::nullopt, 0};
 
 		class SetSecondaryTakeValue : public Command
 		{
@@ -293,15 +293,15 @@ namespace YimMenu::Features
 			}
 		};
 
-		static SetCuts _CayoPericoHeistSetCuts{"cayopericoheistsetcuts", "设置分红", "设置抢劫分红"};
-		static ForceReady _CayoPericoHeistForceReady{"cayopericoheistforceready", "强制准备", "强制所有玩家准备完成"};
-		static Setup _CayoPericoHeistSetup{"cayopericoheistsetup", "设置任务", "设置佩里科岛抢劫任务"};
+		static SetCuts _CayoPericoHeistSetCuts{"cayopericoheistsetcuts", "应用分红", "应用上方设置的抢劫分红比例。"};
+		static ForceReady _CayoPericoHeistForceReady{"cayopericoheistforceready", "强制全员准备", "将所有玩家设为已准备。"};
+		static Setup _CayoPericoHeistSetup{"cayopericoheistsetup", "配置任务", "配置佩里科岛抢劫。"};
 		static SetPrimaryTargetValue _CayoPericoHeistSetPrimaryTargetValue{"cayopericoheistsetprimarytargetvalue", "设置主要目标价值", "更新主要目标价值"};
-		static SetSecondaryTakeValue _CayoPericoHeistSetSecondaryTakeValue{"cayopericoheistsetsecondarytakevalue", "设置次要收获价值", "更新次要收获价值"};
-		static SkipHacking _CayoPericoHeistSkipHacking{"cayopericoheistskiphacking", "跳过黑客破解", "跳过黑客破解流程"};
+		static SetSecondaryTakeValue _CayoPericoHeistSetSecondaryTakeValue{"cayopericoheistsetsecondarytakevalue", "应用次要目标收益", "应用设定的次要目标总收益。"};
+		static SkipHacking _CayoPericoHeistSkipHacking{"cayopericoheistskiphacking", "跳过破解", "跳过黑客破解流程。"};
 		static CutSewer _CayoPericoHeistCutSewer{"cayopericoheistcutsewer", "切开下水道", "切开下水道入口"};
 		static CutGlass _CayoPericoHeistCutGlass{"cayopericoheistcutglass", "切开玻璃", "切开玻璃"};
-		static TakePrimaryTarget _CayoPericoHeistTakePrimaryTarget{"cayopericoheisttakeprimarytarget", "拿取主要目标", "拿取主要目标"};
-		static InstantFinish _CayoPericoHeistInstantFinish{"cayopericoheistinstantfinish", "瞬间完成", "立即完成抢劫任务"};
+		static TakePrimaryTarget _CayoPericoHeistTakePrimaryTarget{"cayopericoheisttakeprimarytarget", "获取主要目标", "直接将主要目标标记为已获取。"};
+		static InstantFinish _CayoPericoHeistInstantFinish{"cayopericoheistinstantfinish", "立即完成", "立即完成当前抢劫。"};
 	}
 }

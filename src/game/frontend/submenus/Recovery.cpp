@@ -9,9 +9,9 @@ namespace YimMenu::Submenus
 {
 	Recovery::Recovery() :
 		#define ICON_FA_SACK_DOLLAR "\xef\x93\x80"
-	    Submenu::Submenu("恢复", ICON_FA_SACK_DOLLAR)
+	    Submenu::Submenu("账号进度", ICON_FA_SACK_DOLLAR)
 	{
-		auto main = std::make_shared<Category>("主要");
+		auto main = std::make_shared<Category>("基础");
 		auto businesses = std::make_shared<Category>("产业");
 		auto casino = std::make_shared<Category>("赌场");
 

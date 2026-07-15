@@ -47,7 +47,7 @@ namespace YimMenu::Features
 
 	};
 
-	static ListCommand _SelectedInterior{"sendtointeriorindex", "发送到室内索引", "要发送玩家前往的室内地点索引", g_Interiors, (int)eSimpleInteriorIndex::SIMPLE_INTERIOR_ARMORY_TRUCK_1};
+	static ListCommand _SelectedInterior{"sendtointeriorindex", "室内地点", "要将玩家送往的室内地点", g_Interiors, (int)eSimpleInteriorIndex::SIMPLE_INTERIOR_ARMORY_TRUCK_1};
 
 	class SendToInterior : public PlayerCommand
 	{
@@ -75,5 +75,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static SendToInterior _SendToInterior{"sendtointerior", "发送到室内地点", "将玩家发送到所选室内地点"};
+	static SendToInterior _SendToInterior{"sendtointerior", "送往室内地点", "将玩家送往所选室内地点。"};
 }

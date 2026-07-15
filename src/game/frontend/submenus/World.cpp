@@ -8,7 +8,7 @@ namespace YimMenu::Submenus
 		#define ICON_FA_GLOBE "\xef\x82\xac"
 	    Submenu::Submenu("世界", ICON_FA_GLOBE)
 	{
-		auto main = std::make_shared<Category>("主要");
+		auto main = std::make_shared<Category>("基础");
 		auto iplsGroup = std::make_shared<Category>("地图内饰");
 
 		auto killPeds = std::make_shared<Group>("清除", 1);

@@ -782,7 +782,7 @@ namespace YimMenu::Submenus
 			ImGui::Checkbox("生成保镖", &spawnAsBodyguard);
 			ImGui::Checkbox("生成警察", &spawnAsCop);
 			ImGui::Checkbox("生成到我的载具内", &spawnInMyVehicle);
-			ImGui::Checkbox("给予全部武器", &giveAllWeapons);
+			ImGui::Checkbox("为角色配备全部武器", &giveAllWeapons);
 			ImGui::Checkbox("生成妓女", &spawnAsProstitute);
 			ImGui::Checkbox("随机服装", &randomizeOutfit);
 			ImGui::Checkbox("为行人添加标记", &blipPed);

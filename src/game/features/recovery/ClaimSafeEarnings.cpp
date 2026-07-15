@@ -86,5 +86,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static ClaimSafeEarnings _ClaimSafeEarnings{"claimsafeearnings", "领取保险箱收益", "从所选产业领取保险箱收益"};
+	static ClaimSafeEarnings _ClaimSafeEarnings{"claimsafeearnings", "领取产业保险箱收益", "领取所选产业的保险箱收益。"};
 }

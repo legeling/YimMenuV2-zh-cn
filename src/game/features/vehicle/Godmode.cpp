@@ -26,5 +26,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static VehicleGodmode _VehicleGodmode{"vehiclegodmode", "载具无敌", "阻止你当前载具受到任何传入伤害"};
+	static VehicleGodmode _VehicleGodmode{"vehiclegodmode", "载具无敌", "使当前载具免受任何伤害。"};
 }

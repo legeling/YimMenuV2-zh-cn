@@ -254,7 +254,7 @@ namespace YimMenu::Features
 				return;
 
 			SetAllDailyActivitiesCompleted(true);
-			ShowLocalizedNotification("每日活动", "已完成所有活动，请切换战局以应用更改。");
+			ShowLocalizedNotification("日常活动", "已将全部日常活动标记为完成，请切换战局以应用更改。");
 		}
 	};
 
@@ -268,7 +268,7 @@ namespace YimMenu::Features
 				return;
 
 			SetAllDailyActivitiesCompleted(false);
-			ShowLocalizedNotification("每日活动", "已重置所有活动，请切换战局以应用更改。");
+			ShowLocalizedNotification("日常活动", "已重置全部日常活动进度，请切换战局以应用更改。");
 		}
 	};
 
@@ -1071,10 +1071,10 @@ namespace YimMenu::Features
 		}
 	};
 
-	static SetAllActivitiesCompleted _SetAllActivitiesCompleted{"setallactivitiescompleted", "完成所有活动", "请切换战局以应用更改。"};
-	static ResetAllActivities _ResetAllActivities{"resetallactivities", "重置所有活动", "请切换战局以应用更改。"};
+	static SetAllActivitiesCompleted _SetAllActivitiesCompleted{"setallactivitiescompleted", "完成全部日常活动", "将全部日常活动标记为已完成；切换战局后生效。"};
+	static ResetAllActivities _ResetAllActivities{"resetallactivities", "重置日常活动进度", "将全部日常活动重置为未完成；切换战局后生效。"};
 
-	static CompleteAllChallenges _CompleteAllChallenges{"completeallchallenges", "完成全部挑战", "完成所有每日目标和每周挑战。"};
+	static CompleteAllChallenges _CompleteAllChallenges{"completeallchallenges", "完成每日与每周挑战", "完成全部每日目标和当前每周挑战。"};
 
 	static TeleportToHiddenCache _TeleportToHiddenCache{"tptohiddencache", "传送到隐藏补给箱", "传送到所选隐藏补给箱。"};
 	static CollectHiddenCache _CollectHiddenCache{"collecthiddencache", "收集隐藏补给箱", "收集所选隐藏补给箱。"};
@@ -1100,13 +1100,13 @@ namespace YimMenu::Features
 	static DeliverNextExoticExportsVehicle _DeliverNextExoticExportsVehicle{"delivernextexoticexportsvehicle", "交付下一辆出口珍品载具", "直接交付下一辆出口珍品载具。"};
 
 	static TeleportToDeadDrop _TeleportToDeadDrop{"tptodeaddrop", "传送到 G 的藏匿点", "传送到 G 的藏匿点。"};
-	static CollectDeadDrop _CollectDeadDrop{"collectdeaddrop", "收集 G 的藏匿点奖励", "收集 G 的藏匿点奖励。"};
+	static CollectDeadDrop _CollectDeadDrop{"collectdeaddrop", "领取 G 的藏匿点奖励", "直接领取 G 的藏匿点奖励。"};
 
 	static TeleportToStashHouse _TeleportToStashHouse{"tptostashhouse", "传送到藏匿屋", "传送到藏匿屋。"};
 	static EnterStashHouseSafeCode _EnterStashHouseSafeCode{"enterstashhousesafecode", "输入藏匿屋保险箱密码", "输入藏匿屋保险箱密码。"};
 
 	static TeleportToStreetDealer _TeleportToStreetDealer{"tptostreetdealer", "传送到街头贩子", "传送到所选街头贩子。"};
-	static _OpenStreetDealerMenu __OpenStreetDealerMenu{"openstreetdealermenu", "打开街头贩子菜单", "允许你远程访问所选街头贩子。"};
+	static _OpenStreetDealerMenu __OpenStreetDealerMenu{"openstreetdealermenu", "远程交易", "远程打开所选街头贩子的交易界面。"};
 
 	static TeleportToLSTag _TeleportToLSTag{"tptolstag", "传送到洛圣都涂鸦", "传送到所选洛圣都涂鸦。"};
 	static SprayLSTag _SprayLSTag{"spraylstag", "喷涂洛圣都涂鸦", "喷涂所选洛圣都涂鸦。"};

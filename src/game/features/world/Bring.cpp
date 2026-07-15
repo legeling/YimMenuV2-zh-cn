@@ -55,7 +55,7 @@ namespace YimMenu::Features
 		}
 	};
 
-	static BringAllObjs _BringAllObjs{"bringobjs", "拉来全部物体", "将游戏中的所有物体传送到你身边"};
-	static BringAllPeds _BringAllPeds{"bringpeds", "拉来全部行人", "将游戏中的所有行人传送到你身边"};
-	static BringAllVehs _BringAllVehs{"bringvehs", "拉来全部载具", "将游戏中的所有载具传送到你身边"};
+	static BringAllObjs _BringAllObjs{"bringobjs", "传送全部物体到身边", "将游戏中的全部物体传送到你身边。"};
+	static BringAllPeds _BringAllPeds{"bringpeds", "传送全部行人到身边", "将游戏中的全部行人传送到你身边。"};
+	static BringAllVehs _BringAllVehs{"bringvehs", "传送全部载具到身边", "将游戏中的全部载具传送到你身边。"};
 }

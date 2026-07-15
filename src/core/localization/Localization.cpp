@@ -26,7 +26,7 @@ namespace YimMenu::Localization
 		    {"Infinite"sv, "无限"sv},
 		    {"Name"sv, "名称"sv},
 		    {"Basket"sv, "购物篮"sv},
-		    {"Current"sv, "当前位置"sv},
+		    {"Current"sv, "当前"sv},
 		    {"Saved..."sv, "已保存..."sv},
 		    {"Yes"sv, "是"sv},
 		    {"No"sv, "否"sv},
@@ -54,8 +54,8 @@ namespace YimMenu::Localization
 		    {"Division"sv, "除法"sv},
 		    {"Error"sv, "错误"sv},
 		    {"Exceeded"sv, "超出"sv},
-		    {"Frame Padding"sv, "框架边距"sv},
-		    {"Grab Min Size"sv, "抓取最小尺寸"sv},
+		    {"Frame Padding"sv, "控件内边距"sv},
+		    {"Grab Min Size"sv, "滑块最小尺寸"sv},
 		    {"Max"sv, "最大"sv},
 		    {"Memory"sv, "内存"sv},
 		    {"Null"sv, "空"sv},
@@ -64,7 +64,7 @@ namespace YimMenu::Localization
 		    {"Pointer"sv, "指针"sv},
 		    {"Scroll bar Size"sv, "滚动条大小"sv},
 		    {"Scrollbar Size"sv, "滚动条大小"sv},
-		    {"Separator"sv, "分隔符"sv},
+		    {"Separator"sv, "分隔线"sv},
 		    {"Separator Text Align"sv, "分隔符文字对齐"sv},
 		    {"Stack"sv, "堆栈"sv},
 		    {"Underflow"sv, "下溢"sv},
@@ -86,16 +86,16 @@ namespace YimMenu::Localization
 		    {"Apply Font Scale"sv, "应用字体缩放"sv},
 		    {"Adjust"sv, "调整"sv},
 		    {"Edit color for"sv, "编辑颜色："sv},
-		    {"Self"sv, "自身"sv},
+		    {"Self"sv, "个人"sv},
 		    {"Vehicle"sv, "载具"sv},
 		    {"Teleport"sv, "传送"sv},
-		    {"Network"sv, "网络"sv},
+		    {"Network"sv, "联机"sv},
 		    {"Players"sv, "玩家"sv},
 		    {"World"sv, "世界"sv},
-		    {"Recovery"sv, "恢复"sv},
+		    {"Recovery"sv, "账号进度"sv},
 		    {"Settings"sv, "设置"sv},
 		    {"Debug"sv, "调试"sv},
-		    {"Main"sv, "主页"sv},
+		    {"Main"sv, "基础"sv},
 		    {"Globals"sv, "全局"sv},
 		    {"Movement"sv, "移动"sv},
 		    {"Tools"sv, "工具"sv},
@@ -105,7 +105,7 @@ namespace YimMenu::Localization
 		    {"Item"sv, "物品"sv},
 		    {"Bytecode"sv, "字节码"sv},
 		    {"Toxic"sv, "恶意"sv},
-		    {"Troll"sv, "整活"sv},
+		    {"Troll"sv, "整蛊"sv},
 		    {"Locals"sv, "局部变量"sv},
 		    {"Damage"sv, "伤害"sv},
 		    {"Griefing"sv, "骚扰"sv},
@@ -116,7 +116,7 @@ namespace YimMenu::Localization
 		    {"Saved"sv, "已保存"sv},
 		    {"New"sv, "新增"sv},
 		    {"Notifications"sv, "通知"sv},
-		    {"Context Function"sv, "上下文操作"sv},
+		    {"Context Function"sv, "快捷操作"sv},
 		    {"Tracking"sv, "追踪"sv},
 		    {"Host"sv, "主机"sv},
 		    {"Modder"sv, "作弊者"sv},
@@ -150,15 +150,15 @@ namespace YimMenu::Localization
 		    {"Player ESP"sv, "玩家透视"sv},
 		    {"Ped ESP"sv, "行人透视"sv},
 		    {"Object ESP"sv, "物体透视"sv},
-		    {"Overlay"sv, "叠加层"sv},
+		    {"Overlay"sv, "信息浮窗"sv},
 		    {"Chat"sv, "聊天"sv},
 		    {"Businesses"sv, "产业"sv},
 		    {"Casino"sv, "赌场"sv},
 		    {"Slot Machines"sv, "老虎机"sv},
-		    {"Daily Activities"sv, "每日活动"sv},
-		    {"Heists"sv, "抢劫任务"sv},
+		    {"Daily Activities"sv, "日常活动"sv},
+		    {"Heists"sv, "抢劫"sv},
 		    {"Transactions"sv, "交易"sv},
-		    {"Stat Editor"sv, "属性编辑器"sv},
+		    {"Stat Editor"sv, "数据编辑器"sv},
 		    {"Regular"sv, "普通"sv},
 		    {"Packed"sv, "打包"sv},
 		    {"Packed Range"sv, "打包范围"sv},
@@ -180,7 +180,7 @@ namespace YimMenu::Localization
 		    {"Inventory Slot"sv, "库存槽位"sv},
 		    {"New location"sv, "新地点"sv},
 		    {"Save current location"sv, "保存当前位置"sv},
-		    {"Double click to teleport\nShift click to delete"sv, "双击可传送\n按住换挡键点击可删除"sv},
+		    {"Double click to teleport\nShift click to delete"sv, "双击传送\nShift + 单击删除"sv},
 		    {"Distance: %f"sv, "距离：%f"sv},
 		    {"Are you sure you want to delete %s?"sv, "确定要删除 %s 吗？"sv},
 		    {"Please enter a valid name"sv, "请输入有效名称"sv},
@@ -322,19 +322,19 @@ namespace YimMenu::Localization
 		    {"Locally Visible"sv, "本地可见"sv},
 		    {"Be locally visible while remaining invisible to other players"sv, "对其他玩家保持隐形的同时，在本地仍然可见"sv},
 		    {"Off The Radar"sv, "脱离雷达"sv},
-		    {"No Ragdoll"sv, "无布娃娃"sv},
+		    {"No Ragdoll"sv, "防止倒地"sv},
 		    {"No Idle Kick"sv, "防挂机踢出"sv},
 		    {"Unlimited Oxygen"sv, "无限氧气"sv},
-		    {"Format Money"sv, "格式化金钱"sv},
+		    {"Format Money"sv, "金额格式化"sv},
 		    {"Mobile Radio"sv, "移动电台"sv},
 		    {"Keep Player Clean"sv, "保持角色整洁"sv},
-		    {"Disable Critical Hits"sv, "禁用暴击"sv},
+		    {"Disable Critical Hits"sv, "免疫暴击"sv},
 		    {"Skip Cutscene"sv, "跳过过场动画"sv},
 		    {"Skip Conversation"sv, "跳过对话"sv},
 		    {"Suicide"sv, "自杀"sv},
 		    {"Heal"sv, "治疗"sv},
-		    {"Clear Damage"sv, "清除伤害"sv},
-		    {"Fill Inventory"sv, "填满物品栏"sv},
+		    {"Clear Damage"sv, "清除伤痕"sv},
+		    {"Fill Inventory"sv, "补满补给品"sv},
 		    {"Open Wardrobe"sv, "打开衣柜"sv},
 		    {"Stand on Vehicles"sv, "站在载具上"sv},
 		    {"Disable Action Mode"sv, "禁用动作模式"sv},
@@ -460,20 +460,20 @@ namespace YimMenu::Localization
 		    {"Session Type: %s"sv, "战局类型：%s"sv},
 		    {"Host of Session: %s"sv, "战局主持人：%s"sv},
 		    {"Is Spectating: %s"sv, "是否在观战：%s"sv},
-		    {"Is Job Lobby: %s"sv, "是否在任务大厅：%s"sv},
-		    {"Host of Job Lobby: %s"sv, "任务大厅主持人：%s"sv},
+		    {"Is Job Lobby: %s"sv, "是否在差事大厅：%s"sv},
+		    {"Host of Job Lobby: %s"sv, "差事大厅主持人：%s"sv},
 		    {"Mission Type: %s"sv, "任务类型：%s"sv},
 		    {"Mission Name: %s"sv, "任务名称：%s"sv},
 		    {"{} is no longer online"sv, "{} 已离线"sv},
 		    {"{} is now in a joinable session"sv, "{} 当前已可加入"sv},
 		    {"{} is now online"sv, "{} 已上线"sv},
 		    {"{} is no longer in a joinable session"sv, "{} 当前不可加入"sv},
-		    {"{} is now in a {} session"sv, "{} 当前处于{}战局"sv},
-		    {"{} is no longer in a {}"sv, "{} 已不在{}中"sv},
-		    {"{} is now in a {}"sv, "{} 当前正在进行{}"sv},
-		    {"{} has hosted a job lobby"sv, "{} 创建了一个任务大厅"sv},
-		    {"{} has joined a job lobby"sv, "{} 加入了一个任务大厅"sv},
-		    {"{} is no longer in a job lobby"sv, "{} 已离开任务大厅"sv},
+		    {"{} is now in a {} session"sv, "{} 当前处于 {} 战局"sv},
+		    {"{} is no longer in a {}"sv, "{} 已离开 {}"sv},
+		    {"{} is now in a {}"sv, "{} 当前正在进行 {}"sv},
+		    {"{} has hosted a job lobby"sv, "{} 创建了一个差事大厅"sv},
+		    {"{} has joined a job lobby"sv, "{} 加入了一个差事大厅"sv},
+		    {"{} is no longer in a job lobby"sv, "{} 已离开差事大厅"sv},
 		    {"{} vehicles fixed."sv, "已修复 {} 辆载具。"sv},
 		    {"No vehicles to fix."sv, "没有可修复的载具。"sv},
 		    {"Tried to save a vehicle which does not exist"sv, "尝试保存一辆不存在的载具"sv},
@@ -539,8 +539,8 @@ namespace YimMenu::Localization
 		    {"Trigger Range: %.2f"sv, "触发范围：%.2f"sv},
 		    {"Set Cooldown"sv, "设置冷却"sv},
 		    {"Set Availability"sv, "设置可用性"sv},
-		    {"Open GitHub"sv, "打开代码仓库页面"sv},
-		    {"Open Matrix server"sv, "打开社区服务器页面"sv},
+		    {"Open GitHub"sv, "打开 GitHub 仓库"sv},
+		    {"Open Matrix server"sv, "打开 Matrix 社区"sv},
 		    {"Play with YimMenu users"sv, "与 YimMenu 用户一起游玩"sv},
 		    {"Play with everyone (Broken!)"sv, "与所有人一起游玩（已失效）"sv},
 		    {"IMPORTANT! PLEASE READ!"sv, "重要！请务必阅读！"sv},
@@ -627,7 +627,7 @@ namespace YimMenu::Localization
 		    {"Kills you"sv, "将你杀死"sv},
 		    {"Restores your health and armour."sv, "恢复生命值与护甲。"sv},
 		    {"Clears all the dirt and blood on you."sv, "清除身上的污渍和血迹。"sv},
-		    {"Fills all of your snacks and armours."sv, "填满所有零食和护甲。"sv},
+		    {"Fills all of your snacks and armours."sv, "补满全部零食和护甲。"sv},
 		    {"Invisibility"sv, "隐身"sv},
 		    {"Be invisible"sv, "使自己隐身"sv},
 		    {"Prevents you from ragdolling when standing on top of vehicles."sv, "站在载具顶部时不会摔倒。"sv},
@@ -670,7 +670,7 @@ namespace YimMenu::Localization
 		    {"Allows aimbot to lock on to enemies and other players in vehicles"sv, "允许自瞄锁定载具中的敌人和其他玩家"sv},
 		    {"Repair Vehicle"sv, "修复载具"sv},
 		    {"Fixes any damage to your current vehicle"sv, "修复当前载具的所有损坏"sv},
-		    {"Fix All Vehicles"sv, "修复全部载具"sv},
+		    {"Fix All Vehicles"sv, "修复全部个人载具"sv},
 		    {"Fixes all of your destroyed personal vehicles."sv, "修复你所有已损毁的个人载具。"sv},
 		    {"Keep Vehicle Fixed"sv, "保持载具完好"sv},
 		    {"Keeps your vehicle clean and fixed"sv, "保持载具清洁并自动修复"sv},
@@ -679,8 +679,8 @@ namespace YimMenu::Localization
 		    {"Makes the vehicle boost when you hold the horn"sv, "按住喇叭时让载具加速"sv},
 		    {"Speedometer"sv, "速度表"sv},
 		    {"Shows a speedometer whenever you are in a vehicle"sv, "在载具中显示速度表"sv},
-		    {"Allows you to request your personal vehicles."sv, "允许你呼叫你的个人载具。"sv},
-		    {"Enter last vehicle"sv, "进入上一辆载具"sv},
+		    {"Allows you to request your personal vehicles."sv, "打开技工的个人载具选择界面。"sv},
+		    {"Enter last vehicle"sv, "进入最近载具"sv},
 		    {"Enters the last vehicle you were in"sv, "进入你上一次乘坐的载具"sv},
 		    {"Requests your current Personal Vehicle."sv, "请求你当前的个人载具。"sv},
 		    {"Returns your current Personal Vehicle to storage."sv, "将当前个人载具收回仓库。"sv},
@@ -688,11 +688,11 @@ namespace YimMenu::Localization
 		    {"Allows you to keep your hats or head gear inside vehicles."sv, "允许在载具内保留帽子或头饰。"sv},
 		    {"Enables all the DLC vehicles on websites."sv, "在网站中启用所有扩展内容载具。"sv},
 		    {"Saves the current vehicle you are in as your personal vehicle."sv, "将你当前乘坐的载具保存为个人载具。"sv},
-		    {"Bring All Objects"sv, "拉近所有物体"sv},
+		    {"Bring All Objects"sv, "传送全部物体到身边"sv},
 		    {"Teleports all game objects to you"sv, "将游戏内所有物体传送到你身边"sv},
-		    {"Bring All Peds"sv, "拉近所有行人"sv},
+		    {"Bring All Peds"sv, "传送全部行人到身边"sv},
 		    {"Teleports all game peds to you"sv, "将游戏内所有行人传送到你身边"sv},
-		    {"Bring All Vehicles"sv, "拉近所有载具"sv},
+		    {"Bring All Vehicles"sv, "传送全部载具到身边"sv},
 		    {"Teleports all game vehicles to you"sv, "将游戏内所有载具传送到你身边"sv},
 		    {"Kill All Peds"sv, "击杀所有行人"sv},
 		    {"Kills all peds in the game world"sv, "击杀游戏世界中的所有行人"sv},
@@ -721,15 +721,15 @@ namespace YimMenu::Localization
 		    {"The model name of the ped you wish to spawn."sv, "要生成的行人模型名称。"sv},
 		    {"Object Model"sv, "物体模型"sv},
 		    {"The model name of the object you wish to spawn."sv, "要生成的物体模型名称。"sv},
-		    {"Brings the player to you"sv, "将玩家拉到你身边"sv},
+		    {"Brings the player to you"sv, "将玩家传送到你身边"sv},
 		    {"Teleports you to the selected player"sv, "将你传送到选中的玩家身边"sv},
 		    {"Player Teleport Coords"sv, "玩家传送坐标"sv},
 		    {"The coordinates to teleport the player to"sv, "要将玩家传送到的坐标"sv},
 		    {"Teleport Player To Coord"sv, "将玩家传送到坐标"sv},
 		    {"Teleports the player to the specified coordinates"sv, "将玩家传送到指定坐标"sv},
-		    {"Send to Property"sv, "送往房产"sv},
+		    {"Send to Property"sv, "送往资产"sv},
 		    {"Sends the player to the selected property"sv, "将玩家送到所选房产"sv},
-		    {"Send to Interior"sv, "送往室内"sv},
+		    {"Send to Interior"sv, "送往室内地点"sv},
 		    {"Sends the player to the selected interior"sv, "将玩家送到所选室内"sv},
 		    {"Set Bounty"sv, "设置悬赏"sv},
 		    {"Sets the specified bounty to the player"sv, "为玩家设置指定金额的悬赏"sv},
@@ -755,9 +755,9 @@ namespace YimMenu::Localization
 		    {"Primary target"sv, "主要目标"sv},
 		    {"Weapon category"sv, "武器类别"sv},
 		    {"Heist Modifier"sv, "抢劫修改"sv},
-		    {"Apartment Heist"sv, "公寓抢劫任务"sv},
+		    {"Apartment Heist"sv, "公寓抢劫"sv},
 		    {"Diamond Casino Heist"sv, "名钻赌场豪劫"sv},
-		    {"Cayo Perico Heist"sv, "佩里科岛抢劫任务"sv},
+		    {"Cayo Perico Heist"sv, "佩里科岛抢劫"sv},
 		    {"Doomsday Heist"sv, "末日豪劫"sv},
 		    {"Heist Cuts"sv, "分红比例"sv},
 		    {"Heist Setups"sv, "抢劫配置"sv},
@@ -771,8 +771,8 @@ namespace YimMenu::Localization
 		    {"Gunman"sv, "枪手"sv},
 		    {"Driver"sv, "司机"sv},
 		    {"Hacker"sv, "黑客"sv},
-		    {"Skip Hacking"sv, "跳过黑客"sv},
-		    {"Skips hacking process"sv, "跳过黑客流程"sv},
+		    {"Skip Hacking"sv, "跳过破解"sv},
+		    {"Skips hacking process"sv, "跳过破解流程"sv},
 		    {"Skip Drilling"sv, "跳过钻孔"sv},
 		    {"Skips drilling process"sv, "跳过钻孔流程"sv},
 		    {"Skip Swiping"sv, "跳过刷卡"sv},
@@ -792,18 +792,18 @@ namespace YimMenu::Localization
 		    {"Set Potential Take"sv, "设置预计收入"sv},
 		    {"Set Actual Take"sv, "设置实际收入"sv},
 		    {"Primary Target Value"sv, "主要目标价值"sv},
-		    {"Secondary Take Value"sv, "次要收入价值"sv},
+		    {"Secondary Take Value"sv, "次要目标收益"sv},
 		    {"Updates primary target value"sv, "更新主要目标价值"sv},
-		    {"Updates secondary take value"sv, "更新次要收入价值"sv},
+		    {"Updates secondary take value"sv, "更新次要目标收益"sv},
 		    {"Set Primary Target Value"sv, "设置主要目标价值"sv},
-		    {"Set Secondary Take Value"sv, "设置次要战利品价值"sv},
+		    {"Set Secondary Take Value"sv, "应用次要目标收益"sv},
 		    {"Cut Sewer"sv, "切开排水管"sv},
 		    {"Cuts the sewer"sv, "切开排水管"sv},
 		    {"Cut Glass"sv, "切开玻璃"sv},
 		    {"Cuts the glass"sv, "切开玻璃"sv},
-		    {"Take Primary Target"sv, "拿取主要目标"sv},
-		    {"Takes primary target"sv, "拿取主要目标"sv},
-		    {"Solo Mantrap"sv, "单人安检通道"sv},
+		    {"Take Primary Target"sv, "获取主要目标"sv},
+		    {"Takes primary target"sv, "获取主要目标"sv},
+		    {"Solo Mantrap"sv, "单人通过安检门"sv},
 		    {"The Fleeca Job"sv, "全福银行差事"sv},
 		    {"Scope Out"sv, "探查"sv},
 		    {"Adder"sv, "灵蛇"sv},
@@ -972,9 +972,9 @@ namespace YimMenu::Localization
 		    ,{"Selected Animal"sv, "已选动物"sv}
 		    ,{"Product"sv, "货物"sv}
 		    ,{"Selected Product"sv, "已选货物"sv}
-		    ,{"Set All Activities Completed"sv, "完成全部活动"sv}
-		    ,{"Reset All Activities"sv, "重置全部活动"sv}
-		    ,{"Complete All Challenges"sv, "完成全部挑战"sv}
+		    ,{"Set All Activities Completed"sv, "完成全部日常活动"sv}
+		    ,{"Reset All Activities"sv, "重置日常活动进度"sv}
+		    ,{"Complete All Challenges"sv, "完成每日与每周挑战"sv}
 		    ,{"Teleport to Hidden Cache"sv, "传送到隐藏补给箱"sv}
 		    ,{"Collect Hidden Cache"sv, "领取隐藏补给箱"sv}
 		    ,{"Teleport to Treasure Chest"sv, "传送到宝箱"sv}
@@ -990,7 +990,7 @@ namespace YimMenu::Localization
 		    ,{"Teleport to Stash House"sv, "传送到藏匿屋"sv}
 		    ,{"Enter Stash House Safe Code"sv, "输入藏匿屋保险箱密码"sv}
 		    ,{"Teleport to Dealer"sv, "传送到街头贩子"sv}
-		    ,{"Open Street Dealer Menu"sv, "打开街头贩子菜单"sv}
+		    ,{"Open Street Dealer Menu"sv, "远程交易"sv}
 		    ,{"Teleport to LS Tag"sv, "传送到洛圣都涂鸦"sv}
 		    ,{"Spray LS Tag"sv, "喷涂洛圣都涂鸦"sv}
 		    ,{"Spawn Animal"sv, "生成动物"sv}
@@ -999,7 +999,7 @@ namespace YimMenu::Localization
 		    ,{"Collect Product"sv, "领取货物"sv}
 		    ,{"UI Style"sv, "界面风格"sv}
 		    ,{"Choose the UI style"sv, "选择界面风格"sv}
-		    ,{"Claim Safe Earnings"sv, "领取保险箱收益"sv}
+		    ,{"Claim Safe Earnings"sv, "领取产业保险箱收益"sv}
 		    ,{"ADD"sv, "添加"sv}
 		    ,{"ALL"sv, "全部"sv}
 		    ,{"COLOR_OPTIONS"sv, "颜色选项"sv}
@@ -1020,9 +1020,9 @@ namespace YimMenu::Localization
 		    ,{"WHEEL_COLOR"sv, "轮毂颜色"sv}
 		    ,{"WHEEL_TYPE"sv, "轮毂类型"sv}
 		    ,{"Force-updates all saved players"sv, "强制更新所有已保存玩家的信息"sv}
-		    ,{"Set All Activities Completed"sv, "完成全部活动"sv}
-		    ,{"Reset All Activities"sv, "重置全部活动"sv}
-		    ,{"Complete All Challenges"sv, "完成全部挑战"sv}
+		    ,{"Set All Activities Completed"sv, "完成全部日常活动"sv}
+		    ,{"Reset All Activities"sv, "重置日常活动进度"sv}
+		    ,{"Complete All Challenges"sv, "完成每日与每周挑战"sv}
 		    ,{"Teleport to Hidden Cache"sv, "传送到隐藏补给箱"sv}
 		    ,{"Collect Hidden Cache"sv, "领取隐藏补给箱"sv}
 		    ,{"Teleport to Treasure Chest"sv, "传送到宝箱"sv}
@@ -1044,7 +1044,7 @@ namespace YimMenu::Localization
 		    ,{"Teleport to Stash House"sv, "传送到藏匿屋"sv}
 		    ,{"Enter Stash House Safe Code"sv, "输入藏匿屋保险箱密码"sv}
 		    ,{"Teleport to Dealer"sv, "传送到街头贩子"sv}
-		    ,{"Open Street Dealer Menu"sv, "打开街头贩子菜单"sv}
+		    ,{"Open Street Dealer Menu"sv, "远程交易"sv}
 		    ,{"Teleport to LS Tag"sv, "传送到洛圣都涂鸦"sv}
 		    ,{"Spray LS Tag"sv, "喷涂洛圣都涂鸦"sv}
 		    ,{"Teleport to Madrazo Hit"sv, "传送到玛德拉索暗杀"sv}
@@ -1061,8 +1061,8 @@ namespace YimMenu::Localization
 		    ,{"Open Wardrobe"sv, "打开衣柜"sv}
 		    ,{"Allows you to access your wardrobe remotely."sv, "允许你远程访问衣柜。"sv}
 		    ,{"Call Mechanic"sv, "呼叫技工"sv}
-		    ,{"Allows you to request your personal vehicles."sv, "允许你呼叫你的个人载具。"sv}
-		    ,{"Fix All Vehicles"sv, "修复全部载具"sv}
+		    ,{"Allows you to request your personal vehicles."sv, "打开技工的个人载具选择界面。"sv}
+		    ,{"Fix All Vehicles"sv, "修复全部个人载具"sv}
 		    ,{"Fixes all of your destroyed personal vehicles."sv, "修复你所有已损毁的个人载具。"sv}
 		    ,{"Join YimMenu-only Sessions"sv, "加入仅限 YimMenu 的战局"sv}
 		    ,{"Fast Join"sv, "快速加入"sv}
@@ -1080,15 +1080,15 @@ namespace YimMenu::Localization
 		    ,{"Unlock GTA+"sv, "解锁 GTA+"sv}
 		    ,{"Weapon Explosion RadiusScale"sv, "武器爆炸范围倍率"sv}
 		    ,{"Modifying Weapon Explosion RadiusScale"sv, "修改武器爆炸范围倍率"sv}
-		    ,{"RP Multiplier Input"sv, "声望倍率输入"sv}
-		    ,{"RP Mulitplier (< 0 = 0 -> No RP)"sv, "声望倍率（< 0 时为 0，即无声望）"sv}
+		    ,{"RP Multiplier Input"sv, "RP 倍率"sv}
+		    ,{"RP Mulitplier (< 0 = 0 -> No RP)"sv, "RP 倍率（小于 0 时按 0 计算，不获得 RP）"sv}
 		    ,{"IPL set to load"sv, "要加载的场景集"sv}
 		    ,{"Business to claim earning from."sv, "要领取保险箱收益的产业。"sv}
 		    ,{"Hands on Car Wash"sv, "亲力亲为洗车行"sv}
 		    ,{"Hands On Car Wash"sv, "亲力亲为洗车行"sv}
 		    ,{"hands on car wash"sv, "亲力亲为洗车行"sv}
 		    ,{"Switch session to apply the changes."sv, "请切换战局以应用更改。"sv}
-		    ,{"Completes all the Daily Objectives and the Weekly Challenge."sv, "完成所有每日目标和每周挑战。"sv}
+		    ,{"Completes all the Daily Objectives and the Weekly Challenge."sv, "完成全部每日目标和当前每周挑战。"sv}
 		    ,{"Teleports to the selected Hidden Cache."sv, "传送到所选隐藏补给箱。"sv}
 		    ,{"Collects the selected Hidden Cache."sv, "收集所选隐藏补给箱。"sv}
 		    ,{"Teleports to the selected Treasure Chest."sv, "传送到所选宝箱。"sv}
@@ -1109,7 +1109,7 @@ namespace YimMenu::Localization
 		    ,{"Collects G's Cache."sv, "领取 G 的藏匿点奖励。"sv}
 		    ,{"Teleports to Stash House."sv, "传送到藏匿屋。"sv}
 		    ,{"Enters the Stash House safe code."sv, "输入藏匿屋保险箱密码。"sv}
-		    ,{"Allows you to access the selected Street Dealer remotely."sv, "允许你远程访问所选街头贩子。"sv}
+		    ,{"Allows you to access the selected Street Dealer remotely."sv, "远程打开所选街头贩子的交易界面。"sv}
 		    ,{"Teleports to the selected LS Tag."sv, "传送到所选洛圣都涂鸦。"sv}
 		    ,{"Sprays the selected LS Tag."sv, "喷涂所选洛圣都涂鸦。"sv}
 		    ,{"Teleports to Madrazo Hit."sv, "传送到玛德拉索暗杀。"sv}
@@ -1127,10 +1127,10 @@ namespace YimMenu::Localization
 		    ,{"Spawns an object at your current location."sv, "在当前位置生成一个物体。"sv}
 		    ,{"Save Personal Vehicle"sv, "保存个人载具"sv}
 		    ,{"Saves the current vehicle you are in as your personal vehicle."sv, "将你当前乘坐的载具保存为个人载具。"sv}
-		    ,{"Send to Interior Index"sv, "发送到室内索引"sv}
-		    ,{"The interior index to send the player(s) to"sv, "要将玩家发送到的室内索引"sv}
-		    ,{"Send to Property Index"sv, "发送到房产索引"sv}
-		    ,{"The property index to send the player(s) to"sv, "要将玩家发送到的房产索引"sv}
+		    ,{"Send to Interior Index"sv, "室内地点"sv}
+		    ,{"The interior index to send the player(s) to"sv, "要将玩家送往的室内地点"sv}
+		    ,{"Send to Property Index"sv, "资产"sv}
+		    ,{"The property index to send the player(s) to"sv, "要将玩家送往的资产"sv}
 		    ,{"Player 1"sv, "玩家 1"sv}
 		    ,{"Player 2"sv, "玩家 2"sv}
 		    ,{"Player 3"sv, "玩家 3"sv}
@@ -1228,19 +1228,19 @@ namespace YimMenu::Localization
 		    ,{"Force Script Host"sv, "强制脚本主机"sv}
 		    ,{"Force Thunder"sv, "强制雷暴"sv}
 		    ,{"Force Weather"sv, "强制天气"sv}
-		    ,{"Give All Weapons"sv, "给予全部武器"sv}
-		    ,{"Gives the player all weapons"sv, "给予该玩家全部武器"sv}
+		    ,{"Give All Weapons"sv, "全部武器"sv}
+		    ,{"Gives the player all weapons"sv, "为所选玩家添加全部武器。"sv}
 		    ,{"Give Max Ammo"sv, "补满弹药"sv}
-		    ,{"Gives you all weapons"sv, "给予你全部武器"sv}
+		    ,{"Gives you all weapons"sv, "为自己添加全部武器。"sv}
 		    ,{"Refills your ammo to max."sv, "将你的弹药补充至上限。"sv}
 		    ,{"Load IPL"sv, "加载场景集"sv}
 		    ,{"Unload IPL"sv, "卸载场景集"sv}
 		    ,{"Teleport to IPL"sv, "传送到场景集"sv}
 		    ,{"Teleport to the selected IPL"sv, "传送到所选场景集"sv}
-		    ,{"Play All Missions Solo"sv, "单人游玩所有任务"sv}
+		    ,{"Play All Missions Solo"sv, "允许单人开始任务"sv}
 		    ,{"Remove LSC Restrictions"sv, "移除洛圣都改车王限制"sv}
 		    ,{"Removes Los Santos Customs vehicle modification restrictions"sv, "移除洛圣都改车王的载具改装限制"sv}
-		    ,{"Request Personal Vehicle"sv, "请求个人载具"sv}
+		    ,{"Request Personal Vehicle"sv, "呼叫个人载具"sv}
 		    ,{"Save Personal Vehicle"sv, "保存个人载具"sv}
 		    ,{"Silence Phone Calls"sv, "静音来电"sv}
 		    ,{"Teleport to Waypoint"sv, "传送到导航点"sv}
@@ -1353,7 +1353,7 @@ namespace YimMenu::Localization
 		    ,{"DisplayWindowPadding"sv, "显示窗口边距"sv}
 		    ,{"SelectableTextAlign"sv, "可选项文本对齐"sv}
 		    ,{"SeparatorTextAlign"sv, "分隔符文字对齐"sv}
-		    ,{"GrabMinSize"sv, "抓取最小尺寸"sv}
+		    ,{"GrabMinSize"sv, "滑块最小尺寸"sv}
 		    ,{"ScrollbarSize"sv, "滚动条大小"sv}
 		    ,{"WindowMinSize"sv, "窗口最小尺寸"sv}
 		    ,{"WindowBorderSize"sv, "窗口边框大小"sv}
@@ -1499,8 +1499,8 @@ namespace YimMenu::Localization
 		    ,{"Blackjack"sv, "二十一点"sv}
 		    ,{"Blimp"sv, "飞艇"sv}
 		    ,{"Boost behavior"sv, "推进器行为"sv}
-		    ,{"Bring"sv, "拉近"sv}
-		    ,{"Bring All"sv, "拉近全部"sv}
+		    ,{"Bring"sv, "传送到身边"sv}
+		    ,{"Bring All"sv, "全部传送到身边"sv}
 		    ,{"CEO Kick All"sv, "踢出所有首席执行官"sv}
 		    ,{"CEO Kick"sv, "首席执行官踢出"sv}
 		    ,{"Challenges"sv, "挑战"sv}
@@ -1551,14 +1551,14 @@ namespace YimMenu::Localization
 		    ,{"IMPORTANT! PLEASE READ!"sv, "重要！请务必阅读！"sv}
 		    ,{"Play with YimMenu users"sv, "与 YimMenu 用户一起游玩"sv}
 		    ,{"Play with everyone (Broken!)"sv, "与所有人一起游玩（已失效）"sv}
-		    ,{"Open GitHub"sv, "打开 GitHub 页面"sv}
-		    ,{"Open Matrix server"sv, "打开 Matrix 服务器页面"sv}
+		    ,{"Open GitHub"sv, "打开 GitHub 仓库"sv}
+		    ,{"Open Matrix server"sv, "打开 Matrix 社区"sv}
 		    ,{"Skipped phone call from character {}"sv, "已跳过角色来电：{}"sv}
 		    ,{"You are solely responsible for what you do with this tool. If you don't know what you're doing, you'll likely get banned"sv, "你需自行承担使用此工具的后果。如果不了解自己在做什么，很可能会被封禁"sv}
 		    ,{"Allow Hats In Vehicles"sv, "允许在载具内佩戴帽子"sv}
 		    ,{"Allows altering your melee damage output"sv, "允许调整你的近战伤害输出"sv}
 		    ,{"Allows you to access gun locker remotely."sv, "允许你远程访问武器柜。"sv}
-		    ,{"Allows you to access the selected Street Dealer remotely."sv, "允许你远程访问所选街头贩子。"sv}
+		    ,{"Allows you to access the selected Street Dealer remotely."sv, "远程打开所选街头贩子的交易界面。"sv}
 		    ,{"Allows you to access your wardrobe remotely."sv, "允许你远程访问衣柜。"sv}
 		    ,{"Allows you to join players with rpf mods (or a half installed game)."sv, "允许你加入安装了资源模组（或游戏安装不完整）的玩家。"sv}
 		    ,{"Allows you to listen to any radio station on foot with Hotkey Q"sv, "允许你在步行时通过 Q 键收听任意电台"sv}
@@ -1580,7 +1580,7 @@ namespace YimMenu::Localization
 		    ,{"Collects the selected Treasure Chest."sv, "收集所选宝箱。"sv}
 		    ,{"Collects the selected product."sv, "收集所选货物。"sv}
 		    ,{"Completed all activities, switch session to apply the changes."sv, "已完成所有活动，请切换战局以应用更改。"sv}
-		    ,{"Completes all the Daily Objectives and the Weekly Challenge."sv, "完成所有每日目标和每周挑战。"sv}
+		    ,{"Completes all the Daily Objectives and the Weekly Challenge."sv, "完成全部每日目标和当前每周挑战。"sv}
 		    ,{"Completes the selected Skydive."sv, "完成所选高空跳伞。"sv}
 		    ,{"Completes the selected Time Trial."sv, "完成所选时间挑战赛。"sv}
 		    ,{"Desired rocket boost behavior"sv, "期望的火箭推进器行为"sv}
@@ -1619,7 +1619,7 @@ namespace YimMenu::Localization
 		    ,{"Kicks the player from their organization or motorcycle club"sv, "将玩家踢出其组织或摩托帮"sv}
 		    ,{"Kills the player"sv, "击杀该玩家"sv}
 		    ,{"Lets you win the Rig Slot Machines every time"sv, "让你每次都能稳赢老虎机"sv}
-		    ,{"Manipulate Rig Slot Machines"sv, "操控老虎机结果"sv}
+		    ,{"Manipulate Rig Slot Machines"sv, "老虎机必胜"sv}
 		    ,{"Modify boost behavior"sv, "修改推进器行为"sv}
 		    ,{"Modify rocket boost behavior for vehicles that support it"sv, "修改支持该功能的载具的火箭推进器行为"sv}
 		    ,{"Multiplies RP by the given value"sv, "按给定数值倍增声望"sv}
@@ -1982,9 +1982,9 @@ namespace YimMenu::Localization
 		    ,{"Ped Hashes"sv, "行人哈希值"sv}
 		    ,{"Ped Net Info"sv, "行人网络信息"sv}
 		    ,{"Ped Script Info"sv, "行人脚本信息"sv}
-		    ,{"Peds Ignore"sv, "行人无视"sv}
+		    ,{"Peds Ignore"sv, "行人无视玩家"sv}
 		    ,{"Player List"sv, "玩家列表"sv}
-		    ,{"Populate Name"sv, "填充名称"sv}
+		    ,{"Populate Name"sv, "自动填入名称"sv}
 		    ,{"Service"sv, "服务"sv}
 		    ,{"Spoof Region"sv, "伪装地区"sv}
 		    ,{"Secondary Item"sv, "次要物品"sv}
@@ -2047,9 +2047,9 @@ namespace YimMenu::Localization
 		    ,{"Product 9"sv, "货物 9"sv}
 		    ,{"Product 10"sv, "货物 10"sv}
 		    ,{"RC Bandito Time Trial"sv, "遥控匪徒时间挑战赛"sv}
-		    ,{"Release Dead Target"sv, "释放死亡目标"sv}
+		    ,{"Release Dead Target"sv, "目标死亡后解除锁定"sv}
 		    ,{"Releases the lock-on to the target after they are dead"sv, "目标死亡后解除锁定"sv}
-		    ,{"Secondary Take Value"sv, "次要收入价值"sv}
+		    ,{"Secondary Take Value"sv, "次要目标收益"sv}
 		    ,{"Selected Animal"sv, "已选动物"sv}
 		    ,{"Selected Buried Stash"sv, "已选埋藏战利品"sv}
 		    ,{"Selected Hidden Cache"sv, "已选隐藏补给箱"sv}
@@ -2084,14 +2084,14 @@ namespace YimMenu::Localization
 		    ,{"Treasure Chest 2"sv, "宝箱 2"sv}
 		    ,{"Infinite Boundary"sv, "无限边界"sv}
 		    ,{"Infinite Clip"sv, "无限弹匣"sv}
-		    ,{"Override RP Multiplier"sv, "覆盖声望倍率"sv}
+		    ,{"Override RP Multiplier"sv, "自定义 RP 倍率"sv}
 		    ,{"Deadeye"sv, "死亡之眼"sv}
 		    ,{"Snapshot (Aim at head)"sv, "快照（瞄准头部）"sv}
 		    ,{"Insult"sv, "辱骂"sv}
 		    ,{"Updates actual take"sv, "更新实际收入"sv}
 		    ,{"Updates potential take"sv, "更新预计收入"sv}
 		    ,{"Updates primary target value"sv, "更新主要目标价值"sv}
-		    ,{"Updates secondary take value"sv, "更新次要收入价值"sv}
+		    ,{"Updates secondary take value"sv, "更新次要目标收益"sv}
 		    ,{"Vehicle Bullet"sv, "载具子弹"sv}
 		    ,{"Vehicle Mine"sv, "载具地雷"sv}
 		    ,{"Vehicle Mine (EMP)"sv, "载具地雷（电磁脉冲）"sv}
@@ -2279,14 +2279,14 @@ namespace YimMenu::Localization
 		    ,{"Sets the bounty as anonymous"sv, "将悬赏设置为匿名"sv}
 		    ,{"Matchmaking Region"sv, "匹配地区"sv}
 		    ,{"Matchmaking region to spoof to"sv, "要伪装的匹配地区"sv}
-		    ,{"Send to Interior Index"sv, "发送到室内索引"sv}
-		    ,{"The interior index to send the player(s) to"sv, "要将玩家发送到的室内索引"sv}
+		    ,{"Send to Interior Index"sv, "室内地点"sv}
+		    ,{"The interior index to send the player(s) to"sv, "要将玩家送往的室内地点"sv}
 		    ,{"Boost behavior"sv, "推进器行为"sv}
 		    ,{"Desired rocket boost behavior"sv, "期望的火箭推进器行为"sv}
-		    ,{"Send to Property Index"sv, "发送到房产索引"sv}
-		    ,{"The property index to send the player(s) to"sv, "要将玩家发送到的房产索引"sv}
-		    ,{"RP Multiplier Input"sv, "声望倍率输入"sv}
-		    ,{"RP Mulitplier (< 0 = 0 -> No RP)"sv, "声望倍率（< 0 时为 0，即无声望）"sv}
+		    ,{"Send to Property Index"sv, "资产"sv}
+		    ,{"The property index to send the player(s) to"sv, "要将玩家送往的资产"sv}
+		    ,{"RP Multiplier Input"sv, "RP 倍率"sv}
+		    ,{"RP Mulitplier (< 0 = 0 -> No RP)"sv, "RP 倍率（小于 0 时按 0 计算，不获得 RP）"sv}
 		    ,{"Junk Energy Bike Time Trial"sv, "拉机能量自行车时间挑战赛"sv}
 		    ,{"Wanted Slider"sv, "通缉等级滑块"sv}
 		    ,{"Wanted level to set/freeze"sv, "要设置或冻结的通缉等级"sv}

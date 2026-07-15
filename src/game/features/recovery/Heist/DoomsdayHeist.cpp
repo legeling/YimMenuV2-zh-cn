@@ -52,7 +52,7 @@ namespace YimMenu::Features
 			{1, "波格丹危机"},
 			{2, "末日将至"}
 		};
-		static ListCommand _DoomsdayHeistCategory{"doomsdayheistcategory", "选择抢劫任务", "抢劫任务章节", doomsdayHeistCategory, 0};
+		static ListCommand _DoomsdayHeistCategory{"doomsdayheistcategory", "抢劫章节", "要配置的末日豪劫章节", doomsdayHeistCategory, 0};
 
 		class Setup : public Command
 		{
@@ -142,11 +142,11 @@ namespace YimMenu::Features
 			}
 		};
 
-		static SetCuts _DoomsdayHeistSetCuts{"doomsdayheistsetcuts", "设置分红", "设置抢劫分红"};
-		static ForceReady _DoomsdayHeistForceReady{"doomsdayheistforceready", "强制准备", "强制所有玩家准备完成"};
-		static Setup _DoomsdayHeistSetup{"doomsdayheistsetup", "设置任务", "设置末日豪劫任务"};
-		static SkipHacking _DoomsdayHeistSkipHacking{"doomsdayheistskiphacking", "跳过黑客破解", "跳过黑客破解流程"};
-		static InstantFinish _DoomsdayHeistInstantFinish{"doomsdayheistinstantfinish", "瞬间完成", "立即完成抢劫任务"};
-		static InstantFinishAct3 _DoomsdayHeistInstantFinishAct3{"doomsdayheistinstantfinishact3", "瞬间完成（第三章）", "立即完成末日将至第三章"};
+		static SetCuts _DoomsdayHeistSetCuts{"doomsdayheistsetcuts", "应用分红", "应用上方设置的抢劫分红比例。"};
+		static ForceReady _DoomsdayHeistForceReady{"doomsdayheistforceready", "强制全员准备", "将所有玩家设为已准备。"};
+		static Setup _DoomsdayHeistSetup{"doomsdayheistsetup", "配置任务", "配置所选末日豪劫章节。"};
+		static SkipHacking _DoomsdayHeistSkipHacking{"doomsdayheistskiphacking", "跳过破解", "跳过黑客破解流程。"};
+		static InstantFinish _DoomsdayHeistInstantFinish{"doomsdayheistinstantfinish", "立即完成", "立即完成当前抢劫。"};
+		static InstantFinishAct3 _DoomsdayHeistInstantFinishAct3{"doomsdayheistinstantfinishact3", "立即完成（第三章）", "立即完成末日将至第三章。"};
 	}
 }

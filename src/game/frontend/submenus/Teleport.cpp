@@ -184,7 +184,7 @@ namespace YimMenu::Submenus
 		#define ICON_FA_TELEPORT "\xef\x8f\x85"
 	    Submenu::Submenu("传送", ICON_FA_TELEPORT)
 	{
-		auto main = std::make_shared<Category>("主要");
+		auto main = std::make_shared<Category>("基础");
 		auto miscGroup = std::make_shared<Group>("杂项");
 
 		miscGroup->AddItem(std::make_shared<ConditionalItem>("autotptowaypoint"_J, std::make_shared<CommandItem>("tptowaypoint"_J), true));

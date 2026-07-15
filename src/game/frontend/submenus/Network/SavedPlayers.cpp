@@ -141,8 +141,8 @@ namespace YimMenu::Submenus
 				ImGui::Text("战局类型：%s", gameState.c_str());
 				ImGui::Text("战局主持人：%s", data.m_HostOfSession ? yes : no);
 				ImGui::Text("是否在观战：%s", data.m_Spectating ? yes : no);
-				ImGui::Text("是否在任务大厅：%s", data.m_InTransition ? yes : no);
-				ImGui::Text("任务大厅主持人：%s", data.m_HostOfTransition ? yes : no);
+				ImGui::Text("是否在差事大厅：%s", data.m_InTransition ? yes : no);
+				ImGui::Text("差事大厅主持人：%s", data.m_HostOfTransition ? yes : no);
 				if (data.m_MissionType != FetchedPlayerData::MissionType::NONE)
 				{
 					const auto missionType = Localization::Translate(FetchedPlayerData::MissionTypeToString(data.m_MissionType));
@@ -213,7 +213,7 @@ namespace YimMenu::Submenus
 
 	std::shared_ptr<Category> BuildSavedPlayersMenu()
 	{
-		auto menu = std::make_shared<Category>("保存玩家");
+		auto menu = std::make_shared<Category>("已保存玩家");
 		auto players = std::make_shared<Group>("玩家");
 		auto new_player = std::make_shared<Group>("新增");
 		auto tracking = std::make_shared<Group>("追踪");

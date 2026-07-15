@@ -48,5 +48,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static CallMechanic _CallMechanic{"callmechanic", "呼叫技工", "允许你请求个人载具。"};
+	static CallMechanic _CallMechanic{"callmechanic", "呼叫技工", "打开技工的个人载具选择界面。"};
 }

@@ -9,9 +9,9 @@ namespace YimMenu::Submenus
 {
 	Self::Self() :
 		#define ICON_FA_USER "\xef\x80\x87"
-	    Submenu::Submenu("自身", ICON_FA_USER)
+	    Submenu::Submenu("个人", ICON_FA_USER)
 	{
-		auto main = std::make_shared<Category>("主要");
+		auto main = std::make_shared<Category>("基础");
 		auto globalsGroup = std::make_shared<Group>("全局");
 		auto movementGroup = std::make_shared<Group>("移动");
 		auto toolsGroup = std::make_shared<Group>("工具", 2);

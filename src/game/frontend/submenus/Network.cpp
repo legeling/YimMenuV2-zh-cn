@@ -14,7 +14,7 @@ namespace YimMenu::Submenus
 	    Submenu::Submenu("联机", ICON_FA_ROUTE)
 	{
 		// TODO: this needs a rework
-		auto session = std::make_shared<Category>("会话");
+		auto session = std::make_shared<Category>("战局");
 		auto joinGroup = std::make_shared<Group>("加入");
 		auto bountyGroup = std::make_shared<Group>("悬赏", 1);
 		auto toxicGroup = std::make_shared<Group>("恶意");

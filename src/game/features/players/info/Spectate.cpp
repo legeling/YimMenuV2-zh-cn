@@ -35,5 +35,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static Spectate _Spectate{"spectate", "旁观", "旁观所选玩家"};
+	static Spectate _Spectate{"spectate", "观战", "观看所选玩家的视角。"};
 }

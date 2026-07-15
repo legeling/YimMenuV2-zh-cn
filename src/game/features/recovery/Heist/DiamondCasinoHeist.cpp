@@ -366,14 +366,14 @@ namespace YimMenu::Features
 			}
 		};
 
-		static SetCuts _DiamondCasinoHeistSetCuts{"diamondcasinoheistsetcuts", "设置分红", "设置抢劫分红"};
-		static ForceReady _DiamondCasinoHeistForceReady{"diamondcasinoheistforceready", "强制准备", "强制所有玩家准备完成"};
-		static Setup _DiamondCasinoHeistSetup{"diamondcasinoheistsetup", "设置任务", "设置名钻赌场豪劫任务"};
+		static SetCuts _DiamondCasinoHeistSetCuts{"diamondcasinoheistsetcuts", "应用分红", "应用上方设置的抢劫分红比例。"};
+		static ForceReady _DiamondCasinoHeistForceReady{"diamondcasinoheistforceready", "强制全员准备", "将所有玩家设为已准备。"};
+		static Setup _DiamondCasinoHeistSetup{"diamondcasinoheistsetup", "配置任务", "配置名钻赌场豪劫。"};
 		static SetPotentialTake _DiamondCasinoHeistSetPotentialTake{"diamondcasinoheistsetpotentialtake", "设置预计收益", "更新预计收益"};
 		static SetActualTake _DiamondCasinoHeistSetActualTake{"diamondcasinoheistsetactualtake", "设置实际收益", "更新实际收益"};
-		static SkipHacking _DiamondCasinoHeistSkipHacking{"diamondcasinoheistskiphacking", "跳过黑客破解", "跳过黑客破解流程"};
+		static SkipHacking _DiamondCasinoHeistSkipHacking{"diamondcasinoheistskiphacking", "跳过破解", "跳过黑客破解流程。"};
 		static SkipDrilling _DiamondCasinoHeistSkipDrilling{"diamondcasinoheistskipdrilling", "跳过钻孔", "跳过钻孔流程"};
-		static SoloMantrap _DiamondCasinoHeistSoloMantrap{"diamondcasinoheistsolomantrap", "单人安检门", "跳过刷卡流程"};
-		static InstantFinish _DiamondCasinoHeistInstantFinish{"diamondcasinoheistinstantfinish", "瞬间完成", "立即完成抢劫任务"};
+		static SoloMantrap _DiamondCasinoHeistSoloMantrap{"diamondcasinoheistsolomantrap", "单人通过安检门", "允许单人通过原本需要双人刷卡的安检门。"};
+		static InstantFinish _DiamondCasinoHeistInstantFinish{"diamondcasinoheistinstantfinish", "立即完成", "立即完成当前抢劫。"};
 	}
 }

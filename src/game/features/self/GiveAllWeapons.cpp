@@ -15,5 +15,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static GiveAllWeapons _GiveAllWeapons{"giveallweapons", "给予全部武器", "给予你全部武器"};
+	static GiveAllWeapons _GiveAllWeapons{"giveallweapons", "获得全部武器", "将全部武器添加到角色物品栏。"};
 }

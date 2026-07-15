@@ -10,7 +10,7 @@ namespace YimMenu::Submenus
 		#define ICON_FA_CAR "\xef\x86\xb9"
 	    Submenu::Submenu("载具", ICON_FA_CAR)
 	{
-		auto main = std::make_shared<Category>("主要");
+		auto main = std::make_shared<Category>("基础");
 
 		auto globals = std::make_shared<Group>("全局");
 		auto tools = std::make_shared<Group>("工具", 2);

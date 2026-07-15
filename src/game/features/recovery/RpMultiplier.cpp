@@ -4,7 +4,7 @@
 
 namespace YimMenu::Features
 {
-	static FloatCommand _RpMultiplierInput{"rpmultiplierinput", "RP 倍率输入", "RP 倍率（< 0 = 0，即无 RP）", std::nullopt, std::nullopt, 1};
+	static FloatCommand _RpMultiplierInput{"rpmultiplierinput", "RP 倍率", "设置获得 RP 时使用的倍率；负数按 0 处理。", std::nullopt, std::nullopt, 1};
 
 	class OverrideRPMultiplier : public LoopedCommand
 	{
@@ -31,5 +31,5 @@ namespace YimMenu::Features
 		}
 	};
 
-	static OverrideRPMultiplier _OverrideRPMultiplier{"overriderpmultiplier", "覆盖 RP 倍率", "按给定数值倍率修改 RP"};
+	static OverrideRPMultiplier _OverrideRPMultiplier{"overriderpmultiplier", "自定义 RP 倍率", "按设定倍率修改获得的 RP。"};
 }

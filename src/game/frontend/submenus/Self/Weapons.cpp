@@ -323,7 +323,7 @@ namespace YimMenu::Submenus
 			ImGui::EndPopup();
 		}
 
-		if (ImGui::Button("给予武器"))
+		if (ImGui::Button("获得武器"))
 		{
 			FiberPool::Push([] {
 				Self::GetPed().GiveWeapon(selectedWeaponHash, true);
