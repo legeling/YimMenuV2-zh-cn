@@ -18,7 +18,7 @@
 | `upstream/enhanced` | 官方 YimMenuV2 的同步来源 |
 | `feature/*`、`fix/*` | 短期功能或修复分支，完成后合入 `main` |
 
-本地 Git 约定为 `origin` 指向中文仓库、`upstream` 指向官方仓库。具体同步步骤与冲突处理原则见 [上游同步指南](docs/upstream-sync.md)。
+本地 Git 约定为 `origin` 指向中文仓库、`upstream` 指向官方仓库。具体同步步骤与冲突处理原则见 [上游同步指南](docs/upstream-sync.md)，当前已吸收的官方提交和未合并 PR 见 [下游合入记录](docs/downstream-integrations.md)。
 
 ## 使用方法
 
