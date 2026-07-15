@@ -4,6 +4,8 @@
 
 维护者在向 `main` 合入新的上游提交或提前吸收官方 PR 时，必须同步更新本文档。
 
+游戏版本兼容性结论见 [`../compatibility/`](../compatibility/)，用户功能的实际支持范围见 [`../features/`](../features/)。PR 已合入不等于受影响功能已经通过实机验证。
+
 ## 当前官方基线
 
 - 官方仓库：[YimMenu/YimMenuV2](https://github.com/YimMenu/YimMenuV2)

@@ -57,11 +57,13 @@ git merge --no-ff upstream/enhanced
 - 中文菜单文本、本地化资源和中文发行配置。
 - `README.md` 中的中文仓库身份与下载入口。
 - `.github/workflows/nightly.yml` 中的中文版本发布规则。
-- `docs/downstream-integrations.md` 中的下游合入来源和状态记录。
+- `docs/maintenance/downstream-integrations.md` 中的下游合入来源和状态记录。
+- `docs/compatibility/` 中的游戏版本兼容性结论。
+- `docs/features/` 中受本次更新影响的功能支持状态。
 
 不要直接用 `--ours` 或 `--theirs` 覆盖整个冲突文件。生成文件与其生成脚本应保持一致。
 
-5. 更新合入记录。官方基线变化和提前吸收的官方 PR 都必须写入 `docs/downstream-integrations.md`，至少记录来源链接、锁定 SHA、中文提交、验证边界和当前状态。
+5. 更新合入记录。官方基线变化和提前吸收的官方 PR 都必须写入 `docs/maintenance/downstream-integrations.md`，至少记录来源链接、锁定 SHA、中文提交、验证边界和当前状态。若改动影响游戏版本兼容性或具体功能，还要同步更新 `docs/compatibility/` 或 `docs/features/` 中的对应文档。
 
 6. 将同步分支推送到中文仓库，完成代码审查和可用的本地验证后合入 `main`。普通分支推送不会触发 CI；完整 CI/CD 只在正式中文版本标签上运行。
 
