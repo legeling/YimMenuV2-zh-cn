@@ -26,6 +26,7 @@
 #include "game/features/vehicle/SavePersonalVehicle.hpp"
 #include "game/features/self/OpenGunLocker.hpp"
 #include "game/features/recovery/DailyActivities.hpp"
+#include "Version.hpp"
 
 namespace YimMenu
 {
@@ -45,7 +46,7 @@ namespace YimMenu
 
 		LogHelper::Init("YimMenuV2", FileMgr::GetProjectFile("./cout.log"));
 
-		LOGF(INFO, "Welcome to YimMenuV2! Build date: {} at {}", __DATE__, __TIME__);
+		LOGF(INFO, "Welcome to YimMenuV2 {}! Version: {}. Build date: {} at {}", Build::Tag, Build::Version, __DATE__, __TIME__);
 
 		g_HotkeySystem.RegisterCommands();
 		SavedLocations::FetchSavedLocations();

@@ -2,7 +2,28 @@ cmake_minimum_required(VERSION 3.20.x)
 
 include(cmake/cross-compile.cmake)
 
-project(YimMenuV2 VERSION 0.0.1 DESCRIPTION "A new base using new C++ features optimised for speed and ease of use")
+file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" YIMMENU_VERSION LIMIT_COUNT 1)
+string(STRIP "${YIMMENU_VERSION}" YIMMENU_VERSION)
+if(NOT YIMMENU_VERSION MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+$")
+    message(FATAL_ERROR "VERSION must contain a semantic version such as 1.1.0")
+endif()
+
+project(YimMenuV2 VERSION "${YIMMENU_VERSION}" DESCRIPTION "A new base using new C++ features optimised for speed and ease of use")
+
+set(YIMMENU_BUILD_TAG "v${PROJECT_VERSION}-zh-cn.dev" CACHE STRING "Full Chinese release tag embedded in the build")
+set(YIMMENU_BUILD_TAG_PREFIX "v${PROJECT_VERSION}-zh-cn.")
+string(FIND "${YIMMENU_BUILD_TAG}" "${YIMMENU_BUILD_TAG_PREFIX}" YIMMENU_BUILD_TAG_PREFIX_POSITION)
+if(NOT YIMMENU_BUILD_TAG_PREFIX_POSITION EQUAL 0)
+    message(FATAL_ERROR "YIMMENU_BUILD_TAG must match VERSION, for example v${PROJECT_VERSION}-zh-cn.1")
+endif()
+
+string(LENGTH "${YIMMENU_BUILD_TAG_PREFIX}" YIMMENU_BUILD_TAG_PREFIX_LENGTH)
+string(SUBSTRING "${YIMMENU_BUILD_TAG}" ${YIMMENU_BUILD_TAG_PREFIX_LENGTH} -1 YIMMENU_BUILD_REVISION)
+if(NOT YIMMENU_BUILD_REVISION MATCHES "^(dev|[1-9][0-9]*)$")
+    message(FATAL_ERROR "YIMMENU_BUILD_TAG revision must be a positive integer or the local .dev suffix")
+endif()
+
+configure_file(cmake/Version.hpp.in generated/Version.hpp @ONLY)
 
 # libs
 include(cmake/async-logger.cmake)
@@ -33,6 +54,7 @@ add_compile_definitions(
 message(STATUS "Setting up include directories.")
 target_include_directories(${PROJECT_NAME} PRIVATE
     "${SRC_DIR}"
+    "${CMAKE_CURRENT_BINARY_DIR}/generated"
     "${imgui_SOURCE_DIR}"
     "${minhook_SOURCE_DIR}/include"
     "${minhook_SOURCE_DIR}/src/hde"

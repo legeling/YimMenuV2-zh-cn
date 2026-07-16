@@ -3,7 +3,7 @@ name: Chinese Release
 on:
   push:
     tags:
-      - "v*-zh-cn.*"
+      - "v*.*.*-zh-cn.*"
 
 permissions:
   contents: write
@@ -27,13 +27,25 @@ jobs:
       - name: Check CMake version
         run: cmake --version
 
+      - name: Match tag to VERSION
+        shell: bash
+        run: |
+          version="$(tr -d '[:space:]' < VERSION)"
+          prefix="v${version}-zh-cn."
+          tag="${GITHUB_REF_NAME}"
+          revision="${tag#${prefix}}"
+          if [[ "${tag}" != "${prefix}${revision}" || ! "${revision}" =~ ^[1-9][0-9]*$ ]]; then
+            echo "Tag ${tag} does not match VERSION ${version}; expected ${prefix}<positive integer>" >&2
+            exit 1
+          fi
+
       - name: Setup MSVC environment
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: amd64
 
       - name: Generate CMake project
-        run: cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
+        run: cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYIMMENU_BUILD_TAG=${{ github.ref_name }} -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
 
       - name: Build 64bit RelWithDebInfo DLL
         run: cmake --build ./build --config RelWithDebInfo --target YimMenuV2 --

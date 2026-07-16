@@ -3,10 +3,29 @@ name: CI
 on:
   push:
     tags:
-      - "v*-zh-cn.*"
+      - "v*.*.*-zh-cn.*"
 
 jobs:
+  validate-version:
+    runs-on: ubuntu-latest
+    name: Validate Release Version
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Match tag to VERSION
+        shell: bash
+        run: |
+          version="$(tr -d '[:space:]' < VERSION)"
+          prefix="v${version}-zh-cn."
+          tag="${GITHUB_REF_NAME}"
+          revision="${tag#${prefix}}"
+          if [[ "${tag}" != "${prefix}${revision}" || ! "${revision}" =~ ^[1-9][0-9]*$ ]]; then
+            echo "Tag ${tag} does not match VERSION ${version}; expected ${prefix}<positive integer>" >&2
+            exit 1
+          fi
+
   native-compilation:
+    needs: validate-version
     runs-on: windows-latest
     name: Native Compilation
     steps:
@@ -21,7 +40,7 @@ jobs:
           arch: amd64
 
       - name: Generate CMake project
-        run: cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
+        run: cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DYIMMENU_BUILD_TAG=${{ github.ref_name }} -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
 
       - name: Build 64bit RelWithDebInfo DLL
         run: cmake --build ./build --config RelWithDebInfo --target YimMenuV2 --
@@ -46,6 +65,7 @@ jobs:
             build/YimMenuV2-dev-*.pdb
 
   cross-compilation:
+    needs: validate-version
     runs-on: ubuntu-latest
     name: Cross-compilation
     steps:
@@ -60,7 +80,7 @@ jobs:
         uses: mlugg/setup-zig@v2
 
       - name: Generate CMake project
-        run: cmake -DUSE_CROSSCOMPILER=Zig -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
+        run: cmake -DUSE_CROSSCOMPILER=Zig -DYIMMENU_BUILD_TAG=${{ github.ref_name }} -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
 
       - name: Build 64bit RelWithDebInfo DLL
         run: cmake --build ./build --config RelWithDebInfo --target YimMenuV2 --

@@ -3,6 +3,7 @@
 #include "core/frontend/manager/UIManager.hpp"
 #include "core/localization/Localization.hpp"
 #include "game/frontend/submenus/Settings/GUISettings.hpp"
+#include "Version.hpp"
 
 namespace YimMenu
 {
@@ -38,7 +39,7 @@ namespace YimMenu
 			}
 			ImGui::EndChild();
 
-			ImGui::Text("YimMenuV2");
+			ImGui::Text("YimMenuV2 %s", Build::Tag.data());
 
 			pos.y -= 28;
 			ImGui::SetCursorPos(ImVec2(pos.x + 130, pos.y));

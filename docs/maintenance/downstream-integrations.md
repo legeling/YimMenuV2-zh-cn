@@ -53,7 +53,7 @@
 - PR #988 与 issue #990 的两份独立日志均为 `EXCEPTION_ILLEGAL_INSTRUCTION`、`GTA5_Enhanced.exe + 0x1487620`，且调用栈返回旧版 `GameSkeletonUpdate.cpp:22`。下游据此扩展完整性检查节点名单，并记录每次 `Run()` 的节点哈希和虚函数地址。
 - PR #988 及下游崩溃防护使用 Zig 0.16 完成 443 个 Windows 目标编译步骤；本次涉及的全部 C/C++ 编译单元均成功。
 - 全仓库通过 `git diff --check`，不存在冲突标记。
-- 普通 `main` 推送未触发 CI/CD；只有 `v*-zh-cn.*` 标签会触发构建和发布。
+- 普通 `main` 推送未触发 CI/CD；只有与 `VERSION` 一致的 `vMAJOR.MINOR.PATCH-zh-cn.REVISION` 标签会触发并通过构建发布。
 
 本机没有完成有效 Windows DLL 构建，也没有完成 GTA 1.73 / 1158.13 实机验证。PR #988 已更新抢劫分红及任务功能中单独硬编码的 `ScriptGlobal(...)` / `ScriptLocal(...)` 地址，但静态更新不能替代游戏回归，因此仍不能确认这些功能已经适配。
 
