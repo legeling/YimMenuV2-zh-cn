@@ -73,7 +73,7 @@ git push -u origin sync/upstream-YYYYMMDD
 
 ## 标签与发布
 
-官方上游和中文仓库都可能使用 `nightly` 等同名标签。刷新分支时使用 `--no-tags`，避免远端标签覆盖本地同名标签。中文正式版本使用 `vMAJOR.MINOR.PATCH-zh-cn.REVISION` 格式，产品版本必须与根目录 `VERSION` 一致。只有推送这种格式的标签时才会执行 CI 构建和中文 Release 发布；普通分支推送不会触发 CI/CD。完整规则和递增命令见[版本与发布规则](versioning.md)。
+官方上游和中文仓库都可能使用 `nightly` 等同名标签。刷新分支时使用 `--no-tags`，避免远端标签覆盖本地同名标签。中文正式版本使用 `vMAJOR.MINOR.PATCH-zh-cn` 格式，产品版本必须与根目录 `VERSION` 一致。只有推送这种格式的标签时才会执行 CI 构建和中文 Release 发布；普通分支推送不会触发 CI/CD。完整规则和递增命令见[版本与发布规则](versioning.md)。
 
 同步完成后，应确认 `main` 同时包含 `upstream/enhanced` 的最新提交和中文维护提交：
 

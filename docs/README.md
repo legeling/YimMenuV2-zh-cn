@@ -7,7 +7,7 @@
 ### 维护与上游
 
 - [上游同步指南](maintenance/upstream-sync.md)：远端、分支、同步、冲突处理和标签规则。
-- [版本与发布规则](maintenance/versioning.md)：SemVer、中文发行修订号、版本递增和 CI/CD 校验规则。
+- [版本与发布规则](maintenance/versioning.md)：SemVer、中文标签、版本递增和 CI/CD 校验规则。
 - [下游合入记录](maintenance/downstream-integrations.md)：已经吸收的官方提交和提前合入的 PR，以及对应验证边界。
 
 ### 兼容性
@@ -40,14 +40,14 @@
 2. 游戏更新引起地址、特征码、全局变量或脚本局部变量变化时，同时更新对应兼容性文档。
 3. 新增、删除或确认失效的用户功能，应同步更新功能支持矩阵。
 4. 未完成 Windows 构建或 GTA 实机验证的内容必须明确标记，不能把“代码已合入”写成“功能已可用”。
-5. 只有与 `VERSION` 一致的 `vMAJOR.MINOR.PATCH-zh-cn.REVISION` 标签可以触发并通过构建发布；文档提交与普通分支推送不得触发 CI/CD。
+5. 只有与 `VERSION` 一致的 `vMAJOR.MINOR.PATCH-zh-cn` 标签可以触发并通过构建发布；文档提交与普通分支推送不得触发 CI/CD。
 
 ## 当前快照
 
 - 文档更新日期：2026-07-16
 - 官方同步分支：`upstream/enhanced`
 - 中文稳定主线：`main`
-- 中文产品版本：`1.1.0`
+- 中文产品版本：`1.0.1`
 - 当前官方基线：`ef1a4df`
 - GTA 目标版本：Enhanced `1.73 / 1158.13`
 - 当前重点缺口：豪宅抢劫尚未进入上游 PR，也未在中文维护版中实现。

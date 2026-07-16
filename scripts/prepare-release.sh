@@ -49,7 +49,7 @@ case "$1" in
 esac
 
 next="${major}.${minor}.${patch}"
-tag="v${next}-zh-cn.1"
+tag="v${next}-zh-cn"
 
 if git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
 	echo "Tag already exists: $tag" >&2
