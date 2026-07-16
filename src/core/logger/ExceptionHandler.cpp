@@ -1,5 +1,6 @@
 #include "ExceptionHandler.hpp"
 
+#include "ExceptionContext.hpp"
 #include "StackTrace.hpp"
 
 #include <hde64.h>
@@ -42,6 +43,17 @@ namespace YimMenu
 		const auto trace_hash = HashStackTrace(trace.GetFramePointers());
 		if (const auto it = logged_exceptions.find(trace_hash); it == logged_exceptions.end())
 		{
+			if (!g_ExceptionContext.m_Name.empty())
+			{
+				LOGF(FATAL,
+				    "Active exception context [{}]: 0x{:X}, 0x{:X}, 0x{:X}, 0x{:X}, 0x{:X}",
+				    g_ExceptionContext.m_Name,
+				    g_ExceptionContext.m_Values[0],
+				    g_ExceptionContext.m_Values[1],
+				    g_ExceptionContext.m_Values[2],
+				    g_ExceptionContext.m_Values[3],
+				    g_ExceptionContext.m_Values[4]);
+			}
 			LOG(FATAL) << trace;
 			Logger::FlushQueue();
 
