@@ -49,13 +49,19 @@ jobs:
       - name: Build 64bit RelWithDebInfo DLL
         run: cmake --build ./build --config RelWithDebInfo --target YimMenuV2 --
 
+      - name: Add version to release filenames
+        run: |
+          ren YimMenuV2.dll YimMenuV2-${{ github.ref_name }}.dll
+          ren YimMenuV2.pdb YimMenuV2-${{ github.ref_name }}.pdb
+        working-directory: build/
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: binary
+          name: binary-${{ github.ref_name }}
           path: |
-            build/YimMenuV2.dll
-            build/YimMenuV2.pdb
+            build/YimMenuV2-${{ github.ref_name }}.dll
+            build/YimMenuV2-${{ github.ref_name }}.pdb
 
       - name: Generate Build Info
         id: var
@@ -73,12 +79,12 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: binary
+          name: binary-${{ github.ref_name }}
 
       - name: Echo build sha256
         id: build_sha
         run: |
-          sha256sum YimMenuV2.dll > sha256.checksum
+          sha256sum YimMenuV2-${{ github.ref_name }}.dll > sha256.checksum
           echo "build_sha=$(cat sha256.checksum)" >> $GITHUB_OUTPUT
           cat sha256.checksum
 
@@ -111,4 +117,4 @@ jobs:
             ${{ needs.build_nightly.outputs.full_sha }}
             ```
           files: |
-            YimMenuV2.dll
+            YimMenuV2-${{ github.ref_name }}.dll

@@ -47,21 +47,19 @@ jobs:
       - name: Check if DLL got built
         run: if (-Not (Test-Path -path "build/YimMenuV2.dll")) {throw 1}
 
-      - name: Rename DLL to YimMenuV2-dev-{GITHUB_SHA}.dll
+      - name: Add version and commit to filenames
         run: |
-          del YimMenuV2-dev-*.dll
-          del YimMenuV2-dev-*.pdb
-          ren YimMenuV2.dll YimMenuV2-dev-${{github.sha}}.dll
-          ren YimMenuV2.pdb YimMenuV2-dev-${{github.sha}}.pdb
+          ren YimMenuV2.dll YimMenuV2-${{ github.ref_name }}-${{ github.sha }}.dll
+          ren YimMenuV2.pdb YimMenuV2-${{ github.ref_name }}-${{ github.sha }}.pdb
         working-directory: build/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: RelWithDebInfo-Native-Clang
+          name: RelWithDebInfo-Native-Clang-${{ github.ref_name }}
           path: |
-            build/YimMenuV2-dev-*.dll
-            build/YimMenuV2-dev-*.pdb
+            build/YimMenuV2-${{ github.ref_name }}-*.dll
+            build/YimMenuV2-${{ github.ref_name }}-*.pdb
 
   cross-compilation:
     needs: validate-version
@@ -87,16 +85,16 @@ jobs:
       - name: Check if DLL got built
         run: if [ ! -f build/libYimMenuV2.dll ]; then exit 1; fi
 
-      - name: Rename DLL to libYimMenuV2-dev-{GITHUB_SHA}.dll
+      - name: Add version and commit to filenames
         run: |
-          mv libYimMenuV2.dll libYimMenuV2-dev-${{github.sha}}.dll
-          mv libYimMenuV2.pdb libYimMenuV2-dev-${{github.sha}}.pdb
+          mv libYimMenuV2.dll libYimMenuV2-${{ github.ref_name }}-${{ github.sha }}.dll
+          mv libYimMenuV2.pdb libYimMenuV2-${{ github.ref_name }}-${{ github.sha }}.pdb
         working-directory: build/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: RelWithDebInfo-Cross
+          name: RelWithDebInfo-Cross-${{ github.ref_name }}
           path: |
-            build/libYimMenuV2-dev-*.dll
-            build/libYimMenuV2-dev-*.pdb
+            build/libYimMenuV2-${{ github.ref_name }}-*.dll
+            build/libYimMenuV2-${{ github.ref_name }}-*.pdb

@@ -19,6 +19,7 @@
 - 构建时通过 `YIMMENU_BUILD_TAG` 嵌入完整标签；本地未指定时使用 `v<version>-zh-cn-dev`。
 - 启动日志和 Classic 界面显示完整构建标签。
 - CI/CD 会校验标签必须与 `VERSION` 生成的 `v<version>-zh-cn` 完全一致。
+- 正式 Release 的 DLL 使用 `YimMenuV2-v<version>-zh-cn.dll`；CI 测试产物在版本标签后继续附加完整 Git SHA，避免不同提交之间重名。
 
 ## 准备发布
 
