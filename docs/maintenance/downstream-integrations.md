@@ -28,15 +28,16 @@
 
 | 官方 PR | 锁定上游提交 | 中文提交 | 内容 | 吸收方式 | 当前状态 |
 | --- | --- | --- | --- | --- | --- |
+| [#988](https://github.com/YimMenu/YimMenuV2/pull/988) | `e65380a3b8cab46a20d18ee6bf89d3e0ca40f9f2` | `213eebd`、`3d30df7` | 全量适配 b1158.13 的网络、脚本、车辆、Globals、Locals、日常活动及四类抢劫硬编码数据；下游追加 `GameSkeletonUpdate` 安全节点拦截和异常上下文，处理公开/好友战局非法指令崩溃 | `cherry-pick -x` 后解决与 #970、#973、#979 及中文翻译的冲突，再追加审查修复 | 已提前吸收，等待实机验证和官方处理 |
 | [#985](https://github.com/YimMenu/YimMenuV2/pull/985) | `3037a5e` | `29bfba5`、`c8124bb`、`13756c0`、`a56e02d` | 修复通知并发、Hook 状态、渲染帧同步、Lua 资源循环、PatternScanner 性能和启动错误处理；下游同时完善近地址跳板分配、完整镜像安全扫描、Call Site/IAT 内存保护、异常上下文、宏安全及 Hook 失败回滚 | `cherry-pick -x` 后追加审查修复 | 已提前吸收，等待官方处理 |
-| [#973](https://github.com/YimMenu/YimMenuV2/pull/973) | `187b910` | `703bc45` | 更新游戏升级后失效的网络伤害、事件确认、遥测、BattlEye 状态、加入战局和战局池相关特征码与偏移 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
-| [#970](https://github.com/YimMenu/YimMenuV2/pull/970) | `24219c5`、`b57c52b`、`5030953` | `a28e89e`、`6ed8d61`、`d297bdc` | 适配 GTA 1.73 / 1158.13：更新车辆列表、Script Global 基址、`GPBD_FM_2` 结构尺寸和衣柜脚本签名 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
-| [#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `e075bd4` | `907dd05` | 更新赌场老虎机结果表和旋转状态的 script local 索引 | `cherry-pick -x` | 已提前吸收，等待官方处理 |
+| [#973](https://github.com/YimMenu/YimMenuV2/pull/973) | `187b910` | `703bc45` | 更新游戏升级后失效的网络伤害、事件确认、遥测、BattlEye 状态、加入战局和战局池相关特征码与偏移 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
+| [#970](https://github.com/YimMenu/YimMenuV2/pull/970) | `24219c5`、`b57c52b`、`5030953` | `a28e89e`、`6ed8d61`、`d297bdc` | 适配 GTA 1.73 / 1158.13：更新车辆列表、Script Global 基址、`GPBD_FM_2` 结构尺寸和衣柜脚本签名 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
+| [#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `e075bd4` | `907dd05` | 更新赌场老虎机结果表和旋转状态的 script local 索引 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
 | [#967](https://github.com/YimMenu/YimMenuV2/pull/967) | `f47abeb` | `8e9491f` | 将 FSL 文件名说明从 `version.dll` 更新为 `WINMM.dll` | 手工适配中文 README | 已提前吸收，等待官方处理 |
 
 ## 验证记录
 
-2026-07-15 对上述提前吸收的 PR 完成了以下检查：
+2026-07-15 至 2026-07-16 对上述提前吸收的 PR 完成了以下检查：
 
 - 核对 PR 基线、头提交和改动文件，确认审查期间提交未漂移。
 - `GPBD_FM`、`GPBD_FM_2`、`GPBD_FM_3` 头文件通过本机 Clang C++23 语法检查和结构尺寸 `static_assert`。
@@ -48,12 +49,15 @@
 - 后续白盒复审修复了 Hook 在 `MH_ApplyQueued` 前提前提交状态、批量应用失败后未回滚、构造失败遗留悬空注册指针和初始化失败仍继续启动的问题。
 - PatternScanner 现在会收集全部异步任务结果，手动映射模式也会扫描全部待查模式；缓存和内存区域边界计算增加了防越界及防整数溢出检查。
 - 异常恢复逻辑改为线程局部去重，并修正 `REX.R` 对 `R8` 至 `R15` 寄存器编号的扩展计算；同时清除了 Windows `ERROR` 宏导致的日志级别编译错误。
+- PR #988 锁定单提交 `e65380a` 合入；33 个变更文件与既有 #970、#973、#979 补丁逐项解决冲突，并保留中文翻译。
+- PR #988 与 issue #990 的两份独立日志均为 `EXCEPTION_ILLEGAL_INSTRUCTION`、`GTA5_Enhanced.exe + 0x1487620`，且调用栈返回旧版 `GameSkeletonUpdate.cpp:22`。下游据此扩展完整性检查节点名单，并记录每次 `Run()` 的节点哈希和虚函数地址。
+- PR #988 及下游崩溃防护使用 Zig 0.16 完成 443 个 Windows 目标编译步骤；本次涉及的全部 C/C++ 编译单元均成功。
 - 全仓库通过 `git diff --check`，不存在冲突标记。
 - 普通 `main` 推送未触发 CI/CD；只有 `v*-zh-cn.*` 标签会触发构建和发布。
 
-本机没有完成 Windows 全量构建，也没有完成 GTA 1.73 / 1158.13 实机验证。PR #970 更新的是 typed global 基址，不包含抢劫分红功能中单独硬编码的 `ScriptGlobal(...)` 地址，因此不能据此确认分红功能已经适配该游戏版本。
+本机没有完成有效 Windows DLL 构建，也没有完成 GTA 1.73 / 1158.13 实机验证。PR #988 已更新抢劫分红及任务功能中单独硬编码的 `ScriptGlobal(...)` / `ScriptLocal(...)` 地址，但静态更新不能替代游戏回归，因此仍不能确认这些功能已经适配。
 
-PR #985 已使用仓库内 Zig 工具链完成全部 C/C++ 编译单元检查，并据此发现和修复日志级别错误；但本机 macOS 的 CMake 4.3 / Zig 0.16 组合把最终 `.dll` 链接成了归档文件，因此该结果不能视为有效 Windows DLL。Hook、Renderer 和异常处理改动仍必须在 Windows 构建及游戏注入环境中继续验证。
+PR #985 与 #988 已使用仓库内 Zig 工具链完成全部 C/C++ 编译单元检查，并据此发现和修复日志级别错误；但本机 macOS 的 CMake 4.3 / Zig 0.16 组合把最终 `.dll` 链接成了归档文件，因此该结果不能视为有效 Windows DLL。Hook、Renderer、异常处理、游戏地址和抢劫数据改动仍必须在 Windows 构建及游戏注入环境中继续验证。
 
 ## 维护规则
 
