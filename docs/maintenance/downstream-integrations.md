@@ -57,7 +57,9 @@
 - 全仓库通过 `git diff --check`，不存在冲突标记。
 - 普通 `main` 推送未触发 CI/CD；只有与 `VERSION` 一致的 `vMAJOR.MINOR.PATCH-zh-cn` 标签会触发并通过构建发布。
 - `v1.0.2-zh-cn` 已通过 GitHub Actions 的 Windows 原生 Clang 构建并成功生成中文 Release；这证明源码可编译并能产出 PE DLL，但不能替代游戏注入和进战局测试。
+- `v1.0.3-zh-cn` 已通过同一 Windows 原生构建和 PE 校验并生成版本化 DLL；原生编译任务耗时 12 分 44 秒，其中 CMake 配置约 69 秒、449 个编译单元及链接约 11 分 5 秒。
 - 发布流水线只保留一次 Windows 原生编译，Release 直接复用同一份已验证产物；移除重复发布构建和不能证明 DLL 格式有效的 Zig CI 构建。
+- 后续发布接入 `sccache` 的 GitHub Actions 内容缓存，并使用嵌入式调试信息提高 Clang/MSVC ABI 对象的可缓存性；首次运行负责填充缓存，后续版本通过缓存统计和总耗时复核收益，不缓存整个构建目录以避免按时间戳误用旧对象。
 
 本机 macOS 没有完成有效 Windows DLL 构建，GTA 1.73 / 1158.13 实机验证也仍未完成。PR #988 已更新抢劫分红及任务功能中单独硬编码的 `ScriptGlobal(...)` / `ScriptLocal(...)` 地址，但静态更新和 GitHub 原生编译都不能替代游戏回归，因此仍不能确认这些功能已经适配。
 

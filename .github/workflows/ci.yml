@@ -17,6 +17,10 @@ jobs:
   native-compilation:
     runs-on: windows-latest
     name: Build and validate Windows DLL
+    env:
+      SCCACHE_GHA_ENABLED: "true"
+      SCCACHE_IGNORE_SERVER_IO_ERROR: "1"
+      SCCACHE_BASEDIRS: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -41,11 +45,21 @@ jobs:
         with:
           arch: amd64
 
+      - name: Setup compiler cache
+        id: sccache
+        uses: mozilla-actions/sccache-action@v0.0.10
+        with:
+          version: "v0.16.0"
+
       - name: Generate CMake project
-        run: cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ "-DYIMMENU_BUILD_TAG=${{ github.ref_name }}" -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
+        run: cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DCMAKE_POLICY_DEFAULT_CMP0141=NEW -DCMAKE_MSVC_DEBUG_INFORMATION_FORMAT=Embedded "-DYIMMENU_BUILD_TAG=${{ github.ref_name }}" -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
 
       - name: Build 64bit RelWithDebInfo DLL
         run: cmake --build ./build --config RelWithDebInfo --target YimMenuV2 --
+
+      - name: Report compiler cache stats
+        if: ${{ always() && steps.sccache.outcome == 'success' }}
+        run: sccache --show-stats
 
       - name: Validate and version build outputs
         shell: pwsh
