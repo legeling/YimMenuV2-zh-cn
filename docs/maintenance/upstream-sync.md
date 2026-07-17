@@ -56,7 +56,7 @@ git merge --no-ff upstream/enhanced
 - 上游新增的功能、接口、指针和兼容性修复。
 - 中文菜单文本、本地化资源和中文发行配置。
 - `README.md` 中的中文仓库身份与下载入口。
-- `.github/workflows/nightly.yml` 中的中文版本发布规则。
+- `.github/workflows/ci.yml` 中的中文版本构建与发布规则。
 - `docs/maintenance/downstream-integrations.md` 中的下游合入来源和状态记录。
 - `docs/compatibility/` 中的游戏版本兼容性结论。
 - `docs/features/` 中受本次更新影响的功能支持状态。

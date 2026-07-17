@@ -19,7 +19,8 @@
 - 构建时通过 `YIMMENU_BUILD_TAG` 嵌入完整标签；本地未指定时使用 `v<version>-zh-cn-dev`。
 - 启动日志和 Classic 界面显示完整构建标签。
 - CI/CD 会校验标签必须与 `VERSION` 生成的 `v<version>-zh-cn` 完全一致。
-- 正式 Release 的 DLL 使用 `YimMenuV2-v<version>-zh-cn.dll`；CI 测试产物在版本标签后继续附加完整 Git SHA，避免不同提交之间重名。
+- 正式 Release 的 DLL 使用 `YimMenuV2-v<version>-zh-cn.dll`；工作流 artifact 包名使用 `binary-v<version>-zh-cn-<完整 Git SHA>`，避免不同提交之间重名。
+- 每个正式标签只执行一次 Windows 原生构建；发布任务复用已经验证并上传的 DLL，不再运行第二次相同构建。Zig 交叉编译保留为本地白盒检查手段，不作为发布门禁或发布产物来源。
 
 ## 准备发布
 

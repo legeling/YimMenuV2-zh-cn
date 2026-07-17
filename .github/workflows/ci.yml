@@ -1,16 +1,26 @@
-name: CI
+name: Chinese Release
 
 on:
   push:
     tags:
       - "v*.*.*-zh-cn"
 
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  validate-version:
-    runs-on: ubuntu-latest
-    name: Validate Release Version
+  native-compilation:
+    runs-on: windows-latest
+    name: Build and validate Windows DLL
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
 
       - name: Match tag to VERSION
         shell: bash
@@ -22,13 +32,6 @@ jobs:
             echo "Tag ${tag} does not match VERSION ${version}; expected ${expected}" >&2
             exit 1
           fi
-
-  native-compilation:
-    needs: validate-version
-    runs-on: windows-latest
-    name: Native Compilation
-    steps:
-      - uses: actions/checkout@v4
 
       - name: Check CMake version
         run: cmake --version
@@ -44,57 +47,80 @@ jobs:
       - name: Build 64bit RelWithDebInfo DLL
         run: cmake --build ./build --config RelWithDebInfo --target YimMenuV2 --
 
-      - name: Check if DLL got built
-        run: if (-Not (Test-Path -path "build/YimMenuV2.dll")) {throw 1}
-
-      - name: Add version and commit to filenames
+      - name: Validate and version build outputs
+        shell: pwsh
         run: |
-          ren YimMenuV2.dll YimMenuV2-${{ github.ref_name }}-${{ github.sha }}.dll
-          ren YimMenuV2.pdb YimMenuV2-${{ github.ref_name }}-${{ github.sha }}.pdb
-        working-directory: build/
+          $dll = "build/YimMenuV2.dll"
+          $pdb = "build/YimMenuV2.pdb"
+          if (-Not (Test-Path -Path $dll -PathType Leaf)) { throw "Missing build output: $dll" }
+          if (-Not (Test-Path -Path $pdb -PathType Leaf)) { throw "Missing build output: $pdb" }
+          $stream = [System.IO.File]::OpenRead($dll)
+          try {
+            if ($stream.ReadByte() -ne 0x4D -or $stream.ReadByte() -ne 0x5A) {
+              throw "Build output is not a Windows PE file: $dll"
+            }
+          } finally {
+            $stream.Dispose()
+          }
+          Move-Item $dll "build/YimMenuV2-${{ github.ref_name }}.dll"
+          Move-Item $pdb "build/YimMenuV2-${{ github.ref_name }}.pdb"
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload validated build
+        uses: actions/upload-artifact@v7
         with:
-          name: RelWithDebInfo-Native-Clang-${{ github.ref_name }}
+          name: binary-${{ github.ref_name }}-${{ github.sha }}
           path: |
-            build/YimMenuV2-${{ github.ref_name }}-*.dll
-            build/YimMenuV2-${{ github.ref_name }}-*.pdb
+            build/YimMenuV2-${{ github.ref_name }}.dll
+            build/YimMenuV2-${{ github.ref_name }}.pdb
+          if-no-files-found: error
+          retention-days: 14
 
-  cross-compilation:
-    needs: validate-version
+  create-release:
     runs-on: ubuntu-latest
-    name: Cross-compilation
+    name: Create Chinese Release
+    needs: native-compilation
+    permissions:
+      actions: read
+      contents: write
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup CMake and build tools
-        run: |
-          sudo apt update
-          sudo apt install -y cmake ninja-build
-
-      - name: Setup Zig
-        uses: mlugg/setup-zig@v2
-
-      - name: Generate CMake project
-        run: cmake -DUSE_CROSSCOMPILER=Zig "-DYIMMENU_BUILD_TAG=${{ github.ref_name }}" -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build -G Ninja
-
-      - name: Build 64bit RelWithDebInfo DLL
-        run: cmake --build ./build --config RelWithDebInfo --target YimMenuV2 --
-
-      - name: Check if DLL got built
-        run: if [ ! -f build/libYimMenuV2.dll ]; then exit 1; fi
-
-      - name: Add version and commit to filenames
-        run: |
-          mv libYimMenuV2.dll libYimMenuV2-${{ github.ref_name }}-${{ github.sha }}.dll
-          mv libYimMenuV2.pdb libYimMenuV2-${{ github.ref_name }}-${{ github.sha }}.pdb
-        working-directory: build/
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+      - name: Download validated build
+        uses: actions/download-artifact@v8
         with:
-          name: RelWithDebInfo-Cross-${{ github.ref_name }}
-          path: |
-            build/libYimMenuV2-${{ github.ref_name }}-*.dll
-            build/libYimMenuV2-${{ github.ref_name }}-*.pdb
+          name: binary-${{ github.ref_name }}-${{ github.sha }}
+
+      - name: Generate build SHA256
+        id: build_sha
+        run: |
+          sha256sum YimMenuV2-${{ github.ref_name }}.dll > sha256.checksum
+          echo "build_sha=$(cat sha256.checksum)" >> "$GITHUB_OUTPUT"
+          cat sha256.checksum
+
+      - name: Chinese Release
+        uses: softprops/action-gh-release@v2.2.2
+        with:
+          name: zh-cn build ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          body: |
+            **This release has been built by GitHub Actions**
+            [Link to build](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+            Build SHA256:
+            ```
+            ${{ steps.build_sha.outputs.build_sha }}
+            ```
+            To verify the build SHA256 during the action, open the build link and read the Generate build SHA256 step.
+
+            You can download the workflow artifact, generate a SHA256 checksum and compare it with the release binary.
+            Workflow artifacts are not automatically identical to release assets because release assets can be modified afterwards.
+
+            This build is provided for testing purposes only:
+            - Test whether the build environment produces a working YimMenuV2 DLL
+            - Test whether the source remains compatible with the current version of Grand Theft Auto V: Enhanced
+
+            If you use this menu as-is, you are on your own and no warranty is provided.
+
+            Full Commit Hash:
+            ```
+            ${{ github.sha }}
+            ```
+          files: YimMenuV2-${{ github.ref_name }}.dll
