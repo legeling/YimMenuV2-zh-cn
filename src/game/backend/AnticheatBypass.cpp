@@ -97,10 +97,19 @@ namespace YimMenu
 		if (m_BattlEyeRunning)
 			LOGF(WARNING, "If you are not running an actual BattlEye bypass, exit the game immediately and ensure that BE is properly disabled");
 
-#if 0
 		if (!m_FSLProvidesBEBypass && !m_BattlEyeRunning)
-			Pointers.BattlEyeStatusUpdatePatch->Apply();
-#endif
+		{
+			if (Pointers.BattlEyeStatusUpdatePatch)
+			{
+				Pointers.BattlEyeStatusUpdatePatch->Apply();
+				LOGF(VERBOSE, "Applied the no-FSL BattlEye status update patch");
+			}
+			else
+			{
+				LOGF(FATAL, "Cannot enable no-FSL network protection: BattlEye status patch is unavailable");
+				return;
+			}
+		}
 
 		while (true)
 		{

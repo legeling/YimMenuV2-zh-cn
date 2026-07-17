@@ -9,6 +9,41 @@
 
 namespace YimMenu
 {
+	static void LogIllegalInstructionBytes(EXCEPTION_POINTERS* exception_info)
+	{
+		constexpr std::size_t kInstructionWindowSize = 16;
+		std::array<std::uint8_t, kInstructionWindowSize> bytes{};
+		SIZE_T bytesRead = 0;
+		const auto instruction = reinterpret_cast<const void*>(exception_info->ContextRecord->Rip);
+
+		if (!ReadProcessMemory(GetCurrentProcess(), instruction, bytes.data(), bytes.size(), &bytesRead) || bytesRead < 2)
+		{
+			LOGF(FATAL, "Unable to read instruction bytes at 0x{:X}", exception_info->ContextRecord->Rip);
+			return;
+		}
+
+		LOGF(FATAL,
+		    "Instruction bytes at 0x{:X}: {:02X} {:02X} {:02X} {:02X} {:02X} {:02X} {:02X} {:02X} "
+		    "{:02X} {:02X} {:02X} {:02X} {:02X} {:02X} {:02X} {:02X}",
+		    exception_info->ContextRecord->Rip,
+		    bytes[0],
+		    bytes[1],
+		    bytes[2],
+		    bytes[3],
+		    bytes[4],
+		    bytes[5],
+		    bytes[6],
+		    bytes[7],
+		    bytes[8],
+		    bytes[9],
+		    bytes[10],
+		    bytes[11],
+		    bytes[12],
+		    bytes[13],
+		    bytes[14],
+		    bytes[15]);
+	}
+
 	inline auto HashStackTrace(std::vector<uint64_t> stack_trace)
 	{
 		auto data = reinterpret_cast<const char*>(stack_trace.data());
@@ -54,6 +89,8 @@ namespace YimMenu
 				    g_ExceptionContext.m_Values[3],
 				    g_ExceptionContext.m_Values[4]);
 			}
+			if (exception_code == EXCEPTION_ILLEGAL_INSTRUCTION)
+				LogIllegalInstructionBytes(exception_info);
 			LOG(FATAL) << trace;
 			Logger::FlushQueue();
 

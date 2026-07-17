@@ -51,6 +51,7 @@
 - 异常恢复逻辑改为线程局部去重，并修正 `REX.R` 对 `R8` 至 `R15` 寄存器编号的扩展计算；同时清除了 Windows `ERROR` 宏导致的日志级别编译错误。
 - PR #988 锁定单提交 `e65380a` 合入；33 个变更文件与既有 #970、#973、#979 补丁逐项解决冲突，并保留中文翻译。
 - PR #988 与 issue #990 的两份独立日志均为 `EXCEPTION_ILLEGAL_INSTRUCTION`、`GTA5_Enhanced.exe + 0x1487620`，且调用栈返回旧版 `GameSkeletonUpdate.cpp:22`。下游据此扩展完整性检查节点名单，并记录每次 `Run()` 的节点哈希和虚函数地址。
+- 2026-07-17 的中文维护版实机日志进一步锁定 `Common Main / CNetwork` 节点，并确认发生在无 FSL 的 `Vanilla` 路径。下游恢复上游历史中的短特征 BattlEye 状态补丁、移除易漂移的固定偏移，并增加非法指令机器码日志；该修复仍需公共及好友战局复测。
 - PR #988 及下游崩溃防护使用 Zig 0.16 完成 443 个 Windows 目标编译步骤；本次涉及的全部 C/C++ 编译单元均成功。
 - 全仓库通过 `git diff --check`，不存在冲突标记。
 - 普通 `main` 推送未触发 CI/CD；只有与 `VERSION` 一致的 `vMAJOR.MINOR.PATCH-zh-cn` 标签会触发并通过构建发布。

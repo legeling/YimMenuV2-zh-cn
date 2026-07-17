@@ -9,6 +9,17 @@
 
 namespace YimMenu
 {
+	static constexpr auto kBattlEyeStatusUpdateEarlyReturn = std::to_array<std::uint8_t>({
+	    0x48,
+	    0x83,
+	    0xC4,
+	    0x38, // add rsp, 38h
+	    0x5F, // pop rdi
+	    0x5E, // pop rsi
+	    0xC3, // ret
+	});
+	static_assert(kBattlEyeStatusUpdateEarlyReturn.size() == 7);
+
 	// on some cracked game builds
 	static bool IsSocialClubNeverGoingToLoad()
 	{
@@ -228,13 +239,12 @@ namespace YimMenu
 			IsBEBanned = ptr.Add(3).Rip().Add(8).Add(4).Add(8).Add(4).As<bool*>();
 		});
 
-#if 0
-		constexpr auto battlEyeStatusUpdatePatchPtrn = Pattern<"80 B9 92 0A 00 00 01 48 81 D1 90 0A 00 00">("BattlEyeStatusUpdatePatch");
+		// The tail of this Arxan-obfuscated routine changes between builds. Match the
+		// stable status comparison and return through its known stack frame instead.
+		constexpr auto battlEyeStatusUpdatePatchPtrn = Pattern<"80 B9 92 0A 00 00 01">("BattlEyeStatusUpdatePatch");
 		scanner.Add(battlEyeStatusUpdatePatchPtrn, [this](PointerCalculator ptr) {
-			BattlEyeStatusUpdatePatch = BytePatches::Add(ptr.Add(0x10C).As<void*>(),
-				std::to_array<std::uint8_t>({0x31, 0xC0, 0xC3})); // xor eax, eax; ret
+			BattlEyeStatusUpdatePatch = BytePatches::Add(ptr.As<void*>(), kBattlEyeStatusUpdateEarlyReturn);
 		});
-#endif
 
 		constexpr auto writeNetArrayDataPtrn = Pattern<"0F 84 06 03 00 00 0F B6 83">("WriteNetArrayData");
 		scanner.Add(writeNetArrayDataPtrn, [this](PointerCalculator ptr) {
