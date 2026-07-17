@@ -9,6 +9,94 @@
 
 namespace YimMenu
 {
+	static bool TryRecoverKnownCNetworkTrap(EXCEPTION_POINTERS* exception_info)
+	{
+		constexpr std::uintptr_t kTrapOffset = 0x1487620;
+		constexpr std::uintptr_t kReturnOffset = 0x1485806;
+		constexpr std::uint32_t kCommonMainHash = 0xCA49E244;
+		constexpr std::uint32_t kCNetworkHash = 0xB6331929;
+		constexpr auto kTrapBytes = std::to_array<std::uint8_t>({
+		    0x1E,
+		    0x4C,
+		    0x69,
+		    0x3B,
+		    0x26,
+		    0x66,
+		    0x66,
+		    0x66,
+		    0x66,
+		    0x66,
+		    0x2E,
+		    0x0F,
+		    0x1F,
+		    0x84,
+		    0x00,
+		    0x00,
+		});
+
+		if (exception_info->ExceptionRecord->ExceptionCode != EXCEPTION_ILLEGAL_INSTRUCTION
+		    || g_ExceptionContext.m_Values[0] != 1
+		    || g_ExceptionContext.m_Values[2] != kCommonMainHash
+		    || g_ExceptionContext.m_Values[3] != kCNetworkHash)
+		{
+			return false;
+		}
+
+		const auto gameBase = reinterpret_cast<std::uintptr_t>(GetModuleHandleW(nullptr));
+		if (!gameBase || exception_info->ContextRecord->Rip != gameBase + kTrapOffset)
+			return false;
+
+		std::array<std::uint8_t, kTrapBytes.size()> instructionBytes{};
+		std::uintptr_t returnAddress = 0;
+		SIZE_T instructionBytesRead = 0;
+		SIZE_T returnAddressBytesRead = 0;
+		if (!ReadProcessMemory(GetCurrentProcess(),
+		        reinterpret_cast<const void*>(exception_info->ContextRecord->Rip),
+		        instructionBytes.data(),
+		        instructionBytes.size(),
+		        &instructionBytesRead)
+		    || instructionBytesRead != instructionBytes.size()
+		    || instructionBytes != kTrapBytes)
+		{
+			return false;
+		}
+
+		if (!ReadProcessMemory(GetCurrentProcess(),
+		        reinterpret_cast<const void*>(exception_info->ContextRecord->Rsp),
+		        &returnAddress,
+		        sizeof(returnAddress),
+		        &returnAddressBytesRead)
+		    || returnAddressBytesRead != sizeof(returnAddress))
+		{
+			return false;
+		}
+		if (returnAddress != gameBase + kReturnOffset)
+		{
+			LOGF(FATAL,
+			    "Known b1158.13 CNetwork trap has unexpected stack return 0x{:X}; expected 0x{:X}, refusing recovery",
+			    returnAddress,
+			    gameBase + kReturnOffset);
+			Logger::FlushQueue();
+			return false;
+		}
+
+		static thread_local bool loggedRecovery = false;
+		if (!loggedRecovery)
+		{
+			LOGF(WARNING,
+			    "Recovered the known b1158.13 CNetwork trap at 0x{:X}; returning to 0x{:X}",
+			    exception_info->ContextRecord->Rip,
+			    returnAddress);
+			Logger::FlushQueue();
+			loggedRecovery = true;
+		}
+
+		exception_info->ContextRecord->Rip = returnAddress;
+		exception_info->ContextRecord->Rsp += sizeof(returnAddress);
+		exception_info->ContextRecord->Rax = 0;
+		return true;
+	}
+
 	static void LogIllegalInstructionBytes(EXCEPTION_POINTERS* exception_info)
 	{
 		constexpr std::size_t kInstructionWindowSize = 16;
@@ -71,6 +159,8 @@ namespace YimMenu
 		const auto exception_code = exception_info->ExceptionRecord->ExceptionCode;
 		if (exception_code == EXCEPTION_BREAKPOINT || exception_code == DBG_PRINTEXCEPTION_C || exception_code == DBG_PRINTEXCEPTION_WIDE_C)
 			return EXCEPTION_CONTINUE_SEARCH;
+		if (TryRecoverKnownCNetworkTrap(exception_info))
+			return EXCEPTION_CONTINUE_EXECUTION;
 
 		static thread_local std::unordered_set<std::size_t> logged_exceptions;
 
