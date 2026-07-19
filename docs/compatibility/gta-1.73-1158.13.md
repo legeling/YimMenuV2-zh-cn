@@ -22,7 +22,7 @@
 - `v1.0.2-zh-cn` 已通过 GitHub Actions 的 Windows 原生 Clang 构建并成功生成带版本号的 DLL Release。
 - 合入时全仓库已通过 `git diff --check`，不存在冲突标记。
 - 普通 `main` 推送不会触发 CI/CD；只有与 `VERSION` 一致的 `vMAJOR.MINOR.PATCH-zh-cn` 标签会触发并通过构建发布。
-- PR #1019 的 20 个改动文件已逐项解决与中文本地化及下游 #985 加固的冲突；官方 Native Compilation 和 Cross-compilation 检查均通过，但中文组合版本仍需完成本地编译检查。
+- PR #1019 的 20 个改动文件已逐项解决与中文本地化及下游 #985 加固的冲突；`v1.1.0-zh-cn` 已通过 Windows 原生 Clang 构建、PE 校验和版本化产物上传。
 
 ## 崩溃定位与防护
 
