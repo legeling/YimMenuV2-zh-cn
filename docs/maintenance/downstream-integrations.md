@@ -10,9 +10,9 @@
 
 - 官方仓库：[YimMenu/YimMenuV2](https://github.com/YimMenu/YimMenuV2)
 - 官方分支：`enhanced`
-- 已同步官方提交：`ef1a4df2162a9c87d8232285c88147fadbad8be3`
-- 中文仓库合并提交：`ba758c09368eafba285a72285c325f4e35e1fe81`
-- 同步日期：2026-07-15
+- 已审查并同步至官方提交：`a9e9e0a4195cc931fab429970fa5e434b134c069`
+- 中文仓库集成提交：待本轮审查和验证完成后填写
+- 同步日期：2026-07-19
 
 本次官方基线包含：
 
@@ -21,6 +21,8 @@
 | [#949](https://github.com/YimMenu/YimMenuV2/pull/949) | `017904b` | 扩展 Lua 菜单、ImGui、文件、内存、指针、命令、玩家、实体、事件和脚本相关 API，并补充 Lua 文档与类型提示 | 已由官方合并，已随 `upstream/enhanced` 同步 |
 | [#952](https://github.com/YimMenu/YimMenuV2/pull/952) | `628f2fd` | 更新 `GetAvatars` 特征码 | 已由官方合并，已随 `upstream/enhanced` 同步 |
 | [#963](https://github.com/YimMenu/YimMenuV2/pull/963) | `ef1a4df` | 修复 Lua Pattern 扫描错误指向旧版 `GTA5.exe` 的问题 | 已由官方合并，已随 `upstream/enhanced` 同步 |
+| [#988](https://github.com/YimMenu/YimMenuV2/pull/988) | `5d9ab8d` | 更新 GTA Enhanced `b1158.13` 的特征码、偏移、车辆、脚本和抢劫数据 | 下游此前已锁定 PR 头提交提前吸收；本轮确认官方版本覆盖基础适配，并撤销已被 #1019 取代的下游崩溃绕过 |
+| [#1019](https://github.com/YimMenu/YimMenuV2/pull/1019) | `a9e9e0a` | 恢复新版反作弊破坏或加密的游戏函数，更新 BattlEye 状态补丁，并修复遥测 Hook 签名等附带问题 | 功能实现按官方同步；仅保留中文本地化、发行规则及与本问题无关的通用稳定性修复 |
 
 ## 提前吸收的官方 PR
 
@@ -28,7 +30,8 @@
 
 | 官方 PR | 锁定上游提交 | 中文提交 | 内容 | 吸收方式 | 当前状态 |
 | --- | --- | --- | --- | --- | --- |
-| [#988](https://github.com/YimMenu/YimMenuV2/pull/988) | `e65380a3b8cab46a20d18ee6bf89d3e0ca40f9f2` | `213eebd`、`3d30df7` | 全量适配 b1158.13 的网络、脚本、车辆、Globals、Locals、日常活动及四类抢劫硬编码数据；下游追加 `GameSkeletonUpdate` 安全节点拦截和异常上下文，处理公开/好友战局非法指令崩溃 | `cherry-pick -x` 后解决与 #970、#973、#979 及中文翻译的冲突，再追加审查修复 | 已提前吸收，等待实机验证和官方处理 |
+| [#988](https://github.com/YimMenu/YimMenuV2/pull/988) | `e65380a3b8cab46a20d18ee6bf89d3e0ca40f9f2` | `213eebd`、`3d30df7` | 全量适配 b1158.13 的网络、脚本、车辆、Globals、Locals、日常活动及四类抢劫硬编码数据；下游曾追加 `GameSkeletonUpdate` 节点屏蔽和异常上下文 | `cherry-pick -x` 后解决与 #970、#973、#979 及中文翻译的冲突，再追加审查修复 | 基础适配已由官方 #988 覆盖；下游崩溃绕过已由官方 #1019 的真实函数恢复取代并撤销 |
+| [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014) | `40c22688cd40448d3747adad0a072e6d5d3a94e5` | 待本轮提交后填写 | 新增科兹中心豪劫标签页，可选择 27 个主要目标，并配置采购、准备任务、次要目标和兴趣点侦察状态 | 按锁定 head patch 吸收，并采用 Rockstar 简体中文名称整理界面文本 | 官方 PR 仍开放、可合并，但没有上游评审和检查；代码已进入当前工作区，等待 GTA 实机验证 |
 | [#985](https://github.com/YimMenu/YimMenuV2/pull/985) | `3037a5e` | `29bfba5`、`c8124bb`、`13756c0`、`a56e02d` | 修复通知并发、Hook 状态、渲染帧同步、Lua 资源循环、PatternScanner 性能和启动错误处理；下游同时完善近地址跳板分配、完整镜像安全扫描、Call Site/IAT 内存保护、异常上下文、宏安全及 Hook 失败回滚 | `cherry-pick -x` 后追加审查修复 | 已提前吸收，等待官方处理 |
 | [#973](https://github.com/YimMenu/YimMenuV2/pull/973) | `187b910` | `703bc45` | 更新游戏升级后失效的网络伤害、事件确认、遥测、BattlEye 状态、加入战局和战局池相关特征码与偏移 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
 | [#970](https://github.com/YimMenu/YimMenuV2/pull/970) | `24219c5`、`b57c52b`、`5030953` | `a28e89e`、`6ed8d61`、`d297bdc` | 适配 GTA 1.73 / 1158.13：更新车辆列表、Script Global 基址、`GPBD_FM_2` 结构尺寸和衣柜脚本签名 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
@@ -60,6 +63,9 @@
 - `v1.0.3-zh-cn` 已通过同一 Windows 原生构建和 PE 校验并生成版本化 DLL；原生编译任务耗时 12 分 44 秒，其中 CMake 配置约 69 秒、449 个编译单元及链接约 11 分 5 秒。
 - 发布流水线只保留一次 Windows 原生编译，Release 直接复用同一份已验证产物；移除重复发布构建和不能证明 DLL 格式有效的 Zig CI 构建。
 - 后续发布接入 `sccache` 的 GitHub Actions 内容缓存，并使用嵌入式调试信息提高 Clang/MSVC ABI 对象的可缓存性；首次运行负责填充缓存，后续版本通过缓存统计和总耗时复核收益，不缓存整个构建目录以避免按时间戳误用旧对象。
+- 2026-07-19 同步官方 PR #1019：采用 213 处加密/破坏函数恢复数据、新版 BattlEye 状态特征和正确的遥测 Hook 签名；中文界面和发行规则继续保留。
+- 官方函数恢复取代下游针对 `+0x1487620` 的模拟返回、扩展节点屏蔽和异常上下文。这些临时诊断与绕过均从当前代码移除，避免与官方实现叠加；与本次崩溃无关的 Call Hook 近地址分配和 MinHook 队列状态修复继续保留。
+- 2026-07-19 锁定并吸收开放 PR #1014 的 `40c22688`：新增科兹中心豪劫的目标、采购、准备和侦察配置；PR 当前无上游评审或检查，本轮按用户要求不等待全量编译，仍需 GTA 实机验证各项 `MPX_K26_*` 数据。
 
 本机 macOS 没有完成有效 Windows DLL 构建，GTA 1.73 / 1158.13 实机验证也仍未完成。PR #988 已更新抢劫分红及任务功能中单独硬编码的 `ScriptGlobal(...)` / `ScriptLocal(...)` 地址，但静态更新和 GitHub 原生编译都不能替代游戏回归，因此仍不能确认这些功能已经适配。
 
