@@ -7,8 +7,8 @@
 | 范围 | 来源 | 中文提交 | 状态 |
 | --- | --- | --- | --- |
 | b1158.13 全量地址、特征码、车辆、脚本及四类抢劫数据 | 上游 PR [#988](https://github.com/YimMenu/YimMenuV2/pull/988)，锁定 `e65380a` | `213eebd` | 已合入；443 个 Windows 目标编译步骤通过，未实机验证 |
-| 无 FSL 公开/好友战局非法指令修复 | 上游 PR [#1019](https://github.com/YimMenu/YimMenuV2/pull/1019)，提交 `a9e9e0a` | 本轮同步，中文提交待填写 | 已按官方同步新版状态特征和 213 处函数恢复；下游临时崩溃绕过已撤销，等待实机复测 |
-| 科兹中心豪劫准备配置 | 上游开放 PR [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014)，锁定 `40c22688` | 本轮吸收，中文提交待填写 | 已新增目标、采购、准备和侦察状态；PR 无上游检查，未实机验证 |
+| 无 FSL 公开/好友战局非法指令修复 | 上游 PR [#1019](https://github.com/YimMenu/YimMenuV2/pull/1019)，提交 `a9e9e0a` | `f1181c8` | 已按官方同步新版状态特征和 213 处函数恢复；下游临时崩溃绕过已撤销，等待实机复测 |
+| 科兹中心豪劫准备配置 | 上游开放 PR [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014)，锁定 `40c22688` | `f1181c8` | 已新增目标、采购、准备和侦察状态；PR 无上游检查，未实机验证 |
 | PR #970、#973、#979 的先期适配 | 上游 PR [#970](https://github.com/YimMenu/YimMenuV2/pull/970)、[#973](https://github.com/YimMenu/YimMenuV2/pull/973)、[#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `a28e89e`、`6ed8d61`、`d297bdc`、`703bc45`、`907dd05` | 历史记录保留，内容已由 #988 的更新版本覆盖 |
 
 完整的锁定上游提交和吸收方式见[下游合入记录](../maintenance/downstream-integrations.md)。
