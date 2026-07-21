@@ -9,33 +9,33 @@ namespace YimMenu::Features
 	{
 		// --- Primary Target ---
 		static std::vector<std::pair<int, const char*>> kortzCenterTargets = {
-		    {0, "La Dernière Débauche"},
-		    {1, "Hare Oneself Think"},
-		    {2, "The Downfall of Rome"},
-		    {3, "Brother Brother"},
-		    {4, "A Cast of Characters"},
-		    {5, "Gone To Seed"},
-		    {6, "True Love"},
-		    {7, "Breathless"},
-		    {8, "Consumato"},
-		    {9, "I Hear Voices"},
-		    {10, "Winter, Nowhere in Particular"},
-		    {11, "The Girl With the Pearl Necklace"},
-		    {12, "Chat on Fruit"},
-		    {13, "Pumpkin"},
-		    {14, "Twindifference"},
-		    {15, "Stacks Study V"},
-		    {16, "I, Fruit"},
-		    {17, "To Beat About the Bush"},
-		    {18, "In Excess of Success"},
-		    {19, "Juiced"},
-		    {20, "A Winding Road Home"},
-		    {21, "Teckels"},
-		    {22, "Trust"},
-		    {23, "Until Death"},
-		    {24, "What Are Melons?"},
-		    {25, "The Outcome of Endeavour"},
-		    {26, "Mi O Melee"}
+		    {0, "最后的放纵"},
+		    {1, "野兔独思"},
+		    {2, "罗马的覆灭"},
+		    {3, "兄弟兄弟"},
+		    {4, "众生相"},
+		    {5, "日渐衰败"},
+		    {6, "真爱"},
+		    {7, "屏息"},
+		    {8, "圆满"},
+		    {9, "我听见了声音"},
+		    {10, "冬日，某个无名之地"},
+		    {11, "戴珍珠项链的少女"},
+		    {12, "水果闲谈"},
+		    {13, "南瓜"},
+		    {14, "双生之异"},
+		    {15, "堆叠习作 V"},
+		    {16, "我，水果"},
+		    {17, "拐弯抹角"},
+		    {18, "成功过剩"},
+		    {19, "榨汁"},
+		    {20, "蜿蜒归途"},
+		    {21, "腊肠犬"},
+		    {22, "信任"},
+		    {23, "至死不渝"},
+		    {24, "什么是甜瓜？"},
+		    {25, "奋斗的成果"},
+		    {26, "米奥混战"}
 		};
 		static ListCommand _KortzCenterPrimaryTarget{"kortzcenterheistprimarytarget", "主要目标", "选择科兹中心豪劫的主要目标艺术品。", kortzCenterTargets, 0};
 
@@ -43,11 +43,11 @@ namespace YimMenu::Features
 		static BoolCommand _KortzCenterGuardRoutes{"kortzcenterheistguardroutes", "保安巡逻路线", "将保安巡逻路线标记为已购买。", true};
 		static BoolCommand _KortzCenterGlassCutter{"kortzcenterheistglasscutter", "玻璃切割器", "将玻璃切割器标记为已购买。", true};
 		static BoolCommand _KortzCenterPowerDrills{"kortzcenterheistpowerdrills", "电钻", "将电钻标记为已购买。", true};
-		static BoolCommand _KortzCenterEMPCharges{"kortzcenterheistempcharges", "EMP 炸药", "将 EMP 炸药标记为已购买。", true};
+		static BoolCommand _KortzCenterEMPCharges{"kortzcenterheistempcharges", "电磁脉冲炸药", "将电磁脉冲炸药标记为已购买。", true};
 
 		// --- Prep Work (MPX_K26_ROBBERY_PROG bits 0-15) ---
 		static BoolCommand _KortzCenterScopeOut{"kortzcenterheistscopeout", "前期侦察", "将科兹中心侦察任务标记为完成。", true};
-		static BoolCommand _KortzCenterAlphaMail{"kortzcenterheistalphamail", "Alpha Mail 伪装", "将 Alpha Mail 伪装准备标记为完成。", true};
+		static BoolCommand _KortzCenterAlphaMail{"kortzcenterheistalphamail", "阿尔法邮政伪装", "将阿尔法邮政伪装准备标记为完成。", true};
 		static BoolCommand _KortzCenterHazmat{"kortzcenterheisthazmat", "防化服", "将防化服准备标记为完成。", true};
 		static BoolCommand _KortzCenterStaffKeycard{"kortzcenterheiststaffkeycard", "工作人员钥匙卡", "将工作人员钥匙卡准备标记为完成。", true};
 		static BoolCommand _KortzCenterTacticalEquip{"kortzcenterheisttacticalequip", "战术装备", "将战术装备准备标记为完成。", true};
@@ -57,7 +57,7 @@ namespace YimMenu::Features
 		static BoolCommand _KortzCenterCaracara{"kortzcenterheistcaracara", "装甲卡拉卡拉", "将装甲卡拉卡拉准备标记为完成。", true};
 		static BoolCommand _KortzCenterAnnihilator{"kortzcenterheistannihilator", "歼灭者隐形版", "将歼灭者隐形版准备标记为完成。", true};
 		static BoolCommand _KortzCenterManchez{"kortzcenterheistmanchez", "曼切兹", "将曼切兹准备标记为完成。", true};
-		static BoolCommand _KortzCenterPrepEMP{"kortzcenterheistprepemp", "EMP 炸药（准备）", "将 EMP 炸药准备任务标记为完成。", true};
+		static BoolCommand _KortzCenterPrepEMP{"kortzcenterheistprepemp", "电磁脉冲炸药（准备）", "将电磁脉冲炸药准备任务标记为完成。", true};
 		static BoolCommand _KortzCenterGuardShipments{"kortzcenterheistguardshipments", "保安装备货物", "将保安装备货物准备标记为完成。", true};
 		static BoolCommand _KortzCenterGuardRoutesPrep{"kortzcenterheistguardroutesprep", "保安巡逻路线（准备）", "将保安巡逻路线准备标记为完成。", true};
 		static BoolCommand _KortzCenterGlassCutterPrep{"kortzcenterheistglasscutterprep", "玻璃切割器（准备）", "将玻璃切割器准备标记为完成。", true};
