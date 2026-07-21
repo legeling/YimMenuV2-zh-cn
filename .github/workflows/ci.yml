@@ -7,7 +7,7 @@ on:
 
 permissions:
   actions: read
-  contents: read
+  contents: write
 
 concurrency:
   group: release-${{ github.ref }}
@@ -79,35 +79,17 @@ jobs:
           Move-Item $dll "build/YimMenuV2-${{ github.ref_name }}.dll"
           Move-Item $pdb "build/YimMenuV2-${{ github.ref_name }}.pdb"
 
-      - name: Upload validated build
-        uses: actions/upload-artifact@v7
-        with:
-          name: binary-${{ github.ref_name }}-${{ github.sha }}
-          path: |
-            build/YimMenuV2-${{ github.ref_name }}.dll
-            build/YimMenuV2-${{ github.ref_name }}.pdb
-          if-no-files-found: error
-          retention-days: 14
-
-  create-release:
-    runs-on: ubuntu-latest
-    name: Create Chinese Release
-    needs: native-compilation
-    permissions:
-      actions: read
-      contents: write
-    steps:
-      - name: Download validated build
-        uses: actions/download-artifact@v8
-        with:
-          name: binary-${{ github.ref_name }}-${{ github.sha }}
-
       - name: Generate build SHA256
         id: build_sha
+        shell: pwsh
         run: |
-          sha256sum YimMenuV2-${{ github.ref_name }}.dll > sha256.checksum
-          echo "build_sha=$(cat sha256.checksum)" >> "$GITHUB_OUTPUT"
-          cat sha256.checksum
+          $dll = "build/YimMenuV2-${{ github.ref_name }}.dll"
+          $fileName = Split-Path $dll -Leaf
+          $hash = (Get-FileHash -Path $dll -Algorithm SHA256).Hash.ToLowerInvariant()
+          $checksum = "$hash  $fileName"
+          $checksum | Set-Content -Path sha256.checksum -Encoding ascii
+          "build_sha=$checksum" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          Get-Content sha256.checksum
 
       - name: Chinese Release
         uses: softprops/action-gh-release@v2.2.2
@@ -122,10 +104,7 @@ jobs:
             ```
             ${{ steps.build_sha.outputs.build_sha }}
             ```
-            To verify the build SHA256 during the action, open the build link and read the Generate build SHA256 step.
-
-            You can download the workflow artifact, generate a SHA256 checksum and compare it with the release binary.
-            Workflow artifacts are not automatically identical to release assets because release assets can be modified afterwards.
+            To verify the Release asset, download the DLL, calculate its SHA256 locally and compare it with the value above and the Generate build SHA256 step.
 
             This build is provided for testing purposes only:
             - Test whether the build environment produces a working YimMenuV2 DLL
@@ -137,4 +116,4 @@ jobs:
             ```
             ${{ github.sha }}
             ```
-          files: YimMenuV2-${{ github.ref_name }}.dll
+          files: build/YimMenuV2-${{ github.ref_name }}.dll
