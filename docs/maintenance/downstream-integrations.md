@@ -10,9 +10,9 @@
 
 - 官方仓库：[YimMenu/YimMenuV2](https://github.com/YimMenu/YimMenuV2)
 - 官方分支：`enhanced`
-- 已审查并同步至官方提交：`a9e9e0a4195cc931fab429970fa5e434b134c069`
-- 中文仓库集成提交：`f1181c820e8720ad3cb6c0ea8ad7699571a9f4af`
-- 同步日期：2026-07-19
+- 已审查并同步至官方提交：`da012b18ed08e4f0b537bf0002ac8650a2273d4a`
+- 中文仓库集成提交：`244757eb79b363c44cd43f6a9ca38327d3926812`
+- 同步日期：2026-07-21
 
 本次官方基线包含：
 
@@ -23,6 +23,7 @@
 | [#963](https://github.com/YimMenu/YimMenuV2/pull/963) | `ef1a4df` | 修复 Lua Pattern 扫描错误指向旧版 `GTA5.exe` 的问题 | 已由官方合并，已随 `upstream/enhanced` 同步 |
 | [#988](https://github.com/YimMenu/YimMenuV2/pull/988) | `5d9ab8d` | 更新 GTA Enhanced `b1158.13` 的特征码、偏移、车辆、脚本和抢劫数据 | 下游此前已锁定 PR 头提交提前吸收；本轮确认官方版本覆盖基础适配，并撤销已被 #1019 取代的下游崩溃绕过 |
 | [#1019](https://github.com/YimMenu/YimMenuV2/pull/1019) | `a9e9e0a` | 恢复新版反作弊破坏或加密的游戏函数，更新 BattlEye 状态补丁，并修复遥测 Hook 签名等附带问题 | 功能实现按官方同步；仅保留中文本地化、发行规则及与本问题无关的通用稳定性修复 |
+| [#1018](https://github.com/YimMenu/YimMenuV2/pull/1018) | `da012b1` | 将名钻赌场豪劫“单人气闸”的 `fm_mission_controller` 局部变量从 `63640` 更新为 `64655` | 已按官方提交 `cherry-pick -x` 合入；静态差异检查通过，等待 GTA 1.73 实机验证 |
 
 ## 提前吸收的官方 PR
 
@@ -67,6 +68,7 @@
 - 官方函数恢复取代下游针对 `+0x1487620` 的模拟返回、扩展节点屏蔽和异常上下文。这些临时诊断与绕过均从当前代码移除，避免与官方实现叠加；与本次崩溃无关的 Call Hook 近地址分配和 MinHook 队列状态修复继续保留。
 - 2026-07-19 锁定并吸收开放 PR #1014 的 `40c22688`：新增科兹中心豪劫的目标、采购、准备和侦察配置；PR 当前无上游评审或检查，本轮按用户要求不等待全量编译，仍需 GTA 实机验证各项 `MPX_K26_*` 数据。
 - `v1.1.0-zh-cn` 已通过 GitHub Actions Windows 原生 Clang 全量构建、PE DLL 校验和 Release 上传，产物为 `YimMenuV2-v1.1.0-zh-cn.dll`；本次缓存统计为 439 次未命中、0 次命中，构建成功但未获得缓存加速。
+- 2026-07-21 同步官方 PR #1018：名钻赌场豪劫“单人气闸”使用的 `ScriptLocal` 更新为 `64655`；本次仅改动一个常量，不触发发行流水线，仍需在终章双门通道中实机验证。
 
 本机 macOS 没有完成有效 Windows DLL 构建，GTA 1.73 / 1158.13 实机验证也仍未完成。PR #988 已更新抢劫分红及任务功能中单独硬编码的 `ScriptGlobal(...)` / `ScriptLocal(...)` 地址，但静态更新和 GitHub 原生编译都不能替代游戏回归，因此仍不能确认这些功能已经适配。
 

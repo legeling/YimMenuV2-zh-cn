@@ -8,6 +8,7 @@
 | --- | --- | --- | --- |
 | b1158.13 全量地址、特征码、车辆、脚本及四类抢劫数据 | 上游 PR [#988](https://github.com/YimMenu/YimMenuV2/pull/988)，锁定 `e65380a` | `213eebd` | 已合入；443 个 Windows 目标编译步骤通过，未实机验证 |
 | 无 FSL 公开/好友战局非法指令修复 | 上游 PR [#1019](https://github.com/YimMenu/YimMenuV2/pull/1019)，提交 `a9e9e0a` | `f1181c8` | 已按官方同步新版状态特征和 213 处函数恢复；下游临时崩溃绕过已撤销，等待实机复测 |
+| 名钻赌场豪劫单人气闸 | 上游 PR [#1018](https://github.com/YimMenu/YimMenuV2/pull/1018)，提交 `da012b1` | `244757e` | `fm_mission_controller` 局部变量已由 `63640` 更新为 `64655`；静态检查通过，待终章实机验证 |
 | 科兹中心豪劫准备配置 | 上游开放 PR [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014)，锁定 `40c22688` | `f1181c8` | 已新增目标、采购、准备和侦察状态；PR 无上游检查，未实机验证 |
 | PR #970、#973、#979 的先期适配 | 上游 PR [#970](https://github.com/YimMenu/YimMenuV2/pull/970)、[#973](https://github.com/YimMenu/YimMenuV2/pull/973)、[#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `a28e89e`、`6ed8d61`、`d297bdc`、`703bc45`、`907dd05` | 历史记录保留，内容已由 #988 的更新版本覆盖 |
 
@@ -23,6 +24,7 @@
 - 合入时全仓库已通过 `git diff --check`，不存在冲突标记。
 - 普通 `main` 推送不会触发 CI/CD；只有与 `VERSION` 一致的 `vMAJOR.MINOR.PATCH-zh-cn` 标签会触发并通过构建发布。
 - PR #1019 的 20 个改动文件已逐项解决与中文本地化及下游 #985 加固的冲突；`v1.1.0-zh-cn` 已通过 Windows 原生 Clang 构建、PE 校验和版本化产物上传。
+- PR #1018 只更新名钻赌场豪劫单人气闸的一处 `ScriptLocal` 常量；已核对官方提交差异并通过 `git diff --check`，未运行 GTA 实机流程。
 
 ## 崩溃定位与防护
 
