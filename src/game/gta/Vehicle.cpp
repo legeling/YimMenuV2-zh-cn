@@ -6,6 +6,8 @@
 #include "game/gta/data/VehicleValues.hpp"
 #include "game/gta/data/Vehicles.hpp"
 
+#include <algorithm>
+
 namespace YimMenu
 {
 	namespace
@@ -150,6 +152,68 @@ namespace YimMenu
 		ENTITY_ASSERT_VALID();
 
 		return VEHICLE::IS_VEHICLE_SEAT_FREE(GetHandle(), seat, true);
+	}
+
+	int Vehicle::GetMaxNumOfPassengers()
+	{
+		ENTITY_ASSERT_VALID();
+
+		return VEHICLE::GET_VEHICLE_MAX_NUMBER_OF_PASSENGERS(GetHandle());
+	}
+
+	void Vehicle::ToggleAllDoors(bool open)
+	{
+		ENTITY_ASSERT_VALID();
+		ENTITY_ASSERT_CONTROL();
+		ENTITY_ASSERT_SCRIPT_CONTEXT();
+
+		const int vehicle = GetHandle();
+		for (int door = 0; door < 6; door++)
+		{
+			if (open)
+				VEHICLE::SET_VEHICLE_DOOR_OPEN(vehicle, door, FALSE, FALSE);
+			else
+				VEHICLE::SET_VEHICLE_DOOR_SHUT(vehicle, door, FALSE);
+		}
+	}
+
+	bool Vehicle::HasHydraulics()
+	{
+		ENTITY_ASSERT_VALID();
+
+		return VEHICLE::GET_NUM_VEHICLE_MODS(GetHandle(), static_cast<int>(VehicleModType::MOD_HYDRAULICS)) > 0;
+	}
+
+	bool Vehicle::RaiseHydraulicWheel(int wheelIndex, float raiseFactor)
+	{
+		static constexpr std::array hydraulicWheelIndexes = {0, 1, 4, 5};
+		if (wheelIndex < 0 || wheelIndex >= static_cast<int>(hydraulicWheelIndexes.size()) || !HasHydraulics())
+			return false;
+
+		ENTITY_ASSERT_CONTROL();
+		ENTITY_ASSERT_SCRIPT_CONTEXT();
+
+		const int vehicle = GetHandle();
+		const int wheelId = hydraulicWheelIndexes[wheelIndex];
+		raiseFactor = std::clamp(raiseFactor, 1.0f, 3.0f);
+		VEHICLE::SET_HYDRAULIC_WHEEL_STATE(vehicle, wheelId, 4, raiseFactor, 1);
+		ScriptMgr::Yield(250ms);
+		VEHICLE::SET_HYDRAULIC_WHEEL_STATE(vehicle, wheelId, 1, raiseFactor, 1);
+		return true;
+	}
+
+	bool Vehicle::LowerHydraulicWheel(int wheelIndex, float raiseFactor)
+	{
+		static constexpr std::array hydraulicWheelIndexes = {0, 1, 4, 5};
+		if (wheelIndex < 0 || wheelIndex >= static_cast<int>(hydraulicWheelIndexes.size()) || !HasHydraulics())
+			return false;
+
+		ENTITY_ASSERT_CONTROL();
+		ENTITY_ASSERT_SCRIPT_CONTEXT();
+
+		raiseFactor = std::clamp(raiseFactor, 1.0f, 3.0f);
+		VEHICLE::SET_HYDRAULIC_WHEEL_STATE(GetHandle(), hydraulicWheelIndexes[wheelIndex], 0, raiseFactor, 1);
+		return true;
 	}
 
 	bool Vehicle::SupportsBoost()

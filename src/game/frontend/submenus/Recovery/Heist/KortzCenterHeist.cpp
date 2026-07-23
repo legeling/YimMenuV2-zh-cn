@@ -6,11 +6,12 @@ namespace YimMenu::Submenus
 	{
 		auto tab = std::make_shared<TabItem>("科兹中心豪劫");
 
-		auto target    = std::make_shared<Group>("主要目标", 1);
-		auto general   = std::make_shared<Group>("常规采购", 2);
-		auto preps     = std::make_shared<Group>("前置任务", 2);
-		auto scoping   = std::make_shared<Group>("侦察", 2);
-		auto action    = std::make_shared<Group>("", 1);
+		auto target = std::make_shared<Group>("主要目标", 1);
+		auto general = std::make_shared<Group>("常规采购", 2);
+		auto preps = std::make_shared<Group>("前置任务", 2);
+		auto scoping = std::make_shared<Group>("侦察", 2);
+		auto finale = std::make_shared<Group>("终章辅助", 2);
+		auto action = std::make_shared<Group>("", 1);
 
 		target->AddItem(std::make_shared<ListCommandItem>("kortzcenterheistprimarytarget"_J));
 
@@ -40,11 +41,19 @@ namespace YimMenu::Submenus
 		scoping->AddItem(std::make_shared<BoolCommandItem>("kortzcenterheistscopepoi"_J));
 
 		action->AddItem(std::make_shared<CommandItem>("kortzcenterheistsetup"_J, "应用设置##kortz"));
+		action->AddItem(std::make_shared<CommandItem>("kortzcenterheistrecommendedsetup"_J, "应用推荐配置##kortz"));
+
+		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistcutglass"_J));
+		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistdisablelasergrid"_J));
+		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistskipdatacrack"_J));
+		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistskipfingerprint"_J));
+		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistskipsignalnodes"_J));
 
 		tab->AddItem(target);
 		tab->AddItem(general);
 		tab->AddItem(preps);
 		tab->AddItem(scoping);
+		tab->AddItem(finale);
 		tab->AddItem(action);
 
 		return tab;

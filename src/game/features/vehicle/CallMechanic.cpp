@@ -1,3 +1,4 @@
+#include "VehicleDeliveryCooldown.hpp"
 #include "core/commands/Command.hpp"
 #include "core/backend/ScriptMgr.hpp"
 #include "core/frontend/Notifications.hpp"
@@ -5,9 +6,7 @@
 #include "game/backend/Self.hpp"
 #include "game/gta/Scripts.hpp"
 #include "game/gta/ScriptLocal.hpp"
-#include "game/gta/ScriptGlobal.hpp"
 #include "game/pointers/Pointers.hpp"
-#include "types/script/Timer.hpp"
 
 namespace YimMenu::Features
 {
@@ -37,7 +36,8 @@ namespace YimMenu::Features
 					if (auto thread = Scripts::FindScriptThreadByID(id))
 					{
 						*ScriptLocal(thread, 535).As<int*>() = 1;
-						ScriptGlobal(2686124).At(4373).At(260).At(7, 2).As<TIMER*>()->Destroy();
+						if (!ResetVehicleDeliveryCooldown())
+							Notifications::Show("技工", "载具配送冷却变量当前不可访问。", NotificationType::Warning);
 					}
 				}
 				else

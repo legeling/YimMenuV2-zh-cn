@@ -17,6 +17,11 @@ namespace YimMenu::Stats
 		return index;
 	}
 
+	bool SaveStats()
+	{
+		return STATS::STAT_SAVE(0, FALSE, 3, FALSE);
+	}
+
 	void SetInt(std::string statName, int value)
 	{
 		ConvertMPX(statName);

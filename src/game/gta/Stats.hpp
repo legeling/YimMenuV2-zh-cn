@@ -5,6 +5,7 @@
 namespace YimMenu::Stats
 {
 	extern int GetCharIndex();
+	extern bool SaveStats();
 
 	extern void SetInt(std::string statName, int value);
 	extern void SetBool(std::string statName, bool value);

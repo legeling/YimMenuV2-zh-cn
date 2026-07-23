@@ -12,13 +12,15 @@
 namespace YimMenu::Submenus
 {
 	Vehicle::Vehicle() :
-		#define ICON_FA_CAR "\xef\x86\xb9"
+#define ICON_FA_CAR "\xef\x86\xb9"
 	    Submenu::Submenu("载具", ICON_FA_CAR)
 	{
 		auto main = std::make_shared<Category>("基础");
 
 		auto globals = std::make_shared<Group>("全局");
 		auto tools = std::make_shared<Group>("工具", 2);
+		auto seatsAndDoors = std::make_shared<Group>("座位与车门", 2);
+		auto hydraulics = std::make_shared<Group>("液压悬挂", 2);
 		auto misc = std::make_shared<Group>("杂项");
 
 		globals->AddItem(std::make_shared<BoolCommandItem>("vehiclegodmode"_J));
@@ -31,6 +33,7 @@ namespace YimMenu::Submenus
 		tools->AddItem(std::make_shared<CommandItem>("repairvehicle"_J));
 		tools->AddItem(std::make_shared<CommandItem>("fixallvehicles"_J));
 		tools->AddItem(std::make_shared<CommandItem>("callmechanic"_J));
+		tools->AddItem(std::make_shared<CommandItem>("resetvehicledeliverycooldown"_J));
 		tools->AddItem(std::make_shared<CommandItem>("requestpv"_J));
 		tools->AddItem(std::make_shared<CommandItem>("despawnpv"_J));
 		tools->AddItem(std::make_shared<CommandItem>("savepersonalvehicle"_J));
@@ -41,7 +44,7 @@ namespace YimMenu::Submenus
 
 			if (ImGui::Button("删除当前个人载具"))
 			{
-				if (!*Pointers.IsSessionStarted)
+				if (!Pointers.IsSessionStarted || !*Pointers.IsSessionStarted)
 				{
 					Notifications::Show("删除个人载具", "请先进入 GTA 在线模式。", NotificationType::Error);
 				}
@@ -95,6 +98,16 @@ namespace YimMenu::Submenus
 			}
 		}));
 
+		seatsAndDoors->AddItem(std::make_shared<ListCommandItem>("vehicleseat"_J));
+		seatsAndDoors->AddItem(std::make_shared<CommandItem>("entervehicleseat"_J));
+		seatsAndDoors->AddItem(std::make_shared<CommandItem>("openvehicledoors"_J));
+		seatsAndDoors->AddItem(std::make_shared<CommandItem>("closevehicledoors"_J));
+
+		hydraulics->AddItem(std::make_shared<ListCommandItem>("hydraulicwheel"_J));
+		hydraulics->AddItem(std::make_shared<FloatCommandItem>("hydraulicfactor"_J));
+		hydraulics->AddItem(std::make_shared<CommandItem>("raisehydraulicwheel"_J));
+		hydraulics->AddItem(std::make_shared<CommandItem>("lowerhydraulicwheel"_J));
+
 		misc->AddItem(std::make_shared<BoolCommandItem>("speedometer"_J));
 		misc->AddItem(std::make_shared<BoolCommandItem>("seatbelt"_J));
 		misc->AddItem(std::make_shared<BoolCommandItem>("lowervehiclestance"_J));
@@ -104,6 +117,8 @@ namespace YimMenu::Submenus
 
 		main->AddItem(globals);
 		main->AddItem(tools);
+		main->AddItem(seatsAndDoors);
+		main->AddItem(hydraulics);
 		main->AddItem(misc);
 
 		AddCategory(std::move(main));
