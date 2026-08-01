@@ -48,6 +48,7 @@ namespace YimMenu::Submenus
 		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistskipdatacrack"_J));
 		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistskipfingerprint"_J));
 		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistskipsignalnodes"_J));
+		finale->AddItem(std::make_shared<CommandItem>("kortzcenterheistautoenterpcaccesscode"_J));
 
 		tab->AddItem(target);
 		tab->AddItem(general);
