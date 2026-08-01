@@ -9,7 +9,8 @@
 | b1158.13 全量地址、特征码、车辆、脚本及四类抢劫数据 | 上游 PR [#988](https://github.com/YimMenu/YimMenuV2/pull/988)，锁定 `e65380a` | `213eebd` | 已合入；443 个 Windows 目标编译步骤通过，未实机验证 |
 | 无 FSL 公开/好友战局非法指令修复 | 上游 PR [#1019](https://github.com/YimMenu/YimMenuV2/pull/1019)，提交 `a9e9e0a` | `f1181c8` | 已按官方同步新版状态特征和 213 处函数恢复；下游临时崩溃绕过已撤销，等待实机复测 |
 | 名钻赌场豪劫单人气闸 | 上游 PR [#1018](https://github.com/YimMenu/YimMenuV2/pull/1018)，提交 `da012b1` | `244757e` | `fm_mission_controller` 局部变量已由 `63640` 更新为 `64655`；静态检查通过，待终章实机验证 |
-| 科兹中心豪劫准备配置 | 上游开放 PR [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014)，锁定 `40c22688` | `f1181c8` | 已新增目标、采购、准备和侦察状态；PR 无上游检查，未实机验证 |
+| 科兹中心豪劫准备配置 | 上游 PR [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014)，官方提交 `4913c02` | `3251abf` | 官方实现已同步；中文维护版保留中文化、安全检查和终章扩展，待实机验证 |
+| 2026-07-29 官方增量 | 上游 PR [#1042](https://github.com/YimMenu/YimMenuV2/pull/1042)、[#1044](https://github.com/YimMenu/YimMenuV2/pull/1044)、[#959](https://github.com/YimMenu/YimMenuV2/pull/959)、[#865](https://github.com/YimMenu/YimMenuV2/pull/865)、[#1052](https://github.com/YimMenu/YimMenuV2/pull/1052) | `3251abf` | 已同步加入战局特征码、科兹访问码、鼠标输入拦截、服装编辑器和赌场单人面板补丁；交叉编译通过，待 Windows CI 与 GTA 实测 |
 | 社区功能扩展 | lonelybud/YimMenuV2 `fbf441c8` 复核后重写 | 工作区改动 | 已新增科兹终章辅助、产业实时余额、在线保存、模块化解锁、载具座位/车门/液压和配送冷却；本机交叉编译通过项目模块目标，待 Windows 原生构建及实机验证 |
 | PR #970、#973、#979 的先期适配 | 上游 PR [#970](https://github.com/YimMenu/YimMenuV2/pull/970)、[#973](https://github.com/YimMenu/YimMenuV2/pull/973)、[#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `a28e89e`、`6ed8d61`、`d297bdc`、`703bc45`、`907dd05` | 历史记录保留，内容已由 #988 的更新版本覆盖 |
 
@@ -27,6 +28,7 @@
 - PR #1019 的 20 个改动文件已逐项解决与中文本地化及下游 #985 加固的冲突；`v1.1.0-zh-cn` 已通过 Windows 原生 Clang 构建、PE 校验和版本化产物上传。
 - PR #1018 只更新名钻赌场豪劫单人气闸的一处 `ScriptLocal` 常量；已核对官方提交差异并通过 `git diff --check`，未运行 GTA 实机流程。
 - 社区扩展的新增 C++ 编译单元已由 Zig/Clang Windows 交叉工具链编译，`YimMenuV2` 模块目标完成链接；默认 `all` 目标仍在既有的 `luajit.exe` 辅助链接步骤失败，不能据此宣称获得有效 Windows DLL。
+- `v1.3.1-zh-cn` 发布前检查完成 455 个 Zig/Clang Windows 目标步骤；所有编译单元通过，但 macOS 上的最终文件仍为 `ar archive`，发布有效性以标签触发的 Windows PE 校验为准。
 
 ## 崩溃定位与防护
 
