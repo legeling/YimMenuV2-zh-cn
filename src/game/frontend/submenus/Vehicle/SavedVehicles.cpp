@@ -32,17 +32,14 @@ namespace YimMenu::Submenus
 
 				if (ImGui::Button("保存"))
 					FiberPool::Push([saveToNewFolder] {
-						std::string fileName = vehicle_file_name_input;
+						std::string fileName = TrimString(vehicle_file_name_input);
 						strcpy(vehicle_file_name_input, "");
 
-						if (!TrimString(fileName).size())
+						if (!fileName.size())
 						{
 							Notifications::Show("已保存载具", "文件名不能为空！", NotificationType::Warning);
 							return;
 						}
-
-						ReplaceString(fileName, ".", ""); // filename say "bob.." will throw relative path error from Folder::GetFile
-						fileName += ".json";
 
 						SavedVehicles::Save(saveToNewFolder ? newFolder : folder, fileName);
 

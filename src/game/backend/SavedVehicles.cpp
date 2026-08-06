@@ -6,6 +6,7 @@
 #include "game/gta/VehicleModel.hpp"
 #include "game/backend/Self.hpp"
 #include "game/gta/Natives.hpp"
+#include "core/util/Strings.hpp"
 #include "game/gta/Vehicle.hpp"
 #include "game/gta/data/VehicleValues.hpp"
 
@@ -132,6 +133,9 @@ namespace YimMenu
 	{
 		if (auto veh = Self::GetVehicle(); veh && veh.IsValid())
 		{
+			ReplaceString(fileName, ".", "");
+			fileName += ".json";
+
 			const auto file = SavedVehicles::CheckFolder(folderName).GetFile(fileName);
 			std::ofstream file_stream(file.Path(), std::ios::out | std::ios::trunc);
 			file_stream << SavedVehicles::GetJson(veh).dump(4);

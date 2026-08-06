@@ -10,9 +10,9 @@
 
 - 官方仓库：[YimMenu/YimMenuV2](https://github.com/YimMenu/YimMenuV2)
 - 官方分支：`enhanced`
-- 已审查并同步至官方提交：`da012b18ed08e4f0b537bf0002ac8650a2273d4a`
-- 中文仓库集成提交：`244757eb79b363c44cd43f6a9ca38327d3926812`
-- 同步日期：2026-07-21
+- 已审查并同步至官方提交：`1715a64c1527bb8d2708febcde8f9dd2ff0b0b40`
+- 中文仓库集成提交：当前工作区（待提交）
+- 同步日期：2026-07-30
 
 本次官方基线包含：
 
@@ -24,6 +24,12 @@
 | [#988](https://github.com/YimMenu/YimMenuV2/pull/988) | `5d9ab8d` | 更新 GTA Enhanced `b1158.13` 的特征码、偏移、车辆、脚本和抢劫数据 | 下游此前已锁定 PR 头提交提前吸收；本轮确认官方版本覆盖基础适配，并撤销已被 #1019 取代的下游崩溃绕过 |
 | [#1019](https://github.com/YimMenu/YimMenuV2/pull/1019) | `a9e9e0a` | 恢复新版反作弊破坏或加密的游戏函数，更新 BattlEye 状态补丁，并修复遥测 Hook 签名等附带问题 | 功能实现按官方同步；仅保留中文本地化、发行规则及与本问题无关的通用稳定性修复 |
 | [#1018](https://github.com/YimMenu/YimMenuV2/pull/1018) | `da012b1` | 将名钻赌场豪劫“单人气闸”的 `fm_mission_controller` 局部变量从 `63640` 更新为 `64655` | 已按官方提交 `cherry-pick -x` 合入；静态差异检查通过，等待 GTA 1.73 实机验证 |
+| [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014) | `4913c02` | 新增科兹中心豪劫配置与七项终章辅助 | 已复核正式版；保留中文界面、筛选后的 Stats 掩码及会话/变量访问检查，补齐两项目标拿取辅助 |
+| [#1042](https://github.com/YimMenu/YimMenuV2/pull/1042) | `0581661` | 更新 `HandleJoinRequestIgnorePoolPatch` 特征码 | 已按官方提交更新特征码；补丁字节保持不变，待 Windows 构建及战局实测 |
+| [#1044](https://github.com/YimMenu/YimMenuV2/pull/1044) | `b6543e6` | 科兹中心豪劫自动输入电脑访问码 | 已同步并增加战局、任务线程和 Script Local 访问检查，界面与通知完成中文化 |
+| [#959](https://github.com/YimMenu/YimMenuV2/pull/959) | `5737893` | 阻止菜单鼠标点击穿透到游戏 | 已同步；使用现有 `user32.dll` 模块并处理 API 解析及调用失败，不新增模块引用 |
+| [#865](https://github.com/YimMenu/YimMenuV2/pull/865) | `f833a73` | 恢复旧版服装编辑器的保存、读取、文件夹和随机穿搭能力 | 已同步并完整中文化；增加路径、JSON、容量、模型范围及原子文件替换保护 |
+| [#1052](https://github.com/YimMenu/YimMenuV2/pull/1052) | `1715a64` | 为通用单人任务开关增加赌场终章面板补丁 | 已同步任务补丁；保留中文维护版现有 CJK 字体加载，不引入与功能无关的日文字体专用分支 |
 
 ## 提前吸收的官方 PR
 
@@ -32,7 +38,7 @@
 | 官方 PR | 锁定上游提交 | 中文提交 | 内容 | 吸收方式 | 当前状态 |
 | --- | --- | --- | --- | --- | --- |
 | [#988](https://github.com/YimMenu/YimMenuV2/pull/988) | `e65380a3b8cab46a20d18ee6bf89d3e0ca40f9f2` | `213eebd`、`3d30df7` | 全量适配 b1158.13 的网络、脚本、车辆、Globals、Locals、日常活动及四类抢劫硬编码数据；下游曾追加 `GameSkeletonUpdate` 节点屏蔽和异常上下文 | `cherry-pick -x` 后解决与 #970、#973、#979 及中文翻译的冲突，再追加审查修复 | 基础适配已由官方 #988 覆盖；下游崩溃绕过已由官方 #1019 的真实函数恢复取代并撤销 |
-| [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014) | `40c22688cd40448d3747adad0a072e6d5d3a94e5` | `f1181c8` | 新增科兹中心豪劫标签页，可选择 27 个主要目标，并配置采购、准备任务、次要目标和兴趣点侦察状态 | 按锁定 head patch 吸收，并采用 Rockstar 简体中文名称整理界面文本 | 官方 PR 仍开放、可合并，但没有上游评审和检查；代码已进入当前工作区，等待 GTA 实机验证 |
+| [#1014](https://github.com/YimMenu/YimMenuV2/pull/1014) | `40c22688cd40448d3747adad0a072e6d5d3a94e5` | `f1181c8` | 新增科兹中心豪劫标签页，可选择 27 个主要目标，并配置采购、准备任务、次要目标和兴趣点侦察状态 | 按锁定 head patch 吸收，并采用 Rockstar 简体中文名称整理界面文本 | 已由官方提交 `4913c02` 合并；下游已复核正式版增量并保留更严格的运行时检查 |
 | [#985](https://github.com/YimMenu/YimMenuV2/pull/985) | `3037a5e` | `29bfba5`、`c8124bb`、`13756c0`、`a56e02d` | 修复通知并发、Hook 状态、渲染帧同步、Lua 资源循环、PatternScanner 性能和启动错误处理；下游同时完善近地址跳板分配、完整镜像安全扫描、Call Site/IAT 内存保护、异常上下文、宏安全及 Hook 失败回滚 | `cherry-pick -x` 后追加审查修复 | 已提前吸收，等待官方处理 |
 | [#973](https://github.com/YimMenu/YimMenuV2/pull/973) | `187b910` | `703bc45` | 更新游戏升级后失效的网络伤害、事件确认、遥测、BattlEye 状态、加入战局和战局池相关特征码与偏移 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
 | [#970](https://github.com/YimMenu/YimMenuV2/pull/970) | `24219c5`、`b57c52b`、`5030953` | `a28e89e`、`6ed8d61`、`d297bdc` | 适配 GTA 1.73 / 1158.13：更新车辆列表、Script Global 基址、`GPBD_FM_2` 结构尺寸和衣柜脚本签名 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
@@ -82,6 +88,10 @@
 - 2026-07-19 锁定并吸收开放 PR #1014 的 `40c22688`：新增科兹中心豪劫的目标、采购、准备和侦察配置；PR 当前无上游评审或检查，本轮按用户要求不等待全量编译，仍需 GTA 实机验证各项 `MPX_K26_*` 数据。
 - `v1.1.0-zh-cn` 已通过 GitHub Actions Windows 原生 Clang 全量构建、PE DLL 校验和 Release 上传，产物为 `YimMenuV2-v1.1.0-zh-cn.dll`；本次缓存统计为 439 次未命中、0 次命中，构建成功但未获得缓存加速。
 - 2026-07-21 同步官方 PR #1018：名钻赌场豪劫“单人气闸”使用的 `ScriptLocal` 更新为 `64655`；本次仅改动一个常量，不触发发行流水线，仍需在终章双门通道中实机验证。
+- 2026-07-28 复核官方 PR #1014 正式提交 `4913c02`：本地已有五项带会话、任务线程和变量访问检查的终章辅助；本轮补齐主要及次要目标拿取，未引入正式版中未写入 Stats 的重复准备控件。
+- 2026-07-28 同步官方 PR #1042：将 `HandleJoinRequestIgnorePoolPatch` 更新为 `41 83 FF 05 0F 84 ? ? ? ? 8B 84 F7`；补丁仍写入四字节 `39 C9 90 90`，等待 Windows 原生构建和战局实测。
+- 本轮 `Pointers.cpp`、科兹中心后端和菜单入口均通过 Zig/Clang Windows 目标单文件编译，`git diff --check` 通过；完整 CMake 配置因 GitHub 依赖浅克隆停滞而主动中止，未执行链接或 GTA 实机验证。
+- 2026-07-30 同步官方 PR #1044、#959、#865 和 #1052：吸收科兹访问码、鼠标 Raw Input Hook、服装保存读取及赌场单人面板补丁；中文维护版保留现有中文字体和运行时检查，并加固服装文件输入与 Hook 失败路径。
 
 本机 macOS 没有完成有效 Windows DLL 构建，GTA 1.73 / 1158.13 实机验证也仍未完成。PR #988 已更新抢劫分红及任务功能中单独硬编码的 `ScriptGlobal(...)` / `ScriptLocal(...)` 地址，但静态更新和 GitHub 原生编译都不能替代游戏回归，因此仍不能确认这些功能已经适配。
 

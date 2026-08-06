@@ -1,7 +1,9 @@
 #include "core/commands/Command.hpp"
 #include "core/commands/BoolCommand.hpp"
 #include "core/commands/ListCommand.hpp"
+#include "core/backend/ScriptMgr.hpp"
 #include "core/frontend/Notifications.hpp"
+#include "game/gta/Natives.hpp"
 #include "game/gta/ScriptGlobal.hpp"
 #include "game/gta/ScriptLocal.hpp"
 #include "game/gta/Scripts.hpp"
@@ -298,6 +300,78 @@ namespace YimMenu::Features
 			}
 		};
 
+		class TakePrimaryTarget final : public Command
+		{
+			using Command::Command;
+
+			void OnCall() override
+			{
+				auto thread = RequireFinaleThread("拿取主要目标");
+				if (!thread)
+					return;
+
+				auto target = ScriptLocal(thread, 29355).At(11);
+				if (!target.CanAccess())
+				{
+					Notifications::Show("拿取主要目标", "任务局部变量当前不可访问。", NotificationType::Error);
+					return;
+				}
+
+				*target.As<int*>() = 10;
+				Notifications::Show("拿取主要目标", "已触发主要目标拿取。", NotificationType::Success);
+			}
+		};
+
+		class TakeSecondaryTarget final : public Command
+		{
+			using Command::Command;
+
+			void OnCall() override
+			{
+				auto thread = RequireFinaleThread("拿取次要目标");
+				if (!thread)
+					return;
+
+				auto target = ScriptLocal(thread, 29355).At(11);
+				if (!target.CanAccess())
+				{
+					Notifications::Show("拿取次要目标", "任务局部变量当前不可访问。", NotificationType::Error);
+					return;
+				}
+
+				*target.As<int*>() = 3;
+				Notifications::Show("拿取次要目标", "已触发次要目标拿取。", NotificationType::Success);
+			}
+		};
+
+		class AutoEnterPcAccessCode final : public Command
+		{
+			using Command::Command;
+
+			void OnCall() override
+			{
+				for (int index = 0; index < 3; index++)
+				{
+					auto thread = RequireFinaleThread("自动输入电脑访问代码");
+					if (!thread)
+						return;
+
+					auto digit = ScriptLocal(thread, 32818).At(1).At(index, 2).At(1);
+					if (!digit.CanAccess())
+					{
+						Notifications::Show("自动输入电脑访问代码", "任务局部变量当前不可访问。", NotificationType::Error);
+						return;
+					}
+
+					*digit.As<int*>() = 0;
+					ScriptMgr::Yield(100ms);
+					PAD::SET_CONTROL_VALUE_NEXT_FRAME(0, 237, 1.0f);
+				}
+
+				Notifications::Show("自动输入电脑访问代码", "访问代码已自动输入。", NotificationType::Success);
+			}
+		};
+
 		static Setup _KortzCenterSetup{"kortzcenterheistsetup", "应用设置", "写入所选目标、采购、准备任务和侦察状态。"};
 		static ApplyRecommendedSetup _KortzCenterRecommendedSetup{"kortzcenterheistrecommendedsetup", "应用推荐配置", "使用经筛选的统计掩码完成全部采购、前置和侦察，同时保留所选主要目标。"};
 		static CutGlass _KortzCenterCutGlass{"kortzcenterheistcutglass", "快速切割玻璃", "在科兹中心豪劫终章中完成玻璃切割进度。"};
@@ -305,5 +379,8 @@ namespace YimMenu::Features
 		static SkipDataCrack _KortzCenterSkipDataCrack{"kortzcenterheistskipdatacrack", "跳过数据破解", "在科兹中心豪劫终章中完成数据破解。"};
 		static SkipFingerprint _KortzCenterSkipFingerprint{"kortzcenterheistskipfingerprint", "跳过指纹破解", "在科兹中心豪劫终章中完成指纹破解。"};
 		static SkipSignalNodes _KortzCenterSkipSignalNodes{"kortzcenterheistskipsignalnodes", "跳过信号节点", "在科兹中心豪劫终章中完成信号节点破解。"};
+		static TakePrimaryTarget _KortzCenterTakePrimaryTarget{"kortzcenterheisttakeprimary", "拿取主要目标", "站在主要目标旁，在科兹中心豪劫终章中触发目标拿取。"};
+		static TakeSecondaryTarget _KortzCenterTakeSecondaryTarget{"kortzcenterheisttakesecondary", "拿取次要目标", "站在次要目标旁，在科兹中心豪劫终章中触发目标拿取。"};
+		static AutoEnterPcAccessCode _KortzCenterAutoEnterPcAccessCode{"kortzcenterheistautoenterpcaccesscode", "自动输入电脑访问代码", "在科兹中心豪劫终章中自动填写三位电脑访问代码。"};
 	}
 }
