@@ -56,6 +56,20 @@ namespace YimMenu
 		    -1);
 	}
 
+	static const ImWchar* GetGlyphRangesCyrillicOnly()
+	{
+		static const ImWchar ranges[] = {
+		    0x0400,
+		    0x052F,
+		    0x2DE0,
+		    0x2DFF,
+		    0xA640,
+		    0xA69F,
+		    0,
+		};
+		return ranges;
+	}
+
 	static ImFont* CreateFontWithCjkSupport(ImGuiIO& io, float size)
 	{
 		ImFontConfig FontCfg{};
@@ -74,6 +88,14 @@ namespace YimMenu
 				break;
 			}
 		}
+
+		const auto arialPath = fontsPath / "arial.ttf";
+		if (std::filesystem::exists(arialPath))
+			io.Fonts->AddFontFromFileTTF(arialPath.string().c_str(), size, &FontCfg, GetGlyphRangesCyrillicOnly());
+
+		const auto meiryoPath = fontsPath / "meiryo.ttc";
+		if (std::filesystem::exists(meiryoPath))
+			io.Fonts->AddFontFromFileTTF(meiryoPath.string().c_str(), size, &FontCfg, io.Fonts->GetGlyphRangesJapanese());
 
 		io.Fonts->Build();
 

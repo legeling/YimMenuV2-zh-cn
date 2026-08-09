@@ -6,6 +6,10 @@
 #include "game/backend/Outfit.hpp"
 #include "game/backend/Self.hpp"
 #include "game/frontend/items/Items.hpp"
+#include "core/backend/FiberPool.hpp"
+#include "game/backend/Outfit.hpp"
+#include "core/frontend/Notifications.hpp"
+#include "game/backend/Self.hpp"
 #include "game/gta/Natives.hpp"
 
 #include "misc/cpp/imgui_stdlib.h"

@@ -35,6 +35,7 @@
 - PR #1042 的 `HandleJoinRequestIgnorePoolPatch` 仅替换一组特征码，不改变补丁字节或扫描复杂度。
 - 本轮修改的 `Pointers.cpp`、科兹中心后端和菜单入口均通过 Zig/Clang Windows 目标单文件编译；完整 CMake 配置因 GitHub 依赖浅克隆停滞而中止，未生成 DLL。
 - 社区扩展的新增 C++ 编译单元已由 Zig/Clang Windows 交叉工具链编译，`YimMenuV2` 模块目标完成链接；默认 `all` 目标仍在既有的 `luajit.exe` 辅助链接步骤失败，不能据此宣称获得有效 Windows DLL。
+- `v1.3.1-zh-cn` 发布前检查完成 455 个 Zig/Clang Windows 目标步骤；所有编译单元通过，但 macOS 上的最终文件仍为 `ar archive`，发布有效性以标签触发的 Windows PE 校验为准。
 
 ## 崩溃定位与防护
 
