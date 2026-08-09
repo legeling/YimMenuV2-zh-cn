@@ -27,4 +27,9 @@ namespace YimMenu::Stats
 	extern void SetMaskedInt(std::string statName, int bitStart, int bitSize, int value);
 	extern bool GetMaskedBool(std::string statName, int bitIndex);
 	extern int GetMaskedInt(std::string statName, int bitIndex, int bitSize);
+
+	extern void SetMaskedUInt64(Hash hash, std::uint64_t value);
+	extern void SetMaskedUInt64(std::string statName, std::uint64_t value);
+	extern std::uint64_t GetMaskedUInt64(Hash hash, int playerIndex = -1);
+	extern std::uint64_t GetMaskedUInt64(std::string statName, int playerIndex = -1);
 }

@@ -5,6 +5,7 @@ class sStatData
 public:
 	enum class Type
 	{
+		NONE = 0,
 		INT = 1,
 		FLOAT,
 		STRING,
@@ -15,6 +16,10 @@ public:
 		UINT64,
 		DATE = 20,
 		POS,
+		TEXTLABEL = 22,
+		PACKED,
+		USERID,
+		PROFILE_SETTING,
 		INT64 = 26,
 	};
 

@@ -3,6 +3,10 @@
 
 namespace YimMenu::Stats
 {
+	constexpr int kMaskedChunkBits = 16;
+	constexpr int kMaskedValueBits = 64;
+	constexpr std::uint64_t kMaskedChunkMask = (std::uint64_t{1} << kMaskedChunkBits) - 1;
+
 	static void ConvertMPX(std::string& statName)
 	{
 		std::transform(statName.begin(), statName.end(), statName.begin(), ::tolower);
@@ -136,5 +140,38 @@ namespace YimMenu::Stats
 		ConvertMPX(statName);
 		STATS::STAT_GET_MASKED_INT(Joaat(statName), &value, bitIndex, bitSize, -1);
 		return value;
+	}
+
+	void SetMaskedUInt64(Hash hash, std::uint64_t value)
+	{
+		for (int bitIndex = 0; bitIndex < kMaskedValueBits; bitIndex += kMaskedChunkBits)
+		{
+			const auto chunk = static_cast<int>((value >> bitIndex) & kMaskedChunkMask);
+			STATS::STAT_SET_MASKED_INT(hash, chunk, bitIndex, kMaskedChunkBits, true);
+		}
+	}
+
+	void SetMaskedUInt64(std::string statName, std::uint64_t value)
+	{
+		ConvertMPX(statName);
+		SetMaskedUInt64(Joaat(statName), value);
+	}
+
+	std::uint64_t GetMaskedUInt64(Hash hash, int playerIndex)
+	{
+		std::uint64_t value = 0;
+		for (int bitIndex = 0; bitIndex < kMaskedValueBits; bitIndex += kMaskedChunkBits)
+		{
+			int chunk = 0;
+			STATS::STAT_GET_MASKED_INT(hash, &chunk, bitIndex, kMaskedChunkBits, playerIndex);
+			value |= (static_cast<std::uint64_t>(chunk) & kMaskedChunkMask) << bitIndex;
+		}
+		return value;
+	}
+
+	std::uint64_t GetMaskedUInt64(std::string statName, int playerIndex)
+	{
+		ConvertMPX(statName);
+		return GetMaskedUInt64(Joaat(statName), playerIndex);
 	}
 }

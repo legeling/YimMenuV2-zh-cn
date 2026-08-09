@@ -44,6 +44,7 @@
 | [#970](https://github.com/YimMenu/YimMenuV2/pull/970) | `24219c5`、`b57c52b`、`5030953` | `a28e89e`、`6ed8d61`、`d297bdc` | 适配 GTA 1.73 / 1158.13：更新车辆列表、Script Global 基址、`GPBD_FM_2` 结构尺寸和衣柜脚本签名 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
 | [#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `e075bd4` | `907dd05` | 更新赌场老虎机结果表和旋转状态的 script local 索引 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
 | [#967](https://github.com/YimMenu/YimMenuV2/pull/967) | `f47abeb` | `8e9491f` | 将 FSL 文件名说明从 `version.dll` 更新为 `WINMM.dll` | 手工适配中文 README | 已提前吸收，等待官方处理 |
+| [#1069](https://github.com/YimMenu/YimMenuV2/pull/1069) | `74a6c1d99dd1610c31b5ea2eaceafb438df5196f` | 本次合入提交 | 修复 Stat Editor 的 `INT64` / `UINT64` 持久化和 64 位 Packed Stat 读写 | 手工吸收并保留中文界面；拆分四个 16 位掩码块、复用公共辅助函数并修正边界与字符串前缀处理 | 已提前吸收，等待 Windows 原生构建及 GTA 重新登录验证 |
 
 ## 社区实现复核
 
@@ -92,6 +93,7 @@
 - 2026-07-28 同步官方 PR #1042：将 `HandleJoinRequestIgnorePoolPatch` 更新为 `41 83 FF 05 0F 84 ? ? ? ? 8B 84 F7`；补丁仍写入四字节 `39 C9 90 90`，等待 Windows 原生构建和战局实测。
 - 本轮 `Pointers.cpp`、科兹中心后端和菜单入口均通过 Zig/Clang Windows 目标单文件编译，`git diff --check` 通过；完整 CMake 配置因 GitHub 依赖浅克隆停滞而主动中止，未执行链接或 GTA 实机验证。
 - 2026-07-30 同步官方 PR #1044、#959、#865 和 #1052：吸收科兹访问码、鼠标 Raw Input Hook、服装保存读取及赌场单人面板补丁；中文维护版保留现有中文字体和运行时检查，并加固服装文件输入与 Hook 失败路径。
+- 2026-08-09 锁定并吸收官方 PR #1069 的 `74a6c1d9`：补齐 Stat 类型编号、`INT64` / `UINT64` 持久化路径和 64 位 Packed Stat 编辑；未照搬带 BOM、重复重载实现和错误的 64 位 ImGui 格式。`Stats.cpp`、`StatEditor.cpp` 及现有 32 位 Bitfield 调用已通过 Zig/Clang Windows 目标对象编译，仍需 Windows 原生完整构建及 GTA 重登验证。
 
 本机 macOS 没有完成有效 Windows DLL 构建，GTA 1.73 / 1158.13 实机验证也仍未完成。PR #988 已更新抢劫分红及任务功能中单独硬编码的 `ScriptGlobal(...)` / `ScriptLocal(...)` 地址，但静态更新和 GitHub 原生编译都不能替代游戏回归，因此仍不能确认这些功能已经适配。
 
