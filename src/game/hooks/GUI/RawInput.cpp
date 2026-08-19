@@ -1,7 +1,6 @@
 #include "core/hooking/DetourHook.hpp"
+#include "core/renderer/Renderer.hpp"
 #include "game/hooks/Hooks.hpp"
-
-#include <imgui.h>
 
 namespace YimMenu::Hooks
 {
@@ -10,7 +9,7 @@ namespace YimMenu::Hooks
 		auto result = BaseHook::Get<RawInput::GetRawInputData, DetourHook<decltype(&RawInput::GetRawInputData)>>()->Original()(hRawInput, uiCommand, pData, pcbSize, cbSizeHeader);
 
 		constexpr auto failure = static_cast<UINT>(-1);
-		if (result != failure && result > 0 && pData && uiCommand == RID_INPUT && ImGui::GetCurrentContext() && ImGui::GetIO().WantCaptureMouse)
+		if (result != failure && result > 0 && pData && uiCommand == RID_INPUT && Renderer::IsInitialized() && ImGui::GetCurrentContext() && ImGui::GetIO().WantCaptureMouse)
 		{
 			auto& raw = *static_cast<RAWINPUT*>(pData);
 			if (raw.header.dwType == RIM_TYPEMOUSE)

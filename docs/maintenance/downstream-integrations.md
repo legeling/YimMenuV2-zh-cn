@@ -10,9 +10,9 @@
 
 - 官方仓库：[YimMenu/YimMenuV2](https://github.com/YimMenu/YimMenuV2)
 - 官方分支：`enhanced`
-- 已审查并同步至官方提交：`1715a64c1527bb8d2708febcde8f9dd2ff0b0b40`
+- 已审查并同步至官方提交：`5d3dc15c8d1cc566984c98b448750eeaf3b9cae3`
 - 中文仓库集成提交：当前工作区（待提交）
-- 同步日期：2026-07-30
+- 同步日期：2026-08-19
 
 本次官方基线包含：
 
@@ -30,6 +30,10 @@
 | [#959](https://github.com/YimMenu/YimMenuV2/pull/959) | `5737893` | 阻止菜单鼠标点击穿透到游戏 | 已同步；使用现有 `user32.dll` 模块并处理 API 解析及调用失败，不新增模块引用 |
 | [#865](https://github.com/YimMenu/YimMenuV2/pull/865) | `f833a73` | 恢复旧版服装编辑器的保存、读取、文件夹和随机穿搭能力 | 已同步并完整中文化；增加路径、JSON、容量、模型范围及原子文件替换保护 |
 | [#1052](https://github.com/YimMenu/YimMenuV2/pull/1052) | `1715a64` | 为通用单人任务开关增加赌场终章面板补丁 | 已同步任务补丁；保留中文维护版现有 CJK 字体加载，不引入与功能无关的日文字体专用分支 |
+| [#1067](https://github.com/YimMenu/YimMenuV2/pull/1067) | `3626337` | 增加 ImGui 渲染回调、Lua Script Global/Local 接口及六方向传送命令 | 已同步 API 与传送入口；命令名称和说明完成中文化 |
+| [#1084](https://github.com/YimMenu/YimMenuV2/pull/1084) | `fdb1a04` | 重写 D3D12 Renderer，将 SwapChain 与窗口处理迁移到独立渲染 Hook | 已同步核心重写；保留下游 Raw Input 失败检查、中文字体加载和 Hook 队列回滚保护 |
+| [#1069](https://github.com/YimMenu/YimMenuV2/pull/1069) | `3ad9b2a` | 扩展 Stat Editor 的 64 位、Packed、用户 ID、位置和日期类型读写 | 正式提交已覆盖此前提前吸收版本；保留下游有符号 64 位处理、字符串所有权、日期校验和批量输入上限 |
+| [#1095](https://github.com/YimMenu/YimMenuV2/pull/1095) | `5d3dc15` | 改进玩家与行人 ESP 骨骼绘制 | 已同步并保留中文 ESP 命令文本，等待游戏画面验证 |
 
 ## 提前吸收的官方 PR
 
@@ -44,7 +48,7 @@
 | [#970](https://github.com/YimMenu/YimMenuV2/pull/970) | `24219c5`、`b57c52b`、`5030953` | `a28e89e`、`6ed8d61`、`d297bdc` | 适配 GTA 1.73 / 1158.13：更新车辆列表、Script Global 基址、`GPBD_FM_2` 结构尺寸和衣柜脚本签名 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
 | [#979](https://github.com/YimMenu/YimMenuV2/pull/979) | `e075bd4` | `907dd05` | 更新赌场老虎机结果表和旋转状态的 script local 索引 | `cherry-pick -x` | 历史先期适配；已由 #988 的新值覆盖 |
 | [#967](https://github.com/YimMenu/YimMenuV2/pull/967) | `f47abeb` | `8e9491f` | 将 FSL 文件名说明从 `version.dll` 更新为 `WINMM.dll` | 手工适配中文 README | 已提前吸收，等待官方处理 |
-| [#1069](https://github.com/YimMenu/YimMenuV2/pull/1069) | `74a6c1d99dd1610c31b5ea2eaceafb438df5196f` | 本次合入提交 | 修复 Stat Editor 的 `INT64` / `UINT64` 持久化和 64 位 Packed Stat 读写 | 手工吸收并保留中文界面；拆分四个 16 位掩码块、复用公共辅助函数并修正边界与字符串前缀处理 | 已提前吸收，等待 Windows 原生构建及 GTA 重新登录验证 |
+| [#1069](https://github.com/YimMenu/YimMenuV2/pull/1069) | `74a6c1d99dd1610c31b5ea2eaceafb438df5196f` | `1d859c9` | 修复 Stat Editor 的 `INT64` / `UINT64` 持久化和 64 位 Packed Stat 读写 | 手工吸收并保留中文界面；拆分四个 16 位掩码块、复用公共辅助函数并修正边界与字符串前缀处理 | 已由官方提交 `3ad9b2a` 合并；本轮复核正式增量并继续保留下游加固 |
 
 ## 社区实现复核
 
@@ -94,6 +98,8 @@
 - 本轮 `Pointers.cpp`、科兹中心后端和菜单入口均通过 Zig/Clang Windows 目标单文件编译，`git diff --check` 通过；完整 CMake 配置因 GitHub 依赖浅克隆停滞而主动中止，未执行链接或 GTA 实机验证。
 - 2026-07-30 同步官方 PR #1044、#959、#865 和 #1052：吸收科兹访问码、鼠标 Raw Input Hook、服装保存读取及赌场单人面板补丁；中文维护版保留现有中文字体和运行时检查，并加固服装文件输入与 Hook 失败路径。
 - 2026-08-09 锁定并吸收官方 PR #1069 的 `74a6c1d9`：补齐 Stat 类型编号、`INT64` / `UINT64` 持久化路径和 64 位 Packed Stat 编辑；未照搬带 BOM、重复重载实现和错误的 64 位 ImGui 格式。`Stats.cpp`、`StatEditor.cpp` 及现有 32 位 Bitfield 调用已通过 Zig/Clang Windows 目标对象编译，仍需 Windows 原生完整构建及 GTA 重登验证。
+- 2026-08-19 同步官方 PR #1067、#1084、#1069 和 #1095：引入渲染回调、方向传送、D3D12 Renderer 重写、扩展 Stat 类型以及新版 ESP 骨骼绘制；冲突处理保留中文字体、命令文本、Raw Input 检查和此前的 64 位 Stat 加固。Renderer 每帧工作仍与回调和绘制数据线性相关，方向传送及单项 Stat 操作为 `O(1)`；剪贴板 Stat 导入限制为 1 MiB / 4096 行，Packed 范围单次最多写入 4096 项。
+- 本轮 CMake 4.3.2 / Zig 0.16 Windows 目标构建完成全部 455 个步骤并通过所有 C/C++ 编译单元；验证同时修复了服装后端与菜单中 `const Ped` 误用及依赖模板调用。macOS 上最终 `libYimMenuV2.dll` 仍是 `ar archive` 而不是 PE DLL，因此只能证明源码和链接输入通过交叉工具链，仍需 GitHub Actions 的 Windows 原生构建确认有效产物。
 
 本机 macOS 没有完成有效 Windows DLL 构建，GTA 1.73 / 1158.13 实机验证也仍未完成。PR #988 已更新抢劫分红及任务功能中单独硬编码的 `ScriptGlobal(...)` / `ScriptLocal(...)` 地址，但静态更新和 GitHub 原生编译都不能替代游戏回归，因此仍不能确认这些功能已经适配。
 

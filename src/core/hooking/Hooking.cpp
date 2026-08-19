@@ -10,8 +10,6 @@ namespace YimMenu
 {
 	Hooking::Hooking()
 	{
-		BaseHook::Add<Hooks::Window::WndProc>(new DetourHook("WndProc", Pointers.WndProc, Hooks::Window::WndProc));
-
 		if (const auto user32 = GetModuleHandleA("user32.dll"))
 		{
 			if (const auto getRawInputData = GetProcAddress(user32, "GetRawInputData"))
@@ -23,10 +21,6 @@ namespace YimMenu
 		{
 			LOG(WARNING) << "无法获取 user32.dll，鼠标点击可能穿透菜单。";
 		}
-
-		auto swapchain_vft = *reinterpret_cast<void***>(*Pointers.SwapChain);
-		BaseHook::Add<Hooks::SwapChain::Present>(new DetourHook("Present", swapchain_vft[Hooks::SwapChain::VMTPresentIdx], Hooks::SwapChain::Present));
-		BaseHook::Add<Hooks::SwapChain::ResizeBuffers>(new DetourHook("ResizeBuffers", swapchain_vft[Hooks::SwapChain::VMTResizeBuffersIdx], Hooks::SwapChain::ResizeBuffers));
 
 		// BaseHook::Add<Hooks::Anticheat::QueueDependency>(new DetourHook("QueueDependency", Pointers.QueueDependency, Hooks::Anticheat::QueueDependency));
 		BaseHook::Add<Hooks::Anticheat::GameSkeletonUpdate>(new DetourHook("GameSkeletonUpdate", Pointers.GameSkeletonUpdate, Hooks::Anticheat::GameSkeletonUpdate));

@@ -36,7 +36,7 @@ namespace YimMenu
 
 		void RefreshStats()
 		{
-			const auto self = Self::GetPed();
+			auto self = Self::GetPed();
 			if (!self)
 				return;
 
@@ -106,7 +106,7 @@ namespace YimMenu
 					item.textureId = 0;
 					const auto selected = item;
 					FiberPool::Push([this, id, selected] {
-						const auto self = Self::GetPed();
+						auto self = Self::GetPed();
 						if (self)
 							PED::SET_PED_COMPONENT_VARIATION(self.GetHandle(), id, selected.drawableId, 0, PED::GET_PED_PALETTE_VARIATION(self.GetHandle(), id));
 						RefreshStats();
@@ -119,7 +119,7 @@ namespace YimMenu
 					Outfit::OutfitEditor::CheckBoundsTexture(item, 0);
 					const auto selected = item;
 					FiberPool::Push([this, id, selected] {
-						const auto self = Self::GetPed();
+						auto self = Self::GetPed();
 						if (self)
 							PED::SET_PED_COMPONENT_VARIATION(self.GetHandle(), id, selected.drawableId, selected.textureId, PED::GET_PED_PALETTE_VARIATION(self.GetHandle(), id));
 						RefreshStats();
@@ -145,7 +145,7 @@ namespace YimMenu
 					item.textureId = 0;
 					const auto selected = item;
 					FiberPool::Push([this, id, selected] {
-						const auto self = Self::GetPed();
+						auto self = Self::GetPed();
 						if (self && selected.drawableId < 0)
 							PED::CLEAR_PED_PROP(self.GetHandle(), id, 1);
 						else if (self)
@@ -160,7 +160,7 @@ namespace YimMenu
 					Outfit::OutfitEditor::CheckBoundsTexture(item, 0);
 					const auto selected = item;
 					FiberPool::Push([this, id, selected] {
-						const auto self = Self::GetPed();
+						auto self = Self::GetPed();
 						if (self && selected.drawableId >= 0)
 							PED::SET_PED_PROP_INDEX(self.GetHandle(), id, selected.drawableId, selected.textureId, TRUE, 0);
 						RefreshStats();

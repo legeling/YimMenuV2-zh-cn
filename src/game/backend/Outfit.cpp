@@ -45,10 +45,10 @@ namespace
 			    || !(*entry)["drawable_id"].is_number_integer() || !(*entry)["texture_id"].is_number_integer())
 				return false;
 
-			item.drawableId = (*entry)["drawable_id"].get<int>();
-			item.textureId = (*entry)["texture_id"].get<int>();
+			item.drawableId = (*entry)["drawable_id"].template get<int>();
+			item.textureId = (*entry)["texture_id"].template get<int>();
 			if (entry->contains("palette_var") && (*entry)["palette_var"].is_number_integer())
-				item.palette = (*entry)["palette_var"].get<int>();
+				item.palette = (*entry)["palette_var"].template get<int>();
 			item.present = true;
 			loadedAny = true;
 		}
@@ -71,7 +71,7 @@ namespace YimMenu::Outfit
 
 	void OutfitEditor::SetSelfOutfit(const OutfitComponents& components, const OutfitProps& props, bool applyHair)
 	{
-		const auto self = Self::GetPed();
+		auto self = Self::GetPed();
 		if (!self)
 			return;
 
@@ -115,7 +115,7 @@ namespace YimMenu::Outfit
 
 	void OutfitEditor::RandomizeOutfit()
 	{
-		const auto self = Self::GetPed();
+		auto self = Self::GetPed();
 		if (!self)
 			return;
 
@@ -193,7 +193,7 @@ namespace YimMenu::Outfit
 			return false;
 		}
 
-		const auto self = Self::GetPed();
+		auto self = Self::GetPed();
 		if (!self || json["model"].get<Hash>() != self.GetModel())
 		{
 			Notifications::Show("服装编辑器", "服装文件与当前角色模型不匹配。", NotificationType::Error);
@@ -223,7 +223,7 @@ namespace YimMenu::Outfit
 			return false;
 		}
 
-		const auto self = Self::GetPed();
+		auto self = Self::GetPed();
 		if (!self)
 		{
 			Notifications::Show("服装编辑器", "未找到玩家角色。", NotificationType::Error);

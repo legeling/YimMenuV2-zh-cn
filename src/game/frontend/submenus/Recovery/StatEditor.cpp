@@ -8,7 +8,11 @@
 #include "game/pointers/Pointers.hpp"
 #include "types/stats/CStatsMgr.hpp"
 
+#include <array>
 #include <bit>
+#include <charconv>
+#include <cstdio>
+#include <cstring>
 
 namespace YimMenu::Submenus
 {
@@ -38,13 +42,18 @@ namespace YimMenu::Submenus
 	};
 
 	union StatValue {
-		float m_AsFloat;
+		float m_AsFloat[3];
 		int m_AsInt;
 		bool m_AsBool;
 		std::int64_t m_AsI64;
 		std::uint64_t m_AsU64;
-		char m_AsString[12];
+		char m_AsString[21];
+		Date m_Date;
 	};
+
+	constexpr std::size_t kMaxClipboardBytes = 1024 * 1024;
+	constexpr std::size_t kMaxClipboardLines = 4096;
+	constexpr std::size_t kMaxPackedRangeWrites = 4096;
 
 	// https://stackoverflow.com/questions/66897068/can-trim-of-a-string-be-done-inplace-with-c20-ranges
 	static std::string_view TrimString(std::string_view string)
@@ -53,12 +62,12 @@ namespace YimMenu::Submenus
 		    std::ranges::find_if_not(
 		        string,
 		        [](auto c) {
-			        return std::isspace(c);
+			        return std::isspace(static_cast<unsigned char>(c));
 		        }),
 		    std::ranges::find_if_not(
 		        string | std::views::reverse,
 		        [](auto c) {
-			        return std::isspace(c);
+			        return std::isspace(static_cast<unsigned char>(c));
 		        }).base()};
 	}
 
@@ -79,7 +88,7 @@ namespace YimMenu::Submenus
 
 		name.m_Name = name_str;
 
-		if (len > 3 && tolower(name_str[0]) == 'm' && tolower(name_str[1]) == 'p' && tolower(name_str[2]) == 'x')
+		if (len > 3 && std::tolower(static_cast<unsigned char>(name_str[0])) == 'm' && std::tolower(static_cast<unsigned char>(name_str[1])) == 'p' && std::tolower(static_cast<unsigned char>(name_str[2])) == 'x')
 		{
 			if (auto last_char = Pointers.StatsMgr->GetStat("MPPLY_LAST_MP_CHAR"_J))
 			{
@@ -91,7 +100,7 @@ namespace YimMenu::Submenus
 		name.m_NameHash = Joaat(name.m_Name);
 		name.m_Data = Pointers.StatsMgr->GetStat(name.m_NameHash);
 
-		if (name.m_Data == nullptr && len > 3 && (tolower(name_str[0]) != 'm' || tolower(name_str[1]) != 'p' || !(tolower(name_str[2]) == '0' || tolower(name_str[2]) == '1')))
+		if (name.m_Data == nullptr && len > 3 && (std::tolower(static_cast<unsigned char>(name_str[0])) != 'm' || std::tolower(static_cast<unsigned char>(name_str[1])) != 'p' || !(std::tolower(static_cast<unsigned char>(name_str[2])) == '0' || std::tolower(static_cast<unsigned char>(name_str[2])) == '1')))
 		{
 			// stat names without a character prefix
 			auto last_char = Pointers.StatsMgr->GetStat("MPPLY_LAST_MP_CHAR"_J);
@@ -112,7 +121,7 @@ namespace YimMenu::Submenus
 		return name;
 	}
 
-	static void ReadStat(StatValue& value, sStatData* data)
+	static void ReadStat(std::uint32_t hash, StatValue& value, sStatData* data)
 	{
 		memset(&value, 0, sizeof(StatValue));
 
@@ -122,7 +131,7 @@ namespace YimMenu::Submenus
 			value.m_AsBool = data->GetBool();
 			return;
 		case sStatData::Type::FLOAT:
-			value.m_AsFloat = data->GetFloat();
+			value.m_AsFloat[0] = data->GetFloat();
 			return;
 		case sStatData::Type::INT:
 		case sStatData::Type::UINT32:
@@ -138,8 +147,24 @@ namespace YimMenu::Submenus
 			value.m_AsU64 = data->GetUInt64();
 			return;
 		case sStatData::Type::STRING:
-			strncpy(value.m_AsString, data->GetString(), sizeof(value.m_AsString));
+			if (const auto text = data->GetString())
+				std::snprintf(value.m_AsString, sizeof(value.m_AsString), "%s", text);
 			return;
+		case sStatData::Type::POS:
+			STATS::STAT_GET_POS(hash, &value.m_AsFloat[0], &value.m_AsFloat[1], &value.m_AsFloat[2], -1);
+			return;
+		case sStatData::Type::DATE:
+			STATS::STAT_GET_DATE(hash, &value.m_Date, SCR_SIZEOF(Date), -1);
+			return;
+		case sStatData::Type::USERID:
+		{
+			char userId[21]{};
+			if (data->GetUserID(userId, sizeof(userId)))
+				value.m_AsU64 = std::strtoull(userId, nullptr, 10);
+			return;
+		}
+		case sStatData::Type::PROFILE_SETTING:
+		case sStatData::Type::TEXTLABEL:
 		default:
 			return; // data type not supported
 		}
@@ -168,7 +193,7 @@ namespace YimMenu::Submenus
 			STATS::STAT_SET_BOOL(hash, value.m_AsBool, true);
 			return;
 		case sStatData::Type::FLOAT:
-			STATS::STAT_SET_FLOAT(hash, value.m_AsFloat, true);
+			STATS::STAT_SET_FLOAT(hash, value.m_AsFloat[0], true);
 			return;
 		case sStatData::Type::INT:
 		case sStatData::Type::UINT32:
@@ -185,12 +210,59 @@ namespace YimMenu::Submenus
 		case sStatData::Type::STRING:
 			STATS::STAT_SET_STRING(hash, value.m_AsString, true);
 			return;
+		case sStatData::Type::USERID:
+		{
+			const auto userId = std::to_string(value.m_AsU64);
+			STATS::STAT_SET_USER_ID(hash, userId.c_str(), true);
+			return;
+		}
 		case sStatData::Type::PACKED:
 			Stats::SetMaskedUInt64(hash, value.m_AsU64);
 			return;
+		case sStatData::Type::POS:
+			STATS::STAT_SET_POS(hash, value.m_AsFloat[0], value.m_AsFloat[1], value.m_AsFloat[2], true);
+			return;
+		case sStatData::Type::DATE:
+			STATS::STAT_SET_DATE(hash, &value.m_Date, SCR_SIZEOF(Date), true);
+			return;
+		case sStatData::Type::PROFILE_SETTING:
+		case sStatData::Type::TEXTLABEL:
 		default:
 			return; // data type not supported
 		}
+	}
+
+	static bool CheckDate(const Date& date)
+	{
+		if (date.Year < 0 || date.Month < 1 || date.Month > 12 || date.Day < 1 || date.Hour < 0 || date.Hour > 23 || date.Minute < 0 || date.Minute > 59 || date.Second < 0 || date.Second > 59 || date.Millisecond < 0 || date.Millisecond > 999)
+			return false;
+
+		constexpr std::array daysPerMonth{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		auto maxDay = daysPerMonth[date.Month - 1];
+		const bool leapYear = (date.Year % 4 == 0 && date.Year % 100 != 0) || date.Year % 400 == 0;
+		if (date.Month == 2 && leapYear)
+			maxDay = 29;
+
+		return date.Day <= maxDay;
+	}
+
+	template<typename T, std::size_t Size>
+	static bool ParseCommaSeparated(std::string_view text, std::array<T, Size>& output)
+	{
+		std::size_t index = 0;
+		for (auto part : text | std::views::split(','))
+		{
+			if (index == output.size())
+				return false;
+
+			const auto token = TrimString(std::string_view{part.begin(), part.end()});
+			auto [ptr, error] = std::from_chars(token.data(), token.data() + token.size(), output[index]);
+			if (error != std::errc() || ptr != token.data() + token.size())
+				return false;
+			++index;
+		}
+
+		return index == output.size();
 	}
 
 	static void WriteStatWithStringValue(std::uint32_t hash, std::string_view value, sStatData* data)
@@ -203,7 +275,7 @@ namespace YimMenu::Submenus
 			bool _bool = false;
 			std::string as_string(text);
 			std::transform(as_string.begin(), as_string.end(), as_string.begin(), [](char c) {
-				return tolower(c);
+				return static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
 			});
 
 			if (as_string == "true" || as_string == "1")
@@ -250,6 +322,30 @@ namespace YimMenu::Submenus
 			Stats::SetMaskedUInt64(hash, uint64_);
 			return;
 		}
+		case sStatData::Type::USERID:
+			if (!text.empty() && text.find_first_not_of("0123456789") == std::string::npos)
+				STATS::STAT_SET_USER_ID(hash, text.c_str(), true);
+			return;
+		case sStatData::Type::DATE:
+		{
+			std::array<int, 7> fields{};
+			if (!ParseCommaSeparated(text, fields))
+				return;
+
+			Date date{fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]};
+			if (CheckDate(date))
+				STATS::STAT_SET_DATE(hash, &date, SCR_SIZEOF(Date), true);
+			return;
+		}
+		case sStatData::Type::POS:
+		{
+			std::array<float, 3> position{};
+			if (ParseCommaSeparated(text, position))
+				STATS::STAT_SET_POS(hash, position[0], position[1], position[2], true);
+			return;
+		}
+		case sStatData::Type::PROFILE_SETTING:
+		case sStatData::Type::TEXTLABEL:
 		default:
 			return; // data type not supported
 		}
@@ -261,25 +357,68 @@ namespace YimMenu::Submenus
 		switch (data->GetType())
 		{
 		case sStatData::Type::_BOOL:
-			return ImGui::Checkbox("值", &value.m_AsBool);
+			ImGui::Checkbox("值", &value.m_AsBool);
+			return true;
 		case sStatData::Type::FLOAT:
-			return ImGui::InputFloat("值", &value.m_AsFloat);
+			ImGui::InputFloat("值", &value.m_AsFloat[0]);
+			return true;
 		case sStatData::Type::INT:
-			return ImGui::InputInt("值", &value.m_AsInt);
+			ImGui::InputInt("值", &value.m_AsInt);
+			return true;
 		case sStatData::Type::UINT32:
-			return ImGui::InputScalar("值", ImGuiDataType_U32, &value.m_AsInt);
+			ImGui::InputScalar("值", ImGuiDataType_U32, &value.m_AsInt);
+			return true;
 		case sStatData::Type::UINT16:
-			return ImGui::InputScalar("值", ImGuiDataType_U16, &value.m_AsInt);
+			ImGui::InputScalar("值", ImGuiDataType_U16, &value.m_AsInt);
+			return true;
 		case sStatData::Type::UINT8:
-			return ImGui::InputScalar("值", ImGuiDataType_U8, &value.m_AsInt);
+			ImGui::InputScalar("值", ImGuiDataType_U8, &value.m_AsInt);
+			return true;
 		case sStatData::Type::INT64:
-			return ImGui::InputScalar("值", ImGuiDataType_S64, &value.m_AsI64);
+			ImGui::InputScalar("值", ImGuiDataType_S64, &value.m_AsI64);
+			return true;
 		case sStatData::Type::UINT64:
-			return ImGui::InputScalar("值", ImGuiDataType_U64, &value.m_AsU64);
+		case sStatData::Type::USERID:
+			ImGui::InputScalar("值", ImGuiDataType_U64, &value.m_AsU64);
+			return true;
 		case sStatData::Type::STRING:
-			return ImGui::InputText("值", value.m_AsString, sizeof(value.m_AsString));
+			ImGui::InputText("值", value.m_AsString, sizeof(value.m_AsString));
+			return true;
 		case sStatData::Type::PACKED:
-			return ImGui::Bitfield("值", &value.m_AsU64);
+			ImGui::Bitfield("值", &value.m_AsU64);
+			return true;
+		case sStatData::Type::POS:
+			ImGui::PushItemWidth(70.0f);
+			ImGui::InputFloat("X", &value.m_AsFloat[0]);
+			ImGui::SameLine();
+			ImGui::InputFloat("Y", &value.m_AsFloat[1]);
+			ImGui::SameLine();
+			ImGui::InputFloat("Z", &value.m_AsFloat[2]);
+			ImGui::PopItemWidth();
+			return true;
+		case sStatData::Type::DATE:
+			ImGui::PushItemWidth(70.0f);
+			ImGui::InputScalar("年", ImGuiDataType_S32, &value.m_Date.Year);
+			ImGui::SameLine();
+			ImGui::InputScalar("月", ImGuiDataType_S32, &value.m_Date.Month);
+			ImGui::SameLine();
+			ImGui::InputScalar("日", ImGuiDataType_S32, &value.m_Date.Day);
+			ImGui::InputScalar("时", ImGuiDataType_S32, &value.m_Date.Hour);
+			ImGui::SameLine();
+			ImGui::InputScalar("分", ImGuiDataType_S32, &value.m_Date.Minute);
+			ImGui::SameLine();
+			ImGui::InputScalar("秒", ImGuiDataType_S32, &value.m_Date.Second);
+			ImGui::SameLine();
+			ImGui::InputScalar("毫秒", ImGuiDataType_S32, &value.m_Date.Millisecond);
+			ImGui::PopItemWidth();
+			if (!CheckDate(value.m_Date))
+			{
+				ImGui::TextColored(ImVec4(0.957f, 0.643f, 0.376f, 1.0f), "日期或时间无效，请检查输入。");
+				return false;
+			}
+			return true;
+		case sStatData::Type::PROFILE_SETTING:
+		case sStatData::Type::TEXTLABEL:
 		default:
 			ImGui::BeginDisabled();
 			ImGui::Text("%s", "不支持该数据类型");
@@ -321,7 +460,14 @@ namespace YimMenu::Submenus
 
 	static void WritePackedStatRange(int start, int end, int value)
 	{
-		for (int i = start; i <= end; i++)
+		const auto itemCount = static_cast<std::int64_t>(end) - static_cast<std::int64_t>(start) + 1;
+		if (itemCount <= 0 || itemCount > static_cast<std::int64_t>(kMaxPackedRangeWrites))
+		{
+			LOG(WARNING) << "Packed Stat 批量写入范围无效或超过 4096 项。";
+			return;
+		}
+
+		for (int i = start;; ++i)
 		{
 			auto info = GetPackedStatInfo(i);
 			if (!info.m_IsValid)
@@ -329,6 +475,9 @@ namespace YimMenu::Submenus
 
 			if (info.m_IsBoolStat)
 				STATS::SET_PACKED_STAT_BOOL_CODE(info.m_Index, static_cast<bool>(value), -1);
+
+			if (i == end)
+				break;
 		}
 	}
 
@@ -362,7 +511,7 @@ namespace YimMenu::Submenus
 			{
 				current_info = GetStatInfo(stat_buf);
 				if (current_info.IsValid())
-					ReadStat(value, current_info.m_Data);
+					ReadStat(current_info.m_NameHash, value, current_info.m_Data);
 			}
 
 			if (!current_info.IsValid())
@@ -372,12 +521,11 @@ namespace YimMenu::Submenus
 				ImGui::Text("名称规范化为：%s", current_info.m_Name.data());
 			}
 
-			bool can_edit = !current_info.m_Data->IsControlledByNetshop();
-
-			RenderStatEditor(value, current_info.m_Data);
+			const bool supported = RenderStatEditor(value, current_info.m_Data);
+			const bool can_edit = supported && !current_info.m_Data->IsControlledByNetshop();
 
 			if (ImGui::Button("刷新"))
-				ReadStat(value, current_info.m_Data);
+				ReadStat(current_info.m_NameHash, value, current_info.m_Data);
 			ImGui::SameLine();
 			ImGui::BeginDisabled(!can_edit);
 			if (ImGui::Button("写入"))
@@ -449,26 +597,45 @@ namespace YimMenu::Submenus
 
 			if (ImGui::Button("从剪贴板加载"))
 			{
-				auto clip_text = std::string(ImGui::GetClipboardText());
-				FiberPool::Push([clip_text] {
-					for (auto line : clip_text | std::ranges::views::split('\n'))
-					{
-						auto components = TrimString(std::string_view{line.begin(), line.end()}) | std::ranges::views::split('=') | std::ranges::to<std::vector<std::string>>();
+				const auto clipboard = ImGui::GetClipboardText();
+				if (!clipboard)
+					return;
 
-						if (components.size() != 2)
+				const auto clipboardSize = std::strlen(clipboard);
+				if (clipboardSize > kMaxClipboardBytes)
+				{
+					LOG(WARNING) << "剪贴板数据超过 1 MiB，已拒绝导入。";
+					return;
+				}
+
+				auto clipText = std::string(clipboard, clipboardSize);
+				FiberPool::Push([clipText = std::move(clipText)] {
+					std::size_t lineCount = 0;
+					for (auto line : clipText | std::ranges::views::split('\n'))
+					{
+						if (++lineCount > kMaxClipboardLines)
 						{
-							LOGF(WARNING, "Load From Clipboard: line \"{}\" is malformed", std::string_view{line.begin(), line.end()});
+							LOG(WARNING) << "剪贴板数据超过 4096 行，已停止导入。";
+							break;
+						}
+
+						const auto lineText = TrimString(std::string_view{line.begin(), line.end()});
+						const auto separator = lineText.find('=');
+
+						if (separator == std::string_view::npos || lineText.find('=', separator + 1) != std::string_view::npos)
+						{
+							LOGF(WARNING, "Load From Clipboard: line \"{}\" is malformed", lineText);
 							continue;
 						}
 
-						auto info = GetStatInfo(TrimString(components[0]));
+						auto info = GetStatInfo(TrimString(lineText.substr(0, separator)));
 						if (!info.IsValid())
 						{
-							LOGF(WARNING, "Load From Clipboard: cannot find stat {}", components[0]);
+							LOGF(WARNING, "Load From Clipboard: cannot find stat {}", lineText.substr(0, separator));
 							continue;
 						}
 
-						WriteStatWithStringValue(info.m_NameHash, TrimString(components[1]), info.m_Data);
+						WriteStatWithStringValue(info.m_NameHash, TrimString(lineText.substr(separator + 1)), info.m_Data);
 					}
 				});
 			}

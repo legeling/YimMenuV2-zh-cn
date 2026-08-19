@@ -10,6 +10,7 @@
 #include "core/hooking/Hooking.hpp"
 #include "core/hooking/CallHook.hpp"
 #include "core/memory/ModuleMgr.hpp"
+#include "core/renderer/D3D12Hook.hpp"
 #include "core/renderer/Renderer.hpp"
 #include "core/util/Wine.hpp"
 #include "core/scripting/LuaManager.hpp"
@@ -63,9 +64,6 @@ namespace YimMenu
 
 		AnticheatBypass::RunOnStartup();
 
-		if (!Renderer::Init())
-			goto EARLY_UNLOAD;
-
 		Players::Init();
 
 		if (!Hooking::Init())
@@ -79,6 +77,19 @@ namespace YimMenu
 
 		ScriptPointers::Init();
 
+		if (!D3D12Hook::Init())
+			goto EARLY_UNLOAD;
+		Renderer::Init();
+		{
+			const auto rendererDeadline = std::chrono::steady_clock::now() + 30s;
+			while (!Renderer::IsInitialized() && g_Running && std::chrono::steady_clock::now() < rendererDeadline)
+				std::this_thread::sleep_for(100ms);
+			if (!Renderer::IsInitialized())
+			{
+				LOG(FATAL) << "Renderer initialization timed out.";
+				goto EARLY_UNLOAD;
+			}
+		}
 		GUI::Init();
 
 		ScriptMgr::AddScript(std::make_unique<Script>(&NativeHooks::RunScript)); // runs once
@@ -118,6 +129,7 @@ namespace YimMenu
 
 	EARLY_UNLOAD:
 		g_Running = false;
+		D3D12Hook::Destroy(true);
 		Renderer::Destroy();
 		LogHelper::Destroy();
 
